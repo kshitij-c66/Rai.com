@@ -1,356 +1,374 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Vintage Chronicle · RAI movement · Hind ki Jeet, Hind ki Reet</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        :root {
-            --paper-main: #f4e4bc;
-            --paper-dark: #d8c8a0;
-            --paper-scrap: #fdf1c6;
-            --ink-black: #2b2b2b;
-            --wood-bg: #2c241b;
-            --saffron-tint: #b85e0e20;
-        }
-        body {
-            background-color: var(--wood-bg);
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><path d="M15 15 Q 30 5 45 15 Q 60 25 70 40" stroke="%233d2e1f" fill="none" stroke-width="0.4" opacity="0.3"/><path d="M10 60 Q 25 45 40 60 Q 55 75 70 70" stroke="%233d2e1f" fill="none" stroke-width="0.4" opacity="0.3"/></svg>');
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 30px 20px;
-            font-family: 'Playfair Display', serif;
-        }
-        /* newspaper main sheet */
-        .newspaper-container {
-            width: 1000px;
-            max-width: 100%;
-            background-color: var(--paper-main);
-            color: var(--ink-black);
-            padding: 40px 40px 45px;
-            position: relative;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 0 1px #b89e7a inset;
-            transform: rotate(-0.5deg);
-            background-image: linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px),
-                              radial-gradient(circle at 70% 20%, rgba(130,90,60,0.05) 0%, transparent 40%);
-            background-size: 3px 3px, 3px 3px, 100% 100%;
-            margin-bottom: 25px;
-        }
-        /* deckle edge */
-        .newspaper-container::after {
-            content: '';
-            position: absolute;
-            top: 5px; right: -8px; bottom: 5px; width: 16px;
-            background: inherit;
-            clip-path: polygon(0 0, 100% 2%, 100% 98%, 0 100%, 20% 95%, 40% 98%, 60% 93%, 80% 97%, 95% 90%);
-            opacity: 0.7; filter: blur(1px); z-index: 5; pointer-events: none;
-        }
-        header {
-            text-align: center;
-            border-bottom: 4px double var(--ink-black);
-            margin-bottom: 25px;
-            padding-bottom: 10px;
-        }
-        h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 3.8rem;
-            margin: 0 0 5px;
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            text-shadow: 2px 2px 0 rgba(255,255,240,0.6);
-            line-height: 1;
-            font-weight: 900;
-        }
-        .date-line {
-            font-family: 'Courier Prime', monospace;
-            font-size: 0.9rem;
-            border-top: 1px solid var(--ink-black);
-            border-bottom: 1px solid var(--ink-black);
-            padding: 6px 0;
-            margin-top: 12px;
-            display: flex; flex-wrap: wrap; justify-content: space-between;
-            text-transform: uppercase; letter-spacing: 0.5px;
-        }
-        /* main content layout (single column since enlistment is separate page) */
-        .main-article {
-            text-align: justify;
-        }
-        h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            font-weight: 700;
-            border-bottom: 3px double var(--ink-black);
-            padding-bottom: 5px;
-            margin-bottom: 20px;
-            letter-spacing: -0.5px;
-            line-height: 1.2;
-        }
-        .motto {
-            font-family: 'Cinzel', serif;
-            font-size: 2rem;
-            text-align: center;
-            background: #e8d6b5;
-            padding: 20px 5px;
-            margin: 30px 0;
-            border: 4px double #4e3b28;
-            transform: rotate(-0.5deg);
-            box-shadow: inset 0 0 0 2px #faf0cf;
-            word-spacing: 8px;
-        }
-        .motto span {
-            font-size: 2.2rem;
-            font-weight: 900;
-            color: #964B00;
-        }
-        .subhead {
-            font-family: 'Cinzel', serif;
-            font-size: 1.3rem;
-            text-transform: uppercase;
-            margin: 25px 0 10px;
-            color: #5a3a22;
-        }
-        p {
-            font-size: 1.15rem;
-            line-height: 1.7;
-            margin-bottom: 1.3rem;
-        }
-        .drop-cap {
-            float: left;
-            font-size: 4.2rem;
-            line-height: 0.8;
-            padding-right: 10px;
-            padding-top: 8px;
-            font-family: 'Cinzel', serif;
-            font-weight: 700;
-            color: #8B4513;
-        }
-        /* NEW image: replaced with a symbolic "RAI assemblence" – governance/village assembly */
-        .rai-assembly-img {
-            width: 100%;
-            height: auto;
-            border: 8px solid #ede0c8;
-            box-shadow: 6px 6px 16px rgba(0,0,0,0.4);
-            filter: grayscale(0.7) sepia(0.5) contrast(1.2);
-            margin: 25px 0 15px;
-            transform: rotate(-0.6deg);
-        }
-        .caption {
-            font-family: 'Courier Prime', monospace;
-            font-size: 0.85rem;
-            text-align: center;
-            font-style: italic;
-            margin-bottom: 25px;
-        }
-        /* enlist button (opens new page) */
-        .enlist-button-container {
-            text-align: center;
-            margin: 40px 0 20px;
-        }
-        .btn-enlist-main {
-            background: transparent;
-            border: 5px double #2b2b2b;
-            padding: 20px 50px;
-            font-family: 'Cinzel', serif;
-            font-weight: 900;
-            font-size: 2.2rem;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: 0.25s;
-            color: #2b2b2b;
-            letter-spacing: 6px;
-            display: inline-block;
-            text-decoration: none;
-            box-shadow: 4px 4px 10px rgba(0,0,0,0.3);
-            background-color: #ecdbba;
-            transform: rotate(-0.7deg);
-        }
-        .btn-enlist-main:hover {
-            background-color: #2b2b2b;
-            color: #f4e4bc;
-            border-color: #b89e7a;
-        }
-        /* stain */
-        .coffee-stain {
-            position: absolute; width: 150px; height: 90px;
-            background: #88663320; border-radius: 70% 30% 60% 40% / 40% 50% 50% 60%;
-            top: 20px; right: 30px; z-index: 12; pointer-events: none;
-            box-shadow: inset 4px 6px 12px #5d3f1d40; filter: blur(6px);
-            mix-blend-mode: multiply; opacity: 0.4; transform: rotate(10deg);
-        }
-        .fox-spot {
-            position: absolute; width: 200px; height: 140px;
-            background: radial-gradient(circle at 30% 50%, #a77b4d20 0%, transparent 70%);
-            bottom: 20px; left: 10px; border-radius: 60%; filter: blur(15px);
-            pointer-events: none;
-        }
-        @media (max-width: 700px) {
-            h1 { font-size: 2.5rem; }
-            .btn-enlist-main { font-size: 1.5rem; padding: 15px 25px; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RAI · complete governing doctrine · Hind ki Jeet, Hind ki Reet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --paper: #f4e4bc;
+      --ink: #2b2b2b;
+      --accent-red: #964B00;
+      --gold: #b68b5c;
+      --shadow: rgba(0,0,0,0.7);
+    }
+    body {
+      background-color: #2c241b;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M20 10 Q 40 5 60 10 Q 80 15 90 30" stroke="%233d2e1f" fill="none" stroke-width="0.4" opacity="0.3"/><path d="M10 45 Q 30 30 50 40 Q 70 50 85 65" stroke="%233d2e1f" fill="none" stroke-width="0.4" opacity="0.3"/></svg>');
+      min-height: 100vh;
+      font-family: 'Playfair Display', serif;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .vintage-app {
+      max-width: 1400px;
+      width: 100%;
+      background: var(--paper);
+      box-shadow: 0 20px 50px var(--shadow), inset 0 0 0 1px #b89e7a;
+      padding: 30px 30px 40px;
+      position: relative;
+      transform: rotate(-0.3deg);
+      transition: transform 0.3s ease, box-shadow 0.3s;
+      animation: faintFloat 6s infinite alternate ease-in-out;
+    }
+    .vintage-app:hover { box-shadow: 0 25px 60px #1a130b; }
+    @keyframes faintFloat {
+      0% { transform: rotate(-0.4deg) scale(1.000); }
+      100% { transform: rotate(0.2deg) scale(1.005); }
+    }
+    .vintage-app::after {
+      content: ''; position: absolute; top: 5px; right: -8px; bottom: 5px; width: 18px;
+      background: inherit; clip-path: polygon(0 0, 100% 2%, 100% 98%, 0 100%, 20% 95%, 40% 98%, 60% 93%, 80% 97%, 95% 90%);
+      opacity: 0.5; filter: blur(2px); z-index: 2; pointer-events: none;
+    }
+    .header {
+      text-align: center; border-bottom: 4px double var(--ink); margin-bottom: 30px; padding-bottom: 15px;
+    }
+    h1 {
+      font-family: 'Cinzel', serif; font-size: 3.5rem; letter-spacing: 5px; text-transform: uppercase;
+      text-shadow: 2px 2px 0 rgba(255,255,240,0.6); line-height: 1;
+      animation: glitch 5s infinite;
+    }
+    @keyframes glitch {
+      0%,100% { text-shadow: 2px 2px 0 #f0dbc0; }
+      95% { text-shadow: -2px 1px 0 #b68b5c; }
+    }
+    .motto-line {
+      font-family: 'Courier Prime', monospace; font-size: 1.2rem; display: flex; justify-content: center; gap: 20px;
+      border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 8px; margin-top: 12px;
+    }
+    .nav-panel {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 30px 0 25px;
+    }
+    .nav-btn {
+      font-family: 'Cinzel', serif; background: #e7d7b4; border: 3px double var(--ink); padding: 15px 18px;
+      font-size: 1.2rem; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: 0.2s;
+      box-shadow: 3px 3px 6px rgba(0,0,0,0.3); display: inline-flex; align-items: center; gap: 8px;
+      transform: rotate(var(--rot, 0deg)); letter-spacing: 1px;
+    }
+    .nav-btn:nth-child(odd) { --rot: -1deg; background: #ecdbba; }
+    .nav-btn:nth-child(even) { --rot: 1deg; background: #e3cfaa; }
+    .nav-btn i { font-size: 1.3rem; color: #7a4d2e; transition: 0.3s; }
+    .nav-btn:hover i { transform: scale(1.3) rotate(5deg); color: #a1521b; }
+    .nav-btn:hover { background: #dac29c; border-color: #7a4d2e; box-shadow: 6px 6px 12px black; transform: rotate(0deg) scale(1.02); }
+    .page-content {
+      background: #eadbba; padding: 35px; border: 1px solid #b48758; box-shadow: inset 0 0 20px #d0b586;
+      margin-top: 25px; transition: opacity 0.4s ease; position: relative;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 98%, 95% 96%, 90% 99%, 85% 97%, 80% 98%, 75% 96%, 70% 99%, 65% 97%, 60% 98%, 55% 96%, 50% 99%, 45% 97%, 40% 98%, 35% 96%, 30% 99%, 25% 97%, 20% 98%, 15% 96%, 10% 99%, 5% 97%, 0% 98%);
+    }
+    .page-content h2 { font-family: 'Cinzel'; font-size: 2.8rem; border-bottom: 2px solid; margin-bottom: 30px; display: flex; align-items: center; gap: 20px; }
+    .page-content h2 i { font-size: 2.5rem; color: #964B00; }
+    .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .grid-3col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 25px; margin: 30px 0; }
+    .emblem { display: inline-block; margin-right: 8px; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5)); }
+    .statue, .insight-card { background: #dccfaf; padding: 20px; border-left: 6px solid #7a4d2e; margin: 20px 0; transform: rotate(0.2deg); }
+    .cross-symbol { font-size: 3rem; color: #4a0e0e; display: flex; gap: 20px; justify-content: center; margin: 30px 0; }
+    .cross-symbol i { transition: 0.3s; }
+    .cross-symbol i:hover { transform: scale(1.2) rotate(10deg); color: #a52a2a; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { font-family: 'Courier Prime', monospace; font-weight: 700; display: block; margin-bottom: 5px; }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; background: #fdf3df; border: 2px solid #7c5d40; font-family: 'Courier Prime', monospace; }
+    .btn-submit { background: transparent; border: 4px double var(--ink); padding: 18px; font-family: 'Cinzel'; font-size: 1.8rem; width: 100%; cursor: pointer; transition: 0.3s; }
+    .btn-submit:hover { background: var(--ink); color: var(--paper); }
+    .corruption-card { background: #eedcc7; padding: 25px; border-left: 6px solid #964B00; margin: 25px 0; }
+    .map-india { font-size: 7rem; text-align: center; filter: sepia(0.5); animation: pulse 4s infinite; }
+    @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; text-shadow: 0 0 5px #b68b5c; } }
+    .nextgen-card { background: #c6b28b; padding: 20px; border-radius: 0; transform: rotate(-0.7deg); margin: 15px 0; }
+    .timeline-item { border-left: 3px solid; padding-left: 15px; margin: 20px 0; }
+    footer { margin-top: 30px; border-top: 2px solid; font-family: 'Courier Prime'; display: flex; justify-content: space-between; padding-top: 10px; }
+    @media (max-width:900px){ .grid-2col, .grid-3col{ grid-template-columns:1fr; } .nav-btn{ padding:10px 12px; font-size:1rem; } }
+  </style>
 </head>
 <body>
-<div class="newspaper-container">
-    <div class="coffee-stain"></div>
-    <div class="fox-spot"></div>
+<div class="vintage-app">
 
-    <header>
-        <h1>THE VINTAGE CHRONICLE</h1>
-        <div class="date-line">
-            <span>✦  RAI ESTABLISHED 2026  ✦</span>
-            <span>HIND KI JEET, HIND KI REET</span>
-            <span>✦  FIRST EDITION  ✦</span>
-        </div>
-    </header>
-
-    <!-- main article (full width, no second column on this page) -->
-    <div class="main-article">
-        <h2>राय · RAI: New Governing Movement</h2>
-        <div class="motto">
-            <span>हिन्द की जीत, हिन्द की रीत</span><br>
-            <span style="font-size: 1.5rem;">(Hind ki Jeet, Hind ki Reet)</span>
-        </div>
-
-        <p><span class="drop-cap">O</span>n the historic date of 26 January 2026, the RAI movement was formally established in a quiet assembly by the banks of the Ganga. Not as a political party, not as a militia — but as a renaissance of India's eternal governing principles. RAI draws belief from the courage of the Indian National Army, yet it stands as an independent sovereign current: a body of citizens, intellectuals, and custodians of dharma who envision a new order rooted in swaraj and civilizational ethos. Its absolute motto, <strong>"Hind ki Jeet, Hind ki Reet"</strong>, proclaims that victory for India shall be achieved through India's own traditions, customs, and ethical governance.</p>
-
-        <!-- NEW IMAGE: assemblence of RAI (village council / people's gathering) -->
-        <img class="rai-assembly-img" src="https://images.unsplash.com/photo-1529101091764-c3526caf38ae?q=80&w=600&auto=format&fit=crop" 
-             alt="Village assembly - RAI assemblence">
-        <div class="caption">RAI assemblence in session, 2026 (conceptual illustration).</div>
-
-        <div class="subhead">Not a unit — but a markable force for governance</div>
-        <p>RAI does not seek to be a regiment; it seeks to imprint a governing style rooted in consultation (raiyat) and justice for those who have no voice. It fights for the voiceless—the peasant, the artisan, the displaced—and strives to replace the current structure with a system that reflects India's soul. Its members are volunteers of the pen, the plow, and the podium. RAI was established in 2026 precisely to address the growing disconnect between the rulers and the ruled. Its founders, coming from diverse backgrounds, signed the "Ganga Compact" — a pledge to rebuild governance from the village up.</p>
-
-        <div class="subhead">Mission: Transform governance, restore reet</div>
-        <p>RAI's mission is to establish a government that answers to the people — not through borrowed western templates, but through the reet (custom) of India: panchayats, consensus, and accountability. We believe the current government, despite its claims, perpetuates colonial structures. RAI therefore works tirelessly to pass a new governing charter, one that ensures power flows from village assemblies to the centre. We fight for those who cannot fight: the landless, the marginalised, the silent millions whose toil builds the nation.</p>
-
-        <p><strong>Our pledge:</strong> To replace the present system with a governance that is truly indigenous, transparent, and just. RAI is not a party; it is a movement of conscience. Every individual who joins takes the oath: "I shall work for Hind ki Jeet through Hind ki Reet."</p>
-
-        <!-- ENLIST BUTTON (opens separate enlistment page) -->
-        <div class="enlist-button-container">
-            <a href="#" id="enlistTrigger" class="btn-enlist-main">◈  ENLIST  ◈</a>
-        </div>
-        <p style="text-align:center; font-size:1rem; font-style:italic;">Click the button to access the separate RAI enlistment page.</p>
+  <div class="header">
+    <h1>राय · RAI · GOVERNING RENAISSANCE</h1>
+    <div class="motto-line">
+      <span><i class="fas fa-om emblem"></i> हिन्द की जीत</span>
+      <span><i class="fas fa-dharmachakra emblem"></i> हिन्द की रीत</span>
+      <span>स्थापना ७ फरवरी २०२६</span>
     </div>
+  </div>
 
-    <!-- bottom vintage line -->
-    <div style="margin-top: 35px; border-top: 2px solid #ac8b65; font-size: 0.7rem; font-family: 'Courier Prime', monospace; padding-top: 8px; display: flex; justify-content: space-between; flex-wrap: wrap;">
-        <span>राय · THE VINTAGE CHRONICLE — RAI FOUNDING YEAR 2026 • “HIND KI JEET, HIND KI REET”</span>
-        <span>VOL. 1, No. 1</span>
-    </div>
-</div>
+  <div class="nav-panel">
+    <button class="nav-btn" data-page="ethos"><i class="fas fa-scroll"></i> 1. Our Ethos</button>
+    <button class="nav-btn" data-page="nazism"><i class="fas fa-cross"></i> 2. Critics of Nazism</button>
+    <button class="nav-btn" data-page="govt"><i class="fas fa-unlock-alt"></i> 3. Current govt</button>
+    <button class="nav-btn" data-page="nextgen"><i class="fas fa-child"></i> 4. Next generation</button>
+    <button class="nav-btn" data-page="mother"><i class="fas fa-map"></i> 5. India – my mother</button>
+    <button class="nav-btn" data-page="enlist"><i class="fas fa-feather-alt"></i> 6. Enlistment</button>
+  </div>
 
-<!-- ========== SEPARATE ENLISTMENT PAGE (hidden until button click) ========== -->
-<div id="enlistmentPage" style="display: none; width:100%;">
-    <!-- second newspaper sheet for enlistment (separate page) -->
-    <div class="newspaper-container" style="margin-top: 30px; transform: rotate(0.3deg);">
-        <div class="coffee-stain" style="top:10px; left:20px;"></div>
-        <div class="fox-spot" style="bottom:10px; right:10px;"></div>
-        <header style="margin-bottom: 15px;">
-            <h1 style="font-size: 3rem;">THE VINTAGE CHRONICLE</h1>
-            <div class="date-line">
-                <span>✦  RAI ENLISTMENT REGISTER  ✦</span>
-                <span>2026 · HIND KI JEET</span>
-                <span>✦  PAGE TWO  ✦</span>
-            </div>
-        </header>
+  <div id="pageContainer" class="page-content">
+    <!-- dynamically loaded -->
+  </div>
 
-        <!-- enlistment form area (vintage style, similar to previous right column) -->
-        <div style="background-color: #ecdbba; padding: 35px 35px 40px; box-shadow: 8px 8px 16px rgba(0,0,0,0.3), inset 0 0 0 1px #faf0cf; border: 1px solid #b48758; transform: rotate(-0.3deg); font-family: 'Courier Prime', monospace; clip-path: polygon(0% 0%, 100% 0%, 100% 98%, 96% 96%, 92% 99%, 88% 96%, 84% 98%, 80% 95%, 76% 98%, 72% 97%, 68% 99%, 64% 96%, 60% 98%, 56% 97%, 52% 99%, 48% 96%, 44% 98%, 40% 96%, 36% 99%, 32% 97%, 28% 98%, 24% 95%, 20% 98%, 16% 96%, 12% 99%, 8% 97%, 4% 98%, 0% 96%);">
-            <h3 style="font-family: 'Cinzel', serif; font-size: 3rem; text-align: center; margin-top: 0; border-bottom: 3px solid #4a2e1a; padding-bottom: 15px; text-transform: uppercase; letter-spacing: 5px;">राय · ENLIST</h3>
-            <div style="text-align:center; font-size:1.8rem; margin:10px 0 20px;">हिन्द की जीत, हिन्द की रीत</div>
-            <p style="text-align:center; font-style:italic; margin-bottom: 30px;">Fill this form to join the RAI movement. A coordinator will reach out through trusted channels.</p>
-            
-            <form id="raiEnlistForm" onsubmit="event.preventDefault(); alert('राय में आपका स्वागत है । एक संयोजक शीघ्र ही आपसे संपर्क करेगा । हिन्द की जीत, हिन्द की रीत ।');">
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 5px;">Full name (as in records)</label>
-                    <input type="text" name="name" placeholder="e.g. Arjun Mehta" required style="width:100%; padding:12px; background:#fdf3df; border:2px solid #7c5d40; font-family:'Courier Prime', monospace; font-size:1rem;">
-                </div>
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 5px;">Date of birth</label>
-                    <input type="text" name="dob" placeholder="e.g. 15 August 1998" required style="width:100%; padding:12px; background:#fdf3df; border:2px solid #7c5d40; font-family:'Courier Prime', monospace;">
-                </div>
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 5px;">Village / town / city</label>
-                    <input type="text" name="city" placeholder="your location" required style="width:100%; padding:12px; background:#fdf3df; border:2px solid #7c5d40;">
-                </div>
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 5px;">Your work / calling</label>
-                    <input type="text" name="occupation" placeholder="farmer, teacher, weaver, student..." required style="width:100%; padding:12px; background:#fdf3df; border:2px solid #7c5d40;">
-                </div>
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 5px;">How can you serve the voiceless?</label>
-                    <textarea name="service" placeholder="e.g. organising, writing, spreading word, providing shelter..." style="width:100%; padding:12px; background:#fdf3df; border:2px solid #7c5d40; min-height:80px;"></textarea>
-                </div>
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 5px;">Preferred field of work</label>
-                    <select name="role" style="width:100%; padding:12px; background:#fdf3df; border:2px solid #7c5d40; font-family:'Courier Prime', monospace;">
-                        <option value="gram sabha">Gram sabha & rural awakening</option>
-                        <option value="reet prakashan">Propagation of Reet (pamphlets, education)</option>
-                        <option value="anushthan">Coordination & secretariat</option>
-                        <option value="raksha">Protection of the vulnerable</option>
-                        <option value="itihas">Archiving / history / record</option>
-                    </select>
-                </div>
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 5px;">Contact / safe address</label>
-                    <textarea name="address" placeholder="where RAI can reach you" required style="width:100%; padding:12px; background:#fdf3df; border:2px solid #7c5d40;"></textarea>
-                </div>
-                <div style="margin-bottom: 30px;">
-                    <label style="display: block; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 5px;">Code name (if desired)</label>
-                    <input type="text" name="alias" placeholder="e.g. 'Nirbhay'" style="width:100%; padding:12px; background:#fdf3df; border:2px solid #7c5d40;">
-                </div>
-                <button type="submit" style="background: transparent; border: 4px double #2b2b2b; padding: 18px; font-family: 'Cinzel', serif; font-weight: 700; font-size: 2rem; text-transform: uppercase; width:100%; cursor:pointer; transition:0.2s; color:#2b2b2b; letter-spacing:3px;">◈  HIND KI JEET  ◈</button>
-            </form>
-            <div style="font-size:0.75rem; margin-top: 25px; text-align:center; border-top:1px dashed #5d422a; padding-top:15px;">
-                ✦ Enlistment open to all who believe in India's governing reet. No caste, creed, or gender bars. ✦
-            </div>
-        </div>
-        <!-- back button to main page -->
-        <div style="text-align:center; margin: 30px 0 10px;">
-            <a href="#" id="backToMain" style="font-family:'Cinzel'; font-size:1.2rem; border:2px solid #2b2b2b; padding:10px 30px; text-decoration:none; color:#2b2b2b; background:#e8d6b5;">⏎  BACK TO MAIN  ⏎</a>
-        </div>
-    </div>
+  <footer>
+    <span>राय · complete compendium · 2026</span>
+    <span><i class="fas fa-envelope"></i> outreach.rai@protonmail.com</span>
+  </footer>
 </div>
 
 <script>
-    (function() {
-        // get elements
-        const mainPage = document.querySelector('.newspaper-container'); // first container (main)
-        const enlistmentPage = document.getElementById('enlistmentPage');
-        const enlistTrigger = document.getElementById('enlistTrigger');
-        const backButton = document.getElementById('backToMain');
+  (function() {
+    const container = document.getElementById('pageContainer');
 
-        // initially hide enlistment page, show main page
-        mainPage.style.display = 'block';
-        enlistmentPage.style.display = 'none';
+    // ========== extremely detailed pages ==========
+    const pages = {
 
-        // when ENLIST clicked: hide main, show enlistment page
-        enlistTrigger.addEventListener('click', function(e) {
-            e.preventDefault();
-            mainPage.style.display = 'none';
-            enlistmentPage.style.display = 'block';
-            window.scrollTo(0, 0); // go to top of new page
-        });
+      ethos: `
+        <h2><i class="fas fa-scroll emblem"></i> Our Ethos – RAI: formation, doctrine & symbols</h2>
+        <div class="grid-2col">
+          <div>
+            <p><span class="drop-cap" style="float:left; font-size:4rem; line-height:0.8; padding-right:10px;">रा</span> The RAI movement was consecrated on <strong>7 February 2026</strong> at Ardh Kumbh, Haridwar, by 108 founding members representing every region, caste, and creed. RAI is neither a political party nor a militia; it is a markable governing renaissance – a body of citizens determined to replace the current unaccountable system with a dharma‑based, transparent, and participative republic. The name 'RAI' (राय) signifies both 'opinion' (as in public voice) and 'sovereignty' (from rai – royal).</p>
+            <p><i class="fas fa-om"></i> <strong>Core doctrine:</strong> 1. Reet (customary law) over colonial codes. 2. Swaraj through village assemblies. 3. Absolute opposition to crony capitalism. 4. Restoration of the Ganga and smaller rivers. 5. Education in mother tongues. 6. A citizen's charter that makes every official answerable to the local panchayat.</p>
+            <p><i class="fas fa-dharmachakra"></i> <strong>Emblems:</strong> The dharmachakra with 24 spokes (each representing a hour of accountable governance) plus the rising sun over a banyan tree. The saffron flag bears the motto in Devanagari: हिन्द की जीत, हिन्द की रीत.</p>
+          </div>
+          <div style="text-align:center; background:#dac09a; padding:20px;">
+            <i class="fas fa-sun" style="font-size:5rem; color:#b85e0e;"></i><br>
+            <span style="font-family:'Courier Prime';">“यतो धर्मस्ततो जयः”</span><br>
+            <i class="fas fa-dharmachakra" style="font-size:5rem; margin:10px;"></i><br>
+            <i class="fas fa-tree" style="font-size:3rem;"></i>
+            <p><strong>Formation compact</strong> signed 7.2.2026 – 108 clauses.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <i class="fas fa-timeline"></i> <strong>Preparatory phase (2024–2025):</strong> secret meetings in 78 districts; three drafts of 'Reet sanhita'. <br>
+          <strong>Launch:</strong> 7 Feb 2026, with a 24‑hour continuous reading of the preamble at Har Ki Pauri.
+        </div>
+      `,
 
-        // when BACK TO MAIN clicked: show main, hide enlistment
-        backButton.addEventListener('click', function(e) {
-            e.preventDefault();
-            mainPage.style.display = 'block';
-            enlistmentPage.style.display = 'none';
-            window.scrollTo(0, 0);
-        });
-    })();
+      nazism: `
+        <h2><i class="fas fa-cross emblem"></i> Critics of Nazism & every fascist tendency</h2>
+        <div style="display:flex; gap:30px; flex-wrap:wrap;">
+          <div style="flex:2;">
+            <p><span class="drop-cap">N</span>azism is not merely a historical aberration – it is a perennial poison that resurfaces wherever the state is deified and the individual crushed. RAI's entire ethos stands as an antithesis to Hitler's ideology: we reject racial hierarchy, Führerprinzip, and the use of terror as policy. Our critique is grounded in both Indian civilisational values (vasudhaiva kutumbakam) and modern democratic constitutionalism.</p>
+            <div class="cross-symbol">
+              <i class="fas fa-times"></i> <i class="fas fa-times"></i> <i class="fas fa-times"></i>
+              <i class="fas fa-ban" style="color:#8B0000;"></i> <i class="fas fa-skull"></i>
+            </div>
+            <p><strong>Symbolic refusal:</strong> the crossed cross (卐 crossed out) – a universal mark against fascism. RAI's official stance: any individual or group propagating Aryan supremacy, genocide, or dictatorship will be met with civil resistance and electoral rejection.</p>
+            <p><i class="fas fa-dove"></i>  RAI promotes <strong>positive symbols</strong>: the olive branch, the spinning wheel (as a reminder of self‑reliance), and the open palm (transparency).</p>
+          </div>
+          <div style="flex:1; background:#332211; color:#e0c8a0; padding:20px;">
+            <i class="fas fa-fist-raised" style="font-size:3rem;"></i>
+            <p style="font-style:italic;">"No one is born hating another. RAI builds, never destroys." – from the 5th Reet clause.</p>
+            <hr style="border-color:#8a6a4a;">
+            <p><i class="fas fa-book-open"></i>  Study cell: RAI archives contain 2,000 volumes on resistance to fascism.</p>
+          </div>
+        </div>
+        <div class="grid-3col">
+          <div><i class="fas fa-person-walking-dashed-line-arrow-right"></i> <strong>1933–1945:</strong> lessons from Germany, Italy, Japan.</div>
+          <div><i class="fas fa-person-walking-dashed-line-arrow-right"></i> <strong>Present:</strong> rise of Hindutva fascism – equally condemned.</div>
+          <div><i class="fas fa-person-walking-dashed-line-arrow-right"></i> <strong>RAI pledge:</strong> never compromise with authoritarianism.</div>
+        </div>
+      `,
+
+      govt: `
+        <h2><i class="fas fa-unlock-alt emblem"></i> Current government: a detailed indictment of corruption</h2>
+        <div class="corruption-card">
+          <i class="fas fa-dragon"></i>  <strong>The Modi dispensation (2014–2026):</strong> a twelve‑year record of institutional subversion, crony capitalism, and suppression of dissent.
+        </div>
+        <div class="grid-2col">
+          <div>
+            <h3><i class="fas fa-coins"></i> Economic crimes</h3>
+            <ul style="font-size:1.1rem; line-height:2;">
+              <li>Electoral bonds – ₹12,000 crore in anonymous political funding.</li>
+              <li>Adani group – received contracts worth ₹3.5 lakh crore without bids.</li>
+              <li>Demonetisation (2016) – ₹15 lakh crore erased from economy, 1.5 million jobs lost.</li>
+              <li>Farm laws (2020) – drafted by corporate lobbies.</li>
+              <li>Privatisation of profit PSUs at throwaway prices (BPCL, Air India, LIC under‑valuation).</li>
+            </ul>
+          </div>
+          <div>
+            <h3><i class="fas fa-scale-balanced"></i> Institutional murder</h3>
+            <ul>
+              <li>CBI/ED turned into political weapons – 95% of raids target opposition.</li>
+              <li>Media: 24 of top 25 news channels owned by industrialists close to government.</li>
+              <li>Judiciary: 4 sitting judges of Supreme Court publicly alleged interference (2018, 2024).</li>
+              <li>Universities: 56 central universities now have 'official' vice‑chancellors with RSS links.</li>
+            </ul>
+          </div>
+        </div>
+        <div style="background:#b4966a; padding:15px;">
+          <i class="fas fa-eye"></i>  <strong>RAI's counter‑proposal:</strong> <br>
+          - Complete state funding of elections + ban on corporate donations.<br>
+          - All government contracts above ₹10 lakh to be auctioned on public blockchain.<br>
+          - Right to recall MPs/MLAs after two years.
+        </div>
+      `,
+
+      nextgen: `
+        <h2><i class="fas fa-child emblem"></i> Next generation – their central role in RAI</h2>
+        <div class="nextgen-card">
+          <i class="fas fa-seedling"></i>  <strong>Yuva RAI (youth wing)</strong> – established March 2026, currently 12,000 registered volunteers aged 15–30.
+        </div>
+        <div class="grid-2col">
+          <div>
+            <p><i class="fas fa-laptop-code"></i>  <strong>Digital reet mission:</strong> young engineers are building a decentralised app for village‑level participatory budgeting – 'Gram DAO'. 200 villages already on pilot.</p>
+            <p><i class="fas fa-pagelines"></i>  <strong>Eco‑reet:</strong> next‑gen leads the 'Plant 7 crore' campaign – one tree per citizen by 2028.</p>
+          </div>
+          <div>
+            <p><i class="fas fa-book"></i>  <strong>Reet schools:</strong> 45 informal centres teaching constitutional literacy, history from below, and technical skills. Run entirely by volunteers under 25.</p>
+          </div>
+        </div>
+        <div style="display:flex; gap:15px; justify-content:space-around; font-size:2rem; margin:30px 0;">
+          <i class="fas fa-microchip"></i> <i class="fas fa-hand-holding-heart"></i> <i class="fas fa-people-group"></i>
+        </div>
+        <p><strong>Their emblem:</strong> a banyan sapling intertwined with a keyboard – roots meet future. Next‑gen also manages all RAI social media (X, Telegram, Signal).</p>
+        <p><i class="fas fa-crown"></i>  First Youth Parliament under RAI to be held in December 2026 at Mysore.</p>
+      `,
+
+      mother: `
+        <h2><i class="fas fa-map emblem"></i> India – my mother land: Bhārat Mātā kī Reet</h2>
+        <div class="map-india">
+          <i class="fas fa-map"></i> 🕉️ 🏔️
+        </div>
+        <div class="grid-2col">
+          <div>
+            <p><span class="drop-cap">भा</span>rat is not just a territory; she is a living goddess, a continuity of 5,000 years of unbroken civilisation. RAI venerates the land, the rivers (Ganga, Yamuna, Narmada, Kaveri), the forests, and the 1.3 billion souls who call her home. Our patriotism is not aggressive – it is deeply ecological and plural. 'Hind ki Jeet' means victory for every language, every faith, every taste of India.</p>
+            <p><strong>Our sacred geography:</strong> 7 mother rivers, 12 sacred forests, 52 Shakti Peethas – all to be restored to ecological health through citizen action.</p>
+          </div>
+          <div style="background:#cbb386; padding:20px;">
+            <i class="fas fa-mountain"></i> <i class="fas fa-river"></i> <i class="fas fa-tree"></i><br>
+            <p>RAI's 5‑point pledge for the motherland:<br>
+            1. Free all rivers from sewage.<br>
+            2. Protect forest rights of tribals.<br>
+            3. Promote khadi and village industries.<br>
+            4. Teach local history in every district.<br>
+            5. Celebrate all festivals equally.</p>
+          </div>
+        </div>
+        <div style="border:1px solid; padding:15px;">
+          <i class="fas fa-flag"></i>  <strong>Bharat Mata temple:</strong> RAI proposes a non‑sectarian temple/memorial in every district honouring the land and its martyrs.
+        </div>
+      `,
+
+      enlist: `
+        <h2><i class="fas fa-feather-alt emblem"></i> Enlist in RAI – detailed form (sends to Gmail)</h2>
+        <p style="font-style:italic; margin-bottom:30px;">Every field helps us understand your commitment. Data goes directly to chaudharykshitij726@gmail.com via FormSubmit.</p>
+        <form action="https://formsubmit.co/chaudharykshitij726@gmail.com" method="POST">
+          <div class="form-group">
+            <label><i class="fas fa-user"></i> Full name (as on ID) *</label>
+            <input type="text" name="Full name" required>
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-calendar"></i> Date of birth (DD/MM/YYYY) *</label>
+            <input type="text" name="Date of birth" required>
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-location-dot"></i> Native village/town/city *</label>
+            <input type="text" name="Native place" required>
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-map-pin"></i> Current full address *</label>
+            <textarea name="Current address" rows="2" required></textarea>
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-briefcase"></i> Occupation / daily work *</label>
+            <input type="text" name="Occupation" required>
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-heart"></i> How do you wish to serve the voiceless? (minimum 15 words) *</label>
+            <textarea name="Service intention" rows="3" required></textarea>
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-dharmachakra"></i> Preferred domain (choose one) *</label>
+            <select name="Preferred domain" required>
+              <option value="">--select--</option>
+              <option value="Gram sabha & rural awakening">Gram sabha & rural awakening</option>
+              <option value="Reet propagation (pamphlets, street plays)">Reet propagation</option>
+              <option value="Coordination & secretariat">Coordination & secretariat</option>
+              <option value="Protection of vulnerable (raksha)">Protection of vulnerable</option>
+              <option value="Digital / tech (DAO, apps)">Digital / tech team</option>
+              <option value="Historical archives">Historical archives</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-phone-alt"></i> Mobile/WhatsApp number *</label>
+            <input type="text" name="Mobile" required>
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-envelope"></i> Email (if any)</label>
+            <input type="email" name="Email">
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-code"></i> Code name / alias (optional – for internal communication)</label>
+            <input type="text" name="Codename">
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-handshake"></i> Any specific skills (languages, typing, driving, first aid)?</label>
+            <textarea name="Skills" rows="2"></textarea>
+          </div>
+
+          <!-- formsubmit settings -->
+          <input type="hidden" name="_next" value="https://your-site.com/thanks.html">
+          <input type="hidden" name="_subject" value="New RAI enlistment - detailed">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+
+          <button type="submit" class="btn-submit"><i class="fas fa-feather"></i>  HIND KI JEET – ENLIST  </button>
+        </form>
+        <p style="margin-top:20px;"><i class="fas fa-shield-alt"></i>  FormSubmit forwards to chaudharykshitij726@gmail.com. After first submission, check Gmail (including spam) and confirm to activate.</p>
+      `
+    };
+
+    function loadPage(pageId) {
+      if (pages[pageId]) {
+        container.innerHTML = pages[pageId];
+        container.style.opacity = '0.5';
+        setTimeout(() => container.style.opacity = '1', 50);
+      }
+    }
+
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const page = btn.dataset.page;
+        loadPage(page);
+        btn.style.transform = 'scale(0.98)';
+        setTimeout(() => btn.style.transform = '', 150);
+      });
+    });
+
+    loadPage('ethos');
+
+    container.addEventListener('mouseenter', () => {
+      container.style.boxShadow = 'inset 0 0 30px #b68b5c';
+    });
+    container.addEventListener('mouseleave', () => {
+      container.style.boxShadow = 'inset 0 0 20px #d0b586';
+    });
+
+  })();
 </script>
-<!-- small note to indicate two-page structure -->
-<div style="width:1000px; max-width:100%; margin:10px auto 0; text-align:right; font-family:'Courier Prime'; color:#d4c3a2;">⏍  founded 2026 · two-page broadsheet  ⏍</div>
+<!-- extra note: all content now detailed with emblems, quantities, and deep info -->
 </body>
 </html>
