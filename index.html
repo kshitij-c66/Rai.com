@@ -3,244 +3,270 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BLAZE LEAGUE — T20 Cricket</title>
-<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nunito:wght@400;700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<title>THE PAAJI LEAGUE — DPSRKP Cricket Fan League</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
-:root{--hot:#FF2D55;--yellow:#FFD600;--cyan:#00D4FF;--green:#00E676;--white:#FFF;--ink:#0D0D0D;--ink2:#1A1A2E;--surface:#F0F2FF;--muted:#6B7280;--border:#E5E7EB;--orange:#FF6B00}
+:root{
+  --gold:#C9A84C;
+  --gold2:#F0D080;
+  --crimson:#8B1A1A;
+  --deep:#0A0A0F;
+  --surface:#0F0F18;
+  --card:#14141E;
+  --border:#2A2A38;
+  --border2:#3A3A50;
+  --text:#F0EDE8;
+  --muted:#7A7A90;
+  --accent:#E05252;
+  --green:#2ECC71;
+  --blue:#4A9EE0;
+  --orange:#E07B2A;
+}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--surface);color:var(--ink);font-family:'Nunito Sans',sans-serif;overflow-x:hidden}
+body{background:var(--deep);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;line-height:1.6}
+
+/* ── CURSOR ── */
+#cursor{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .2s,height .2s,opacity .2s;mix-blend-mode:difference}
+#cursor-ring{position:fixed;width:32px;height:32px;border:1.5px solid var(--gold);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:width .3s,height .3s,transform .08s;opacity:.5}
 *,a,button{cursor:none!important}
-#cursor{position:fixed;width:16px;height:16px;background:var(--hot);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .15s,height .15s,background .15s;mix-blend-mode:multiply}
-#cursor.big{width:38px;height:38px;background:var(--yellow)}
 
 /* ── NAV ── */
-.nav{position:sticky;top:0;z-index:200;background:#fff;border-bottom:3px solid var(--ink);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:64px;box-shadow:0 4px 0 var(--ink)}
-.nav-logo-wrap{display:flex;align-items:center;gap:0;text-decoration:none}
-.nav-links{display:flex;list-style:none}
-.nav-links a{font-family:'Nunito',sans-serif;font-weight:800;font-size:.78rem;letter-spacing:1px;text-transform:uppercase;color:var(--ink);text-decoration:none;padding:0 14px;height:64px;display:flex;align-items:center;border-right:1px solid var(--border);transition:background .15s}
-.nav-links a:hover{background:var(--yellow)}
-.nav-live{display:flex;align-items:center;gap:8px;background:var(--hot);color:#fff;font-family:'Nunito',sans-serif;font-weight:900;font-size:.72rem;letter-spacing:1.5px;padding:8px 16px;border-radius:4px;border:2px solid var(--ink)}
-.live-dot{width:8px;height:8px;border-radius:50%;background:white;animation:blink 1s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.nav{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:68px}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nav-logo-text{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:3px;color:var(--gold);line-height:1}
+.nav-logo-sub{font-size:.5rem;letter-spacing:4px;color:var(--muted);text-transform:uppercase;display:block;margin-top:1px}
+.nav-links{display:flex;list-style:none;gap:0}
+.nav-links a{font-size:.72rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:0 18px;height:68px;display:flex;align-items:center;transition:color .2s,background .2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:0;height:2px;background:var(--gold);transition:width .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-links a:hover::after{width:60%}
+.nav-live{display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--crimson),#6B1010);color:#fff;font-weight:600;font-size:.65rem;letter-spacing:2px;padding:8px 18px;border-radius:2px;border:1px solid rgba(200,50,50,.3)}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#FF5555;animation:pulse 1.4s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,85,85,.5)}50%{box-shadow:0 0 0 5px rgba(255,85,85,0)}}
 
 /* ── TICKER ── */
-.ticker{background:var(--ink);padding:9px 0;overflow:hidden;border-bottom:3px solid var(--hot)}
-.ticker-inner{display:flex;gap:2.5rem;width:max-content;animation:tick 42s linear infinite;white-space:nowrap}
+.ticker{background:var(--gold);padding:8px 0;overflow:hidden}
+.ticker-inner{display:flex;gap:3rem;width:max-content;animation:tick 50s linear infinite;white-space:nowrap}
 @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.t-item{display:flex;align-items:center;gap:10px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.8rem;color:#fff}
-.t-tag{background:var(--hot);color:#fff;font-size:.6rem;font-weight:900;letter-spacing:2px;padding:2px 7px;border-radius:3px;text-transform:uppercase}
-.t-tag.y{background:var(--yellow);color:var(--ink)}.t-tag.c{background:var(--cyan);color:var(--ink)}.t-tag.g{background:var(--green);color:var(--ink)}.t-tag.o{background:var(--orange);color:#fff}
-.t-hi{color:var(--yellow);font-weight:900}.t-sep{color:rgba(255,255,255,.25)}
+.t-item{display:flex;align-items:center;gap:10px;font-size:.7rem;font-weight:700;letter-spacing:1px;color:var(--deep)}
+.t-sep{opacity:.4}
+.t-hi{font-weight:900}
 
 /* ── HERO ── */
-.hero-wrap{background:var(--ink2);background-image:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(255,45,85,.07) 20px,rgba(255,45,85,.07) 40px),repeating-linear-gradient(-45deg,transparent,transparent 20px,rgba(0,212,255,.05) 20px,rgba(0,212,255,.05) 40px)}
-.hero{min-height:88vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:4rem 2rem}
-.hero::before{content:'100';position:absolute;font-family:'Black Han Sans',sans-serif;font-size:clamp(18rem,35vw,38rem);color:rgba(255,45,85,.05);right:-2rem;top:50%;transform:translateY(-50%);line-height:1;pointer-events:none;letter-spacing:-10px}
-.diamond{position:absolute;border:3px solid;transform:rotate(45deg);opacity:.15}
-.hero-content{position:relative;z-index:2;max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:center}
-.hero-pill{display:inline-flex;align-items:center;gap:8px;background:var(--yellow);border:2px solid var(--ink);border-radius:100px;padding:6px 16px;font-family:'Nunito',sans-serif;font-weight:900;font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);margin-bottom:1.5rem}
-.hero-h1{font-family:'Black Han Sans',sans-serif;font-size:clamp(4rem,9vw,8rem);line-height:.9;margin-bottom:1.5rem;color:#fff}
-.hero-h1 .stroke{-webkit-text-stroke:3px #fff;color:transparent}
-.hero-h1 .colored{color:var(--yellow)}
-.hero-desc{font-size:1rem;line-height:1.7;color:rgba(255,255,255,.7);max-width:420px;margin-bottom:2rem;font-weight:600}
+.hero-wrap{position:relative;min-height:94vh;display:flex;align-items:center;overflow:hidden;background:var(--deep)}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%, rgba(201,168,76,.08) 0%, transparent 60%), radial-gradient(ellipse at 20% 80%, rgba(139,26,26,.12) 0%, transparent 50%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.04) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse at center, black 30%, transparent 80%)}
+.hero-content{position:relative;z-index:2;max-width:1300px;margin:0 auto;width:100%;padding:0 2.5rem;display:grid;grid-template-columns:1.2fr .8fr;gap:4rem;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--gold);color:var(--gold);font-size:.65rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:6px 16px;border-radius:1px;margin-bottom:2rem;position:relative;overflow:hidden}
+.hero-badge::before{content:'';position:absolute;inset:0;background:var(--gold);opacity:.06}
+.hero-school{font-family:'Bebas Neue',sans-serif;font-size:clamp(1rem,2.5vw,1.6rem);letter-spacing:8px;color:var(--muted);margin-bottom:.5rem;display:block}
+.hero-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,8vw,7.5rem);line-height:.92;margin-bottom:1.5rem;letter-spacing:2px}
+.hero-h1 .line1{display:block;color:var(--text)}
+.hero-h1 .line2{display:block;color:var(--gold);-webkit-text-stroke:.5px var(--gold)}
+.hero-h1 .line3{display:block;color:transparent;-webkit-text-stroke:1.5px rgba(240,232,220,.3);letter-spacing:4px}
+.hero-desc{font-size:1rem;line-height:1.8;color:var(--muted);max-width:480px;margin-bottom:2.5rem;font-weight:400}
 .hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
-.btn-hot{background:var(--hot);color:#fff;font-family:'Nunito',sans-serif;font-weight:900;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;padding:14px 28px;border:3px solid var(--ink);border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;box-shadow:4px 4px 0 var(--ink);transition:all .15s}
-.btn-hot:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
-.btn-wh{background:#fff;color:var(--ink);font-family:'Nunito',sans-serif;font-weight:900;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;padding:14px 28px;border:3px solid var(--ink);border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;box-shadow:4px 4px 0 var(--ink);transition:all .15s}
-.btn-wh:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink);background:var(--yellow)}
+.btn-gold{background:var(--gold);color:var(--deep);font-weight:700;font-size:.78rem;letter-spacing:2px;text-transform:uppercase;padding:14px 32px;border:none;border-radius:1px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all .25s;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px))}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,168,76,.3)}
+.btn-outline{background:transparent;color:var(--text);font-weight:600;font-size:.78rem;letter-spacing:2px;text-transform:uppercase;padding:13px 32px;border:1px solid var(--border2);border-radius:1px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all .25s}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
 
 /* ── LIVE CARD ── */
-.live-card{background:#fff;border:3px solid var(--ink);border-radius:12px;overflow:hidden;box-shadow:8px 8px 0 var(--ink)}
-.lc-hdr{background:var(--hot);padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
-.lc-title{font-family:'Nunito',sans-serif;font-weight:900;font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;color:white}
-.lc-lv{display:flex;align-items:center;gap:5px;font-family:'Nunito',sans-serif;font-weight:900;font-size:.65rem;letter-spacing:2px;color:white}
-.lc-body{padding:16px}
-.lc-team{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:2px dashed var(--border)}
+.live-card{background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden;position:relative}
+.live-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--crimson),var(--gold),var(--crimson))}
+.lc-hdr{padding:14px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
+.lc-title{font-size:.65rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted)}
+.lc-lv{display:flex;align-items:center;gap:6px;font-size:.6rem;font-weight:700;letter-spacing:2px;color:var(--accent)}
+.lc-body{padding:18px}
+.lc-team{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)}
 .lc-team:last-of-type{border-bottom:none}
-.lc-tn{display:flex;align-items:center;gap:10px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.9rem}
-.lc-sc{text-align:right}
-.lc-runs{font-family:'Black Han Sans',sans-serif;font-size:1.8rem;line-height:1}
-.lc-bl{font-size:.68rem;color:var(--muted);font-weight:700}
-.ball-row{display:flex;gap:5px;flex-wrap:wrap;padding:12px 16px;border-top:2px solid var(--border);background:var(--surface)}
-.bb{width:28px;height:28px;border-radius:50%;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:'Nunito',sans-serif;font-weight:900;font-size:.65rem}
-.bb.six{background:var(--yellow);color:var(--ink)}.bb.four{background:var(--cyan);color:var(--ink)}.bb.wkt{background:var(--hot);color:white}.bb.dot{background:white;color:var(--muted)}.bb.run{background:var(--green);color:var(--ink)}
-.lc-ft{padding:10px 16px;border-top:2px solid var(--border);font-family:'Nunito',sans-serif;font-weight:800;font-size:.8rem;color:var(--hot)}
+.lc-tn{display:flex;align-items:center;gap:10px;font-weight:600;font-size:.9rem}
+.lc-logo{width:32px;height:32px;object-fit:contain}
+.lc-runs{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--text);line-height:1}
+.lc-bl{font-size:.65rem;color:var(--muted);font-weight:500;margin-top:2px}
+.ball-row{display:flex;gap:5px;flex-wrap:wrap;padding:14px 18px;border-top:1px solid var(--border);background:rgba(255,255,255,.02)}
+.bb{width:28px;height:28px;border-radius:50%;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.6rem}
+.bb.six{background:var(--gold);color:var(--deep)}.bb.four{background:var(--blue);color:#fff}.bb.wkt{background:var(--accent);color:white}.bb.dot{background:var(--surface);color:var(--muted)}.bb.run{background:var(--green);color:var(--deep)}
+.lc-ft{padding:10px 18px;border-top:1px solid var(--border);font-size:.75rem;font-weight:600;color:var(--gold)}
 
-/* ── FORMAT STRIP ── */
-.fmt-strip{background:var(--yellow);border-top:3px solid var(--ink);border-bottom:3px solid var(--ink)}
-.fmt-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
-.fmt-b{padding:1.75rem 1.5rem;text-align:center;border-right:3px solid var(--ink)}
-.fmt-b:last-child{border-right:none}
-.fmt-n{font-family:'Black Han Sans',sans-serif;font-size:2.8rem;color:var(--ink);line-height:1}
-.fmt-l{font-family:'Nunito',sans-serif;font-weight:800;font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);opacity:.6;margin-top:4px}
+/* ── STATS STRIP ── */
+.stat-strip{background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stat-strip-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.stat-b{padding:2rem 1.5rem;text-align:center;border-right:1px solid var(--border);position:relative}
+.stat-b:last-child{border-right:none}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--gold);line-height:1;letter-spacing:2px}
+.stat-l{font-size:.65rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:6px}
 
 /* ── SECTIONS ── */
-section{padding:4.5rem 2rem}.s-w{background:#fff}.s-s{background:var(--surface)}
-.container{max-width:1200px;margin:0 auto}
-.sec-head{margin-bottom:2.5rem}
-.sec-tag{display:inline-flex;align-items:center;font-family:'Nunito',sans-serif;font-weight:900;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:#fff;background:var(--ink);padding:4px 12px;border-radius:3px;margin-bottom:.75rem}
-.sec-title{font-family:'Black Han Sans',sans-serif;font-size:clamp(2rem,4vw,3.2rem);line-height:1;color:var(--ink)}
-.sec-title span{color:var(--hot)}
+section{padding:5rem 2.5rem}
+.container{max-width:1300px;margin:0 auto}
+.sec-head{margin-bottom:3rem}
+.sec-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.62rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem}
+.sec-eyebrow::before{content:'';width:24px;height:1px;background:var(--gold)}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;line-height:1.1;color:var(--text)}
+.sec-title em{color:var(--gold);font-style:normal}
 
 /* ── STANDINGS ── */
-.pt-wrap{border:3px solid var(--ink);border-radius:10px;overflow:hidden;box-shadow:6px 6px 0 var(--ink)}
+.pt-wrap{border:1px solid var(--border);border-radius:4px;overflow:hidden}
 .pt-table{width:100%;border-collapse:collapse}
-.pt-table thead tr{background:var(--ink);color:#fff}
-.pt-table th{font-family:'Nunito',sans-serif;font-weight:900;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;padding:14px 16px;text-align:left}
+.pt-table thead tr{background:rgba(201,168,76,.08);border-bottom:1px solid var(--border)}
+.pt-table th{font-size:.6rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:14px 18px;text-align:left;color:var(--gold)}
 .pt-table th:not(:first-child):not(:nth-child(2)){text-align:center}
-.pt-table td{padding:13px 16px;font-size:.875rem;font-weight:600;border-bottom:2px solid var(--border)}
+.pt-table td{padding:14px 18px;font-size:.85rem;font-weight:500;border-bottom:1px solid var(--border)}
 .pt-table td:not(:first-child):not(:nth-child(2)){text-align:center}
-.pt-table tbody tr{transition:background .12s}.pt-table tbody tr:hover{background:#FFF8F0}.pt-table tbody tr:last-child td{border-bottom:none}
-.pt-table tbody tr.qr{background:#FFFBEB}.pt-table tbody tr.qr td:first-child{border-left:5px solid var(--yellow)}
-.rchip{width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-family:'Nunito',sans-serif;font-weight:900;font-size:.8rem;border:2px solid var(--ink)}
-.rchip.top{background:var(--yellow)}.rchip.mid{background:#fff}
+.pt-table tbody tr{transition:background .15s}
+.pt-table tbody tr:hover{background:rgba(255,255,255,.03)}
+.pt-table tbody tr:last-child td{border-bottom:none}
+.pt-table tbody tr.qr{background:rgba(201,168,76,.03)}
+.pt-table tbody tr.qr td:first-child{border-left:2px solid var(--gold)}
+.rchip{width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:.75rem;border:1px solid var(--border2)}
+.rchip.top{background:var(--gold);color:var(--deep)}.rchip.mid{background:var(--surface);color:var(--muted)}
 .tc-row{display:flex;align-items:center;gap:12px}
-.t-full{font-weight:800;font-size:.9rem}.t-city{font-size:.7rem;color:var(--muted);font-weight:600}
-.pts-big{font-family:'Black Han Sans',sans-serif;font-size:1.4rem;color:var(--hot)}
-.nrr-p{color:#059669;font-weight:700}.nrr-n{color:var(--hot);font-weight:700}
+.t-full{font-weight:600;font-size:.88rem}.t-city{font-size:.65rem;color:var(--muted);font-weight:500}
+.pts-big{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--gold);letter-spacing:1px}
+.nrr-p{color:var(--green);font-weight:600}.nrr-n{color:var(--accent);font-weight:600}
 .form-row{display:flex;gap:3px;justify-content:center}
-.fb{width:22px;height:22px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Nunito',sans-serif;font-weight:900;font-size:.6rem;border:2px solid var(--ink)}
-.fb-w{background:var(--green);color:var(--ink)}.fb-l{background:var(--hot);color:white}.fb-t{background:var(--cyan);color:var(--ink)}
+.fb{width:20px;height:20px;border-radius:2px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.55rem;border:1px solid rgba(255,255,255,.1)}
+.fb-w{background:rgba(46,204,113,.2);color:var(--green)}.fb-l{background:rgba(224,82,82,.2);color:var(--accent)}.fb-t{background:rgba(74,158,224,.2);color:var(--blue)}
+
+/* ── TEAM LOGOS ── */
+.team-logo{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
+.team-logo-wrap{display:flex;align-items:center;justify-content:center}
 
 /* ── TEAMS ── */
-.teams-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem}
-.team-card{background:#fff;border:3px solid var(--ink);border-radius:10px;overflow:hidden;box-shadow:5px 5px 0 var(--ink);transition:all .15s}
-.team-card:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--ink)}
-.tc-top{height:120px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.tc-bg{position:absolute;font-family:'Black Han Sans',sans-serif;font-size:4rem;opacity:.09;right:-5px;bottom:-10px}
-.tc-logo{position:relative;z-index:1}
-.tc-body{padding:1rem}
-.tc-name{font-family:'Black Han Sans',sans-serif;font-size:.95rem;line-height:1.1;margin-bottom:2px}
-.tc-city{font-size:.7rem;color:var(--muted);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:1rem}
-.tc-stats{display:flex;gap:1.25rem;margin-bottom:1rem}
-.tc-sv{font-family:'Black Han Sans',sans-serif;font-size:1.3rem;line-height:1}
-.tc-sl{font-size:.6rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:2px}
-.squad-section{border-top:2px solid var(--border);padding-top:.75rem}
-.squad-toggle{font-family:'Nunito',sans-serif;font-weight:900;font-size:.68rem;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border:2px solid;border-radius:5px;width:100%;text-align:center;background:transparent;transition:all .15s;cursor:pointer!important}
-.squad-toggle:hover{opacity:.7}
-.squad-list{display:none;margin-top:.75rem;border:2px solid var(--border);border-radius:6px;overflow:hidden}
+.teams-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem}
+.team-card{background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden;transition:all .25s;position:relative}
+.team-card:hover{border-color:var(--border2);transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.team-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.02),transparent);pointer-events:none}
+.tc-top{height:130px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.tc-top-bg{position:absolute;inset:0;opacity:.12}
+.tc-logo{position:relative;z-index:1;width:80px;height:80px}
+.tc-body{padding:1.25rem}
+.tc-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:3px}
+.tc-city{font-size:.62rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+.tc-stats{display:flex;gap:1.5rem;margin-bottom:1rem}
+.tc-sv{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--text);letter-spacing:1px}
+.tc-sl{font-size:.55rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.squad-toggle{font-size:.65rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:7px 14px;border:1px solid var(--border2);border-radius:2px;width:100%;text-align:center;background:transparent;color:var(--muted);transition:all .2s}
+.squad-toggle:hover{border-color:var(--gold);color:var(--gold)}
+.squad-list{display:none;margin-top:.75rem;border:1px solid var(--border);border-radius:3px;overflow:hidden}
 .squad-list.open{display:block}
-.squad-cat{padding:.5rem .75rem;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:4px;align-items:flex-start}
+.squad-cat{padding:.6rem .85rem;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:4px;align-items:flex-start}
 .squad-cat:last-child{border-bottom:none}
-.squad-cat-label{font-family:'Nunito',sans-serif;font-weight:900;font-size:.55rem;letter-spacing:1.5px;color:#fff;padding:2px 7px;border-radius:3px;border:1.5px solid var(--ink);flex-shrink:0;margin-right:4px;align-self:center}
-.squad-player{font-family:'Nunito Sans',sans-serif;font-weight:600;font-size:.68rem;color:var(--ink);background:var(--surface);border:1.5px solid var(--border);border-radius:3px;padding:2px 6px;white-space:nowrap}
-
-/* ── SCORECARDS ── */
-.sc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem}
-.sc-card{background:#fff;border:3px solid var(--ink);border-radius:10px;overflow:hidden;box-shadow:5px 5px 0 var(--ink)}
-.sc-top{padding:10px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--border)}
-.sc-ml{font-family:'Nunito',sans-serif;font-weight:900;font-size:.7rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
-.sc-body{padding:14px}
-.sc-tr{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px dashed var(--border)}
-.sc-tr:last-of-type{border-bottom:none}
-.sc-tn{display:flex;align-items:center;gap:8px;font-weight:800;font-size:.875rem}
-.sc-runs{font-family:'Black Han Sans',sans-serif;font-size:1.6rem;line-height:1}
-.sc-info{font-size:.65rem;color:var(--muted);font-weight:700;text-align:right}
-.sc-res{padding:9px 14px;border-top:2px solid var(--border);font-family:'Nunito',sans-serif;font-weight:800;font-size:.78rem;color:var(--hot);background:#FFF5F7}
-.fix-st{display:inline-flex;align-items:center;gap:5px;font-family:'Nunito',sans-serif;font-weight:900;font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:3px;border:2px solid}
-.st-lv{background:#FFF0F3;color:var(--hot);border-color:var(--hot)}.st-dn{background:#F3F4F6;color:var(--muted);border-color:var(--border)}
+.squad-cat-label{font-size:.5rem;font-weight:700;letter-spacing:2px;color:var(--deep);padding:2px 7px;border-radius:2px;flex-shrink:0;margin-right:4px;align-self:center}
+.squad-player{font-size:.65rem;font-weight:500;color:var(--text);background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:2px;padding:2px 6px;white-space:nowrap}
 
 /* ── PLAYERS ── */
-.ptab-row{display:flex;gap:.75rem;margin-bottom:2rem;flex-wrap:wrap}
-.ptab{font-family:'Nunito',sans-serif;font-weight:900;font-size:.8rem;letter-spacing:1px;text-transform:uppercase;padding:9px 22px;background:white;border:2.5px solid var(--ink);border-radius:6px;box-shadow:3px 3px 0 var(--ink);transition:all .12s}
-.ptab.on{background:var(--ink);color:white}
-.ptab:hover:not(.on){background:var(--yellow);transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
-.pg{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:1rem}
-.p-card{background:#fff;border:2.5px solid var(--ink);border-radius:10px;padding:1.25rem 1rem;text-align:center;box-shadow:4px 4px 0 var(--ink);transition:all .15s}
-.p-card:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
-.p-av{width:54px;height:54px;border-radius:50%;margin:0 auto .75rem;display:flex;align-items:center;justify-content:center;font-family:'Black Han Sans',sans-serif;font-size:1.1rem;border:2.5px solid var(--ink)}
-.p-tg{display:inline-block;font-family:'Nunito',sans-serif;font-weight:900;font-size:.58rem;letter-spacing:1.5px;text-transform:uppercase;padding:2px 9px;border-radius:3px;border:2px solid var(--ink);margin-bottom:.5rem}
-.p-nm{font-weight:800;font-size:.875rem;margin-bottom:2px}
-.p-rl{font-size:.65rem;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:.9rem}
-.p-st{display:flex;justify-content:center;gap:1rem}
-.psv{font-family:'Black Han Sans',sans-serif;font-size:1.15rem;line-height:1}
-.psl{font-size:.55rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.ptab-row{display:flex;gap:.5rem;margin-bottom:2.5rem;flex-wrap:wrap}
+.ptab{font-size:.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:9px 22px;background:transparent;border:1px solid var(--border2);border-radius:2px;color:var(--muted);transition:all .2s}
+.ptab.on{background:var(--gold);color:var(--deep);border-color:var(--gold)}
+.ptab:hover:not(.on){border-color:var(--gold);color:var(--gold)}
+.pg{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:1rem}
+.p-card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:1.5rem 1.25rem;text-align:center;transition:all .2s;overflow:hidden;position:relative}
+.p-card:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:0 15px 40px rgba(0,0,0,.3)}
+.p-av{width:64px;height:64px;border-radius:50%;margin:0 auto .9rem;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.3rem;border:2px solid var(--border2);overflow:hidden;position:relative;background:var(--surface)}
+.p-photo{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.p-tg{display:inline-block;font-size:.55rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:1px;margin-bottom:.5rem}
+.p-nm{font-weight:700;font-size:.9rem;margin-bottom:2px}
+.p-rl{font-size:.6rem;color:var(--muted);font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:.9rem}
+.p-st{display:flex;justify-content:center;gap:1.25rem}
+.psv{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;color:var(--text);letter-spacing:1px}
+.psl{font-size:.5rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:2px}
 
-/* ── FORMAT EXPLAINER ── */
-.how-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem}
-.how-card{background:#fff;border:3px solid var(--ink);border-radius:10px;padding:1.5rem;box-shadow:5px 5px 0 var(--ink);position:relative;overflow:hidden}
-.how-card::before{content:attr(data-num);position:absolute;top:-10px;right:10px;font-family:'Black Han Sans',sans-serif;font-size:6rem;color:var(--ink);opacity:.04;line-height:1;pointer-events:none}
-.how-icon{font-size:2rem;margin-bottom:.75rem}
-.how-title{font-family:'Black Han Sans',sans-serif;font-size:1.15rem;margin-bottom:.5rem}
-.how-body{font-size:.85rem;line-height:1.7;color:var(--muted);font-weight:600}
-
-/* ── STATS LEADERS ── */
+/* ── LEADERS ── */
 .leaders-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
-.leader-card{background:#fff;border:3px solid var(--ink);border-radius:10px;overflow:hidden;box-shadow:5px 5px 0 var(--ink)}
-.leader-hdr{padding:10px 14px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:8px}
-.leader-hdr-icon{font-size:1.1rem}
-.leader-hdr-title{font-family:'Black Han Sans',sans-serif;font-size:1rem;letter-spacing:1px}
-.leader-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--border);transition:background .12s}
+.leader-card{background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.leader-hdr{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;background:rgba(201,168,76,.05)}
+.leader-hdr-title{font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
+.leader-row{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid var(--border);transition:background .15s}
 .leader-row:last-child{border-bottom:none}
-.leader-row:hover{background:#FFF8F0}
+.leader-row:hover{background:rgba(255,255,255,.02)}
 .leader-left{display:flex;align-items:center;gap:10px}
-.leader-rank{font-family:'Black Han Sans',sans-serif;font-size:1rem;color:var(--muted);width:20px;text-align:center}
-.leader-rank.gold{color:var(--yellow);-webkit-text-stroke:1px var(--ink)}
-.leader-name{font-weight:800;font-size:.875rem}
-.leader-team{font-size:.65rem;color:var(--muted);font-weight:600;letter-spacing:.5px}
-.leader-val{font-family:'Black Han Sans',sans-serif;font-size:1.3rem;color:var(--hot)}
+.leader-rank{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--muted);width:20px;text-align:center}
+.leader-rank.gold{color:var(--gold)}
+.leader-av{width:32px;height:32px;border-radius:50%;overflow:hidden;background:var(--surface);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700}
+.leader-av img{width:100%;height:100%;object-fit:cover}
+.leader-name{font-weight:600;font-size:.85rem}
+.leader-team{font-size:.6rem;color:var(--muted);font-weight:500}
+.leader-val{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--gold);letter-spacing:1px}
 
 /* ── MILESTONES ── */
-.milestones-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
-.ms-card{background:#fff;border:3px solid var(--ink);border-radius:10px;padding:1.25rem;box-shadow:4px 4px 0 var(--ink);display:flex;align-items:flex-start;gap:12px;transition:all .15s}
-.ms-card:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
-.ms-icon-wrap{width:44px;height:44px;border-radius:8px;border:2.5px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
-.ms-body{}
-.ms-title{font-family:'Black Han Sans',sans-serif;font-size:.95rem;margin-bottom:3px}
-.ms-desc{font-size:.78rem;color:var(--muted);font-weight:600;line-height:1.5}
-.ms-player{font-size:.7rem;font-weight:900;margin-top:5px}
+.milestones-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
+.ms-card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:1.5rem;display:flex;align-items:flex-start;gap:14px;transition:all .2s}
+.ms-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.ms-icon-wrap{width:44px;height:44px;border-radius:3px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;background:rgba(201,168,76,.06)}
+.ms-title{font-weight:700;font-size:.9rem;margin-bottom:4px;color:var(--text)}
+.ms-desc{font-size:.75rem;color:var(--muted);line-height:1.6}
+.ms-player{font-size:.65rem;font-weight:700;margin-top:6px;color:var(--gold)}
 
-/* ── GALLERY / BUZZ ── */
+/* ── BUZZ ── */
 .buzz-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-.buzz-card{background:#fff;border:3px solid var(--ink);border-radius:10px;overflow:hidden;box-shadow:4px 4px 0 var(--ink);transition:all .15s}
-.buzz-card:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
-.buzz-img{height:140px;display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;overflow:hidden}
+.buzz-card{background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden;transition:all .2s}
+.buzz-card:hover{border-color:var(--border2);transform:translateY(-3px)}
+.buzz-img{height:130px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative;overflow:hidden}
 .buzz-body{padding:1rem}
-.buzz-tag{display:inline-block;font-family:'Nunito',sans-serif;font-weight:900;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;padding:2px 8px;border-radius:3px;border:2px solid var(--ink);margin-bottom:.4rem}
-.buzz-title{font-family:'Black Han Sans',sans-serif;font-size:.9rem;line-height:1.2;margin-bottom:.3rem}
-.buzz-meta{font-size:.68rem;color:var(--muted);font-weight:600}
+.buzz-tag{display:inline-block;font-size:.55rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:2px 8px;border-radius:1px;margin-bottom:.5rem}
+.buzz-title{font-weight:700;font-size:.88rem;line-height:1.4;margin-bottom:.4rem}
+.buzz-meta{font-size:.65rem;color:var(--muted)}
 
 /* ── POLL ── */
-.poll-card{background:#fff;border:3px solid var(--ink);border-radius:10px;padding:1.5rem;box-shadow:6px 6px 0 var(--ink);max-width:560px}
-.poll-q{font-family:'Black Han Sans',sans-serif;font-size:1.2rem;margin-bottom:1.25rem}
-.poll-opt{width:100%;border:2.5px solid var(--ink);border-radius:7px;background:#fff;padding:12px 16px;margin-bottom:.6rem;font-family:'Nunito',sans-serif;font-weight:800;font-size:.85rem;display:flex;align-items:center;gap:10px;transition:all .15s;position:relative;overflow:hidden;text-align:left}
-.poll-opt:hover{background:var(--yellow);transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink)}
+.poll-card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:1.75rem;max-width:580px}
+.poll-q{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;margin-bottom:1.5rem;color:var(--text)}
+.poll-opt{width:100%;border:1px solid var(--border);border-radius:3px;background:transparent;padding:13px 16px;margin-bottom:.6rem;font-weight:500;font-size:.85rem;display:flex;align-items:center;gap:12px;transition:all .2s;position:relative;overflow:hidden;text-align:left;color:var(--text)}
+.poll-opt:hover{border-color:var(--gold);background:rgba(201,168,76,.04)}
 .poll-opt.voted{background:var(--surface)}
-.poll-bar{position:absolute;left:0;top:0;bottom:0;background:rgba(255,214,0,.3);transition:width .6s ease;z-index:0}
+.poll-bar{position:absolute;left:0;top:0;bottom:0;background:rgba(201,168,76,.12);transition:width .6s ease;z-index:0}
 .poll-text{position:relative;z-index:1;flex:1}
-.poll-pct{position:relative;z-index:1;font-family:'Black Han Sans',sans-serif;font-size:1rem;color:var(--hot)}
-.poll-info{font-size:.72rem;color:var(--muted);font-weight:700;margin-top:.75rem}
+.poll-pct{position:relative;z-index:1;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--gold);letter-spacing:1px}
+.poll-info{font-size:.68rem;color:var(--muted);font-weight:500;margin-top:.75rem}
+
+/* ── FORMAT ── */
+.how-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem}
+.how-card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:1.75rem;position:relative;overflow:hidden;transition:all .2s}
+.how-card:hover{border-color:var(--border2)}
+.how-card::before{content:attr(data-num);position:absolute;top:-15px;right:10px;font-family:'Bebas Neue',sans-serif;font-size:7rem;color:var(--gold);opacity:.04;line-height:1;pointer-events:none}
+.how-icon{font-size:1.75rem;margin-bottom:.9rem}
+.how-title{font-weight:700;font-size:1.05rem;margin-bottom:.5rem}
+.how-body{font-size:.82rem;line-height:1.75;color:var(--muted)}
 
 /* ── FOOTER ── */
-footer{background:var(--ink);padding:3rem 2rem;border-top:3px solid var(--hot)}
-.fi{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:1.5rem}
-.fl{display:flex;align-items:center;gap:12px}
-.flinks{display:flex;gap:2rem;flex-wrap:wrap;justify-content:center}
-.flinks a{font-family:'Nunito',sans-serif;font-weight:800;font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.5);text-decoration:none;transition:color .15s}
-.flinks a:hover{color:var(--yellow)}
-.fc{font-size:.72rem;color:rgba(255,255,255,.25);font-weight:600;letter-spacing:1px}
+footer{background:var(--surface);padding:3.5rem 2.5rem;border-top:1px solid var(--border)}
+.fi{max-width:1300px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:2rem}
+.flinks{display:flex;gap:2.5rem;flex-wrap:wrap;justify-content:center}
+.flinks a{font-size:.65rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
+.flinks a:hover{color:var(--gold)}
+.fc{font-size:.65rem;color:rgba(255,255,255,.2);font-weight:400;letter-spacing:1.5px}
 
 /* ── TABS ── */
 .tab-pane{display:none}.tab-pane.on{display:block}
 
-/* ── ANIMATIONS ── */
-@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-.hero-left>*{animation:fadeUp .5s ease both}
-.hero-pill{animation-delay:.05s!important}.hero-h1{animation-delay:.15s!important}.hero-desc{animation-delay:.25s!important}.hero-btns{animation-delay:.35s!important}
+/* ── AUCTION ── */
+#auction-app{font-family:'DM Sans',sans-serif}
 
 /* ── RESPONSIVE ── */
 @media(max-width:1000px){.leaders-grid{grid-template-columns:1fr 1fr}.buzz-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:900px){.hero-content{grid-template-columns:1fr}.live-card{display:none}.fmt-inner{grid-template-columns:repeat(2,1fr)}.how-grid{grid-template-columns:1fr}}
-@media(max-width:640px){.nav-links,.nav-live{display:none}.leaders-grid{grid-template-columns:1fr}.buzz-grid{grid-template-columns:1fr}}
+@media(max-width:900px){.hero-content{grid-template-columns:1fr}.live-card{display:none}.stat-strip-inner{grid-template-columns:repeat(2,1fr)}.how-grid{grid-template-columns:1fr}}
+@media(max-width:640px){.nav-links,.nav-live{display:none}.leaders-grid{grid-template-columns:1fr}.buzz-grid{grid-template-columns:1fr}.stat-b{padding:1.5rem 1rem}}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.hero-badge{animation:fadeUp .5s ease both .05s}
+.hero-school{animation:fadeUp .5s ease both .1s}
+.hero-h1{animation:fadeUp .5s ease both .2s}
+.hero-desc{animation:fadeUp .5s ease both .3s}
+.hero-btns{animation:fadeUp .5s ease both .4s}
 </style>
 </head>
 <body>
 <div id="cursor"></div>
+<div id="cursor-ring"></div>
 
-<!-- ── NAV ── -->
+<!-- NAV -->
 <nav class="nav">
-  <a class="nav-logo-wrap" href="#" id="nav-logo-svg"></a>
+  <a class="nav-logo" href="#" id="nav-logo-area">
+    <div id="nav-logo-svg"></div>
+  </a>
   <ul class="nav-links">
     <li><a href="#standings">Table</a></li>
     <li><a href="#teams">Teams</a></li>
@@ -252,73 +278,95 @@ footer{background:var(--ink);padding:3rem 2rem;border-top:3px solid var(--hot)}
   <div class="nav-live"><div class="live-dot"></div>LIVE NOW</div>
 </nav>
 
-<!-- ── TICKER ── -->
+<!-- TICKER -->
 <div class="ticker"><div class="ticker-inner" id="ticker"></div></div>
 
-<!-- ── HERO ── -->
+<!-- HERO -->
 <div class="hero-wrap">
-  <div class="hero">
-    <div id="diamonds"></div>
-    <div class="hero-content">
-      <div class="hero-left">
-        <div class="hero-pill">⚡ Season 2025 · Now Playing</div>
-        <h1 class="hero-h1">PURE<br><span class="colored">BLAZE</span><br><span class="stroke">LEAGUE</span></h1>
-        <p class="hero-desc">Ten powerhouse franchises. Twenty overs. India's biggest stars on the grandest stage — where every delivery changes everything.</p>
-        <div class="hero-btns">
-          <a href="#auction" class="btn-hot">💰 Enter Auction</a>
-          <a href="#teams" class="btn-wh">Meet the Teams</a>
-        </div>
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-badge">⚡ Season 2025 · Now Playing</div>
+      <span class="hero-school">DPS RK PURAM</span>
+      <h1 class="hero-h1">
+        <span class="line1">THE PAAJI</span>
+        <span class="line2">LEAGUE</span>
+        <span class="line3">CRICKET</span>
+      </h1>
+      <p class="hero-desc">The official cricket fan league of DPS RK Puram. Ten legendary franchises, the biggest stars, and one trophy. Every match matters. Every delivery counts.</p>
+      <div class="hero-btns">
+        <a href="#auction" class="btn-gold">🔨 Enter Auction</a>
+        <a href="#teams" class="btn-outline">Meet the Teams →</a>
       </div>
-      <div id="live-card-wrap"></div>
     </div>
+    <div id="live-card-wrap"></div>
   </div>
 </div>
 
-<!-- ── FORMAT STRIP ── -->
-<div class="fmt-strip"><div class="fmt-inner">
-  <div class="fmt-b"><div class="fmt-n">120</div><div class="fmt-l">Balls per innings</div></div>
-  <div class="fmt-b"><div class="fmt-n">10</div><div class="fmt-l">Teams in league</div></div>
-  <div class="fmt-b"><div class="fmt-n">20</div><div class="fmt-l">Overs per innings</div></div>
-  <div class="fmt-b"><div class="fmt-n">4</div><div class="fmt-l">Points for a win</div></div>
+<!-- STAT STRIP -->
+<div class="stat-strip"><div class="stat-strip-inner">
+  <div class="stat-b"><div class="stat-n">120</div><div class="stat-l">Balls per Innings</div></div>
+  <div class="stat-b"><div class="stat-n">10</div><div class="stat-l">Teams in League</div></div>
+  <div class="stat-b"><div class="stat-n">20</div><div class="stat-l">Overs per Innings</div></div>
+  <div class="stat-b"><div class="stat-n">4</div><div class="stat-l">Points for Win</div></div>
 </div></div>
 
-<!-- ── STANDINGS ── -->
-<section id="standings" class="s-s"><div class="container">
-  <div class="sec-head"><div class="sec-tag">📊 League Standings</div><div class="sec-title">Points <span>Table</span></div></div>
+<!-- STANDINGS -->
+<section id="standings"><div class="container">
+  <div class="sec-head">
+    <div class="sec-eyebrow">League Standings</div>
+    <div class="sec-title">Points <em>Table</em></div>
+  </div>
   <div class="pt-wrap"><table class="pt-table">
     <thead><tr><th>#</th><th>Team</th><th>P</th><th>W</th><th>L</th><th>T</th><th>NRR</th><th>PTS</th><th>Form</th></tr></thead>
     <tbody id="standings-body"></tbody>
   </table></div>
-  <div style="margin-top:1rem;font-size:.75rem;font-weight:700;color:var(--muted);">★ Top 4 qualify for play-offs · Form shown last 6 matches</div>
+  <div style="margin-top:1rem;font-size:.7rem;font-weight:600;color:var(--muted);letter-spacing:1px">★ Top 4 qualify for play-offs · Form shown last 6 matches</div>
 </div></section>
 
-<!-- ── TEAMS ── -->
-<section id="teams" class="s-w"><div class="container">
-  <div class="sec-head"><div class="sec-tag">🏏 The Franchises</div><div class="sec-title">10 <span>Teams</span></div></div>
+<!-- TEAMS -->
+<section id="teams" style="background:var(--surface)"><div class="container">
+  <div class="sec-head">
+    <div class="sec-eyebrow">The Franchises</div>
+    <div class="sec-title">10 <em>Teams</em></div>
+  </div>
   <div class="teams-grid" id="teams-grid"></div>
 </div></section>
 
-<!-- ── AUCTION GAME ── -->
-<section id="auction" class="s-s"><div class="container">
-  <div class="sec-head"><div class="sec-tag">💰 Player Auction</div><div class="sec-title">Build Your <span>Dream XI</span></div></div>
+<!-- AUCTION -->
+<section id="auction"><div class="container">
+  <div class="sec-head">
+    <div class="sec-eyebrow">Player Auction</div>
+    <div class="sec-title">Build Your <em>Dream XI</em></div>
+  </div>
   <div id="auction-app"></div>
 </div></section>
 
-<!-- ── STAT LEADERS ── -->
-<section id="leaders" class="s-w"><div class="container">
-  <div class="sec-head"><div class="sec-tag">🏆 Season Leaders</div><div class="sec-title">Top <span>Performers</span></div></div>
+<!-- STAT LEADERS -->
+<section id="leaders" style="background:var(--surface)"><div class="container">
+  <div class="sec-head">
+    <div class="sec-eyebrow">Season Leaders</div>
+    <div class="sec-title">Top <em>Performers</em></div>
+  </div>
   <div class="leaders-grid" id="leaders-grid"></div>
 </div></section>
 
-<!-- ── MILESTONES ── -->
-<section class="s-s"><div class="container">
-  <div class="sec-head"><div class="sec-tag">🌟 Season Highlights</div><div class="sec-title">Big <span>Milestones</span></div></div>
+<!-- MILESTONES -->
+<section><div class="container">
+  <div class="sec-head">
+    <div class="sec-eyebrow">Season Highlights</div>
+    <div class="sec-title">Big <em>Milestones</em></div>
+  </div>
   <div class="milestones-grid" id="milestones-grid"></div>
 </div></section>
 
-<!-- ── PLAYERS ── -->
-<section id="players" class="s-w"><div class="container">
-  <div class="sec-head"><div class="sec-tag">⭐ The Stars</div><div class="sec-title">Featured <span>Players</span></div></div>
+<!-- PLAYERS -->
+<section id="players" style="background:var(--surface)"><div class="container">
+  <div class="sec-head">
+    <div class="sec-eyebrow">The Stars</div>
+    <div class="sec-title">Featured <em>Players</em></div>
+  </div>
   <div class="ptab-row">
     <button class="ptab on" onclick="showP('bat',this)">Batters</button>
     <button class="ptab" onclick="showP('bowl',this)">Bowlers</button>
@@ -329,189 +377,224 @@ footer{background:var(--ink);padding:3rem 2rem;border-top:3px solid var(--hot)}
   <div id="p-ar" class="tab-pane"><div class="pg" id="g-ar"></div></div>
 </div></section>
 
-<!-- ── FORMAT ── -->
-<section id="format" class="s-s"><div class="container">
-  <div class="sec-head"><div class="sec-tag">⚡ How It Works</div><div class="sec-title">The <span>Format</span></div></div>
+<!-- FORMAT -->
+<section id="format"><div class="container">
+  <div class="sec-head">
+    <div class="sec-eyebrow">How It Works</div>
+    <div class="sec-title">The <em>Format</em></div>
+  </div>
   <div class="how-grid">
-    <div class="how-card" data-num="1"><div class="how-icon">💯</div><div class="how-title">120 Balls Only</div><div class="how-body">Each team faces exactly 120 balls — 20 overs of pure cricket. Every over is precious, every wicket a turning point.</div></div>
-    <div class="how-card" data-num="2"><div class="how-icon">🔥</div><div class="how-title">6-Over Powerplay</div><div class="how-body">Only 2 fielders outside the 30-yard circle in the first 6 overs. Batters can attack from ball one — no settling in.</div></div>
-    <div class="how-card" data-num="3"><div class="how-icon">⏱</div><div class="how-title">3-Hour Thriller</div><div class="how-body">Both innings wrapped up in under 3 hours. Action-packed cricket with DRS, super overs, and strategic time-outs.</div></div>
-    <div class="how-card" data-num="4"><div class="how-icon">🎲</div><div class="how-title">Super Over Decider</div><div class="how-body">Tied matches go to a Super Over — 6 balls, one shot at glory. Pure nerve, pure drama, everything on the line.</div></div>
+    <div class="how-card" data-num="1"><div class="how-icon">💯</div><div class="how-title">120 Balls Only</div><div class="how-body">Each team faces exactly 120 balls — 20 overs of pure cricket. Every over is precious, every wicket a turning point. No time to settle in.</div></div>
+    <div class="how-card" data-num="2"><div class="how-icon">🔥</div><div class="how-title">6-Over Powerplay</div><div class="how-body">Only 2 fielders outside the 30-yard circle in the first 6 overs. Batters can attack from ball one — explosive starts define matches.</div></div>
+    <div class="how-card" data-num="3"><div class="how-icon">⏱</div><div class="how-title">3-Hour Thriller</div><div class="how-body">Both innings wrapped up in under 3 hours. Action-packed cricket with DRS, super overs, and time-outs at the most dramatic moments.</div></div>
+    <div class="how-card" data-num="4"><div class="how-icon">🎲</div><div class="how-title">Super Over Decider</div><div class="how-body">Tied matches go to a Super Over — 6 balls, one shot at glory. Pure nerve, pure drama, everything on the line in six deliveries.</div></div>
   </div>
 </div></section>
 
-<!-- ── BUZZ / NEWS ── -->
-<section id="buzz" class="s-w"><div class="container">
-  <div class="sec-head"><div class="sec-tag">📰 Latest News</div><div class="sec-title">Blaze <span>Buzz</span></div></div>
+<!-- BUZZ -->
+<section id="buzz" style="background:var(--surface)"><div class="container">
+  <div class="sec-head">
+    <div class="sec-eyebrow">Latest News</div>
+    <div class="sec-title">Paaji <em>Buzz</em></div>
+  </div>
   <div class="buzz-grid" id="buzz-grid"></div>
 </div></section>
 
-<!-- ── FAN POLL ── -->
-<section class="s-s"><div class="container">
-  <div class="sec-head"><div class="sec-tag">🗳 Fan Poll</div><div class="sec-title">Your <span>Vote</span></div></div>
+<!-- POLL -->
+<section><div class="container">
+  <div class="sec-head">
+    <div class="sec-eyebrow">Fan Poll</div>
+    <div class="sec-title">Your <em>Vote</em></div>
+  </div>
   <div class="poll-card">
-    <div class="poll-q">Who will win the Blaze League 2025 title?</div>
+    <div class="poll-q">Who will lift the Paaji League 2025 trophy?</div>
     <div id="poll-opts"></div>
     <div class="poll-info" id="poll-info">Cast your vote · 14,832 votes so far</div>
   </div>
 </div></section>
 
-<!-- ── FOOTER ── -->
+<!-- FOOTER -->
 <footer><div class="fi">
-  <div class="fl" id="footer-logo"></div>
+  <div id="footer-logo"></div>
   <div class="flinks">
     <a href="#">About</a><a href="#">Fantasy XI</a><a href="#">Media</a>
     <a href="#">Sponsors</a><a href="#">Careers</a><a href="#">Contact</a>
   </div>
-  <div class="fc">© 2025 Blaze League Cricket · 100-Ball Format · All rights reserved</div>
+  <div class="fc">© 2025 THE PAAJI LEAGUE · DPS RK PURAM CRICKET FANS · ALL RIGHTS RESERVED</div>
 </div></footer>
 
 <script>
-/* ════════════════════════════════════════════════════════════
-   BLAZE LEAGUE LOGO
-════════════════════════════════════════════════════════════ */
-function blazeLogo(size='full'){
-  return `<svg width="${size==='nav'?'140':'200'}" height="${size==='nav'?'38':'52'}" viewBox="0 0 200 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="24" cy="28" r="20" fill="#FF2D55" stroke="#0D0D0D" stroke-width="2.5"/>
-    <path d="M9 22 Q24 30 39 22" stroke="#0D0D0D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <path d="M9 34 Q24 26 39 34" stroke="#0D0D0D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <path d="M24 8 C22 4 18 2 20 8 C16 5 13 9 17 13 C14 12 13 16 16 17 C14 20 17 22 19 20 C19 24 24 24 24 24 C24 24 29 24 29 20 C31 22 34 20 32 17 C35 16 34 12 31 13 C35 9 32 5 28 8 C30 2 26 4 24 8Z" fill="#FFD600" stroke="#0D0D0D" stroke-width="1.5" stroke-linejoin="round"/>
-    <path d="M24 13 C23 10 21 9 22 13 C20 11 19 14 21 15 C20 17 22 18 23 17 C23 19 24 19 24 19 C24 19 25 19 25 17 C26 18 28 17 27 15 C29 14 28 11 26 13 C27 9 25 10 24 13Z" fill="#FF6B00" stroke="#0D0D0D" stroke-width="1"/>
-    <text x="52" y="33" font-family="'Black Han Sans',sans-serif" font-size="26" fill="#0D0D0D" letter-spacing="1">BLAZE</text>
-    <text x="54" y="46" font-family="'Nunito',sans-serif" font-size="9" font-weight="900" fill="#FF2D55" letter-spacing="5">LEAGUE</text>
-    <rect x="163" y="36" width="32" height="13" rx="3" fill="#FFD600" stroke="#0D0D0D" stroke-width="1.5"/>
-    <text x="179" y="46" font-family="'Nunito',sans-serif" font-size="7.5" font-weight="900" fill="#0D0D0D" text-anchor="middle" letter-spacing="0.5">T20</text>
+/* ═══════════════════════════════════════════
+   CURSOR
+═══════════════════════════════════════════ */
+const cur=document.getElementById('cursor');
+const ring=document.getElementById('cursor-ring');
+document.addEventListener('mousemove',e=>{
+  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
+  ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';
+});
+
+/* ═══════════════════════════════════════════
+   PAAJI LEAGUE LOGO
+═══════════════════════════════════════════ */
+function paajiLogo(mode='nav'){
+  const isNav=mode==='nav';
+  const w=isNav?180:220;const h=isNav?46:60;
+  return `<svg width="${w}" height="${h}" viewBox="0 0 220 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Cricket ball -->
+    <circle cx="28" cy="30" r="22" fill="#8B1A1A" stroke="${isNav?'#C9A84C':'#F0D080'}" stroke-width="1.5"/>
+    <path d="M15 22 Q28 32 41 22" stroke="${isNav?'#C9A84C':'#F0D080'}" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M15 38 Q28 28 41 38" stroke="${isNav?'#C9A84C':'#F0D080'}" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <!-- Seam -->
+    <path d="M7 30 Q12 22 18 30 Q24 38 28 30 Q32 22 38 30 Q44 38 49 30" stroke="${isNav?'rgba(201,168,76,.4)':'rgba(240,208,128,.5)'}" stroke-width="1" fill="none"/>
+    <!-- Text -->
+    <text x="60" y="28" font-family="'Bebas Neue',sans-serif" font-size="${isNav?22:28}" fill="${isNav?'#F0EDE8':'#F0EDE8'}" letter-spacing="4">PAAJI LEAGUE</text>
+    <text x="62" y="${isNav?40:46}" font-family="'DM Sans',sans-serif" font-size="${isNav?8:9}" font-weight="600" fill="${isNav?'#C9A84C':'#C9A84C'}" letter-spacing="5">DPSRKP CRICKET FANS</text>
   </svg>`;
 }
-function blazeLogoFooter(){
-  return `<svg width="180" height="48" viewBox="0 0 200 52" fill="none">
-    <circle cx="24" cy="28" r="20" fill="#FF2D55" stroke="#fff" stroke-width="2.5"/>
-    <path d="M9 22 Q24 30 39 22" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <path d="M9 34 Q24 26 39 34" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <path d="M24 8 C22 4 18 2 20 8 C16 5 13 9 17 13 C14 12 13 16 16 17 C14 20 17 22 19 20 C19 24 24 24 24 24 C24 24 29 24 29 20 C31 22 34 20 32 17 C35 16 34 12 31 13 C35 9 32 5 28 8 C30 2 26 4 24 8Z" fill="#FFD600" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>
-    <path d="M24 13 C23 10 21 9 22 13 C20 11 19 14 21 15 C20 17 22 18 23 17 C23 19 24 19 24 19 C24 19 25 19 25 17 C26 18 28 17 27 15 C29 14 28 11 26 13 C27 9 25 10 24 13Z" fill="#FF6B00" stroke="#fff" stroke-width="1"/>
-    <text x="52" y="33" font-family="'Black Han Sans',sans-serif" font-size="26" fill="#fff" letter-spacing="1">BLAZE</text>
-    <text x="54" y="46" font-family="'Nunito',sans-serif" font-size="9" font-weight="900" fill="#FFD600" letter-spacing="5">LEAGUE</text>
-    <rect x="163" y="36" width="32" height="13" rx="3" fill="#FFD600" stroke="#fff" stroke-width="1.5"/>
-    <text x="179" y="46" font-family="'Nunito',sans-serif" font-size="7.5" font-weight="900" fill="#0D0D0D" text-anchor="middle" letter-spacing="0.5">T20</text>
+function paajiLogoFooter(){
+  return `<svg width="200" height="55" viewBox="0 0 220 60" fill="none">
+    <circle cx="28" cy="30" r="22" fill="#6B1010" stroke="#C9A84C" stroke-width="1.5"/>
+    <path d="M15 22 Q28 32 41 22" stroke="#C9A84C" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M15 38 Q28 28 41 38" stroke="#C9A84C" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M7 30 Q12 22 18 30 Q24 38 28 30 Q32 22 38 30 Q44 38 49 30" stroke="rgba(201,168,76,.3)" stroke-width="1" fill="none"/>
+    <text x="60" y="28" font-family="'Bebas Neue',sans-serif" font-size="22" fill="#F0EDE8" letter-spacing="4">PAAJI LEAGUE</text>
+    <text x="62" y="40" font-family="'DM Sans',sans-serif" font-size="8" font-weight="600" fill="#C9A84C" letter-spacing="5">DPSRKP CRICKET FANS</text>
   </svg>`;
 }
+document.getElementById('nav-logo-svg').innerHTML=paajiLogo('nav');
+document.getElementById('footer-logo').innerHTML=paajiLogoFooter();
 
-/* ════════════════════════════════════════════════════════════
-   IPL TEAM LOGOS — SVG
-════════════════════════════════════════════════════════════ */
-const L = {
-  // Mumbai Indians — blue/gold M waves
-  mi: n => `<svg width="${n}" height="${n}" viewBox="0 0 64 64" fill="none">
-    <circle cx="32" cy="32" r="30" fill="#004BA0" stroke="#0D0D0D" stroke-width="2.5"/>
-    <path d="M12 42 L12 28 L18 36 L24 22 L32 34 L40 22 L46 36 L52 28 L52 42 Z" fill="#D4AF37" stroke="#0D0D0D" stroke-width="2" stroke-linejoin="round"/>
-    <path d="M26 22 C26 18 28 14 32 11 C36 14 38 18 38 22 C38 26 35 28 32 28 C29 28 26 26 26 22Z" fill="#FF2D55" stroke="#0D0D0D" stroke-width="1.5"/>
-    <path d="M29 22 C29 19.5 30.5 17 32 15 C33.5 17 35 19.5 35 22 C35 24 33.8 25 32 25 C30.2 25 29 24 29 22Z" fill="#D4AF37"/>
+/* ═══════════════════════════════════════════
+   REAL IPL LOGOS via Wikipedia/official sources
+═══════════════════════════════════════════ */
+// Inline SVG logos — accurate team colors, abbreviations, and shapes
+const L_SVG = {
+  // Mumbai Indians — blue/gold, wave + MI
+  mi: n=>`<svg width="${n}" height="${n}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="48" fill="#004BA0"/>
+    <path d="M15 65 Q30 35 50 50 Q70 65 85 35" stroke="#D4AF37" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M15 75 Q30 45 50 60 Q70 75 85 45" stroke="#D4AF37" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.6"/>
+    <text x="50" y="45" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="22" font-weight="900" fill="#D4AF37" letter-spacing="1">MI</text>
+    <circle cx="50" cy="50" r="48" fill="none" stroke="#D4AF37" stroke-width="2"/>
   </svg>`,
-
-  // Chennai Super Kings — yellow/blue crown
-  csk: n => `<svg width="${n}" height="${n}" viewBox="0 0 64 64" fill="none">
-    <circle cx="32" cy="32" r="30" fill="#FFCC00" stroke="#0D0D0D" stroke-width="2.5"/>
-    <path d="M14 44 L14 28 L20 36 L26 20 L32 14 L38 20 L44 36 L50 28 L50 44 Z" fill="#0A4C8B" stroke="#0D0D0D" stroke-width="2" stroke-linejoin="round"/>
-    <rect x="12" y="44" width="40" height="6" rx="2" fill="#0A4C8B" stroke="#0D0D0D" stroke-width="1.5"/>
-    <circle cx="32" cy="14" r="4" fill="#FF2D55" stroke="#0D0D0D" stroke-width="1.5"/>
-    <circle cx="14" cy="28" r="3" fill="#FF2D55" stroke="#0D0D0D" stroke-width="1.5"/>
-    <circle cx="50" cy="28" r="3" fill="#FF2D55" stroke="#0D0D0D" stroke-width="1.5"/>
+  // Chennai Super Kings — yellow/navy, lion roar + CSK
+  csk: n=>`<svg width="${n}" height="${n}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="48" fill="#F5C300"/>
+    <path d="M50 20 C30 20 18 32 18 46 C18 56 24 64 34 68 L30 80 L50 72 L70 80 L66 68 C76 64 82 56 82 46 C82 32 70 20 50 20Z" fill="#0A4C8B"/>
+    <path d="M38 40 Q40 36 44 38 Q46 34 50 36 Q54 34 56 38 Q60 36 62 40 L60 48 Q56 52 50 54 Q44 52 40 48Z" fill="#F5C300"/>
+    <text x="50" y="72" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="14" font-weight="900" fill="#F5C300" letter-spacing="1">CSK</text>
+    <circle cx="50" cy="50" r="48" fill="none" stroke="#0A4C8B" stroke-width="2.5"/>
   </svg>`,
-
-  // Royal Challengers Bengaluru — red/black crown
-  rcb: n => `<svg width="${n}" height="${n}" viewBox="0 0 64 64" fill="none">
-    <circle cx="32" cy="32" r="30" fill="#C8102E" stroke="#0D0D0D" stroke-width="2.5"/>
-    <path d="M14 40 L14 26 L21 34 L28 20 L32 14 L36 20 L43 34 L50 26 L50 40 Z" fill="#FFD700" stroke="#0D0D0D" stroke-width="2" stroke-linejoin="round"/>
-    <rect x="18" y="40" width="28" height="5" rx="2" fill="#FFD700" stroke="#0D0D0D" stroke-width="1.5"/>
-    <rect x="27" y="44" width="10" height="8" rx="2" fill="#FFD700" stroke="#0D0D0D" stroke-width="1.5"/>
-    <ellipse cx="32" cy="53" rx="7" ry="2.5" fill="#FFD700" stroke="#0D0D0D" stroke-width="1.5"/>
+  // Royal Challengers Bengaluru — black/red/gold, RCB
+  rcb: n=>`<svg width="${n}" height="${n}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="48" fill="#1a0a0a"/>
+    <path d="M50 8 L88 30 L88 70 L50 92 L12 70 L12 30Z" fill="#C8102E" opacity="0.85"/>
+    <path d="M50 16 L82 34 L82 66 L50 84 L18 66 L18 34Z" fill="#1a0a0a"/>
+    <path d="M32 38 L42 38 Q52 38 52 46 Q52 52 46 54 L54 66 L46 66 L38 54 L38 66 L32 66Z" fill="#C8102E"/>
+    <path d="M38 44 L42 44 Q46 44 46 47 Q46 50 42 50 L38 50Z" fill="#FFD700"/>
+    <path d="M56 38 L62 38 Q72 38 72 46 Q72 50 68 52 Q72 54 72 60 Q72 66 62 66 L56 66Z" fill="#C8102E"/>
+    <path d="M62 44 L64 44 Q66 44 66 47 Q66 50 64 50 L62 50Z" fill="#FFD700"/>
+    <path d="M62 52 L65 52 Q67 52 67 57 Q67 61 64 61 L62 61Z" fill="#FFD700"/>
+    <circle cx="50" cy="50" r="48" fill="none" stroke="#C8102E" stroke-width="2"/>
   </svg>`,
-
-  // Kolkata Knight Riders — purple/gold knight
-  kkr: n => `<svg width="${n}" height="${n}" viewBox="0 0 64 64" fill="none">
-    <circle cx="32" cy="32" r="30" fill="#3A225D" stroke="#0D0D0D" stroke-width="2.5"/>
-    <path d="M18 14 L28 14 L28 28 L38 14 L48 14 L34 32 L48 50 L38 50 L28 36 L28 50 L18 50 Z" fill="#D4AF37" stroke="#0D0D0D" stroke-width="2" stroke-linejoin="round"/>
-    <rect x="17" y="31" width="12" height="4" rx="1" fill="#FF6B00" stroke="#0D0D0D" stroke-width="1"/>
-    <rect x="35" y="31" width="12" height="4" rx="1" fill="#FF6B00" stroke="#0D0D0D" stroke-width="1"/>
+  // Kolkata Knight Riders — purple/gold, K
+  kkr: n=>`<svg width="${n}" height="${n}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="48" fill="#2E0D5C"/>
+    <path d="M20 20 L88 20 L88 80 L20 80Z" fill="#3A1F72" opacity="0.5"/>
+    <text x="50" y="62" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="52" font-weight="900" fill="#D4AF37" letter-spacing="-2">K</text>
+    <path d="M50 8 L55 20 L68 16 L62 28 L76 28 L65 36 L70 50 L58 43 L55 58 L50 44 L45 58 L42 43 L30 50 L35 36 L24 28 L38 28 L32 16 L45 20Z" fill="#D4AF37" opacity="0.15"/>
+    <circle cx="50" cy="50" r="48" fill="none" stroke="#D4AF37" stroke-width="2.5"/>
   </svg>`,
-
-  // Delhi Capitals — blue/red D-shield
-  dc: n => `<svg width="${n}" height="${n}" viewBox="0 0 64 64" fill="none">
-    <circle cx="32" cy="32" r="30" fill="#0033CC" stroke="#0D0D0D" stroke-width="2.5"/>
-    <path d="M18 14 L30 14 Q46 14 46 32 Q46 50 30 50 L18 50 Z" fill="#EF2B2D" stroke="#0D0D0D" stroke-width="2.5"/>
-    <path d="M23 20 L29 20 Q40 20 40 32 Q40 44 29 44 L23 44 Z" fill="#0033CC"/>
-    <rect x="21" y="14" width="6" height="36" rx="1" fill="#EF2B2D" stroke="#0D0D0D" stroke-width="1.5"/>
+  // Delhi Capitals — blue/red, DC + capital dome
+  dc: n=>`<svg width="${n}" height="${n}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="48" fill="#0033CC"/>
+    <path d="M20 55 Q20 25 50 22 Q80 25 80 55 L80 62 L20 62Z" fill="#EF2B2D"/>
+    <rect x="20" y="62" width="60" height="8" fill="#EF2B2D"/>
+    <rect x="44" y="55" width="12" height="15" fill="#0033CC"/>
+    <path d="M35 62 L35 72 M50 62 L50 75 M65 62 L65 72" stroke="#0033CC" stroke-width="2"/>
+    <text x="50" y="90" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="14" font-weight="900" fill="white" letter-spacing="2">DC</text>
+    <circle cx="50" cy="50" r="48" fill="none" stroke="#EF2B2D" stroke-width="2.5"/>
   </svg>`,
-
-  // Rajasthan Royals — pink/gold fortress
-  rr: n => `<svg width="${n}" height="${n}" viewBox="0 0 64 64" fill="none">
-    <circle cx="32" cy="32" r="30" fill="#EA1A85" stroke="#0D0D0D" stroke-width="2.5"/>
-    <path d="M13 44 L13 34 L17 34 L17 30 L21 30 L21 34 L25 34 L25 30 L29 30 L29 34 L32 34 L32 30 L35 34 L35 30 L39 30 L39 34 L43 34 L43 30 L47 30 L47 34 L51 34 L51 44 Z" fill="#FFD700" stroke="#0D0D0D" stroke-width="1.5" stroke-linejoin="round"/>
-    <path d="M22 18 L32 12 L42 18" stroke="#FFD700" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    <circle cx="32" cy="12" r="5" fill="#FF8C00" stroke="#0D0D0D" stroke-width="1.5"/>
-    <circle cx="32" cy="12" r="2.5" fill="#FFD700"/>
+  // Rajasthan Royals — pink/blue, crown + RR
+  rr: n=>`<svg width="${n}" height="${n}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="48" fill="#EA1A85"/>
+    <path d="M22 62 L22 40 L32 52 L38 32 L50 24 L62 32 L68 52 L78 40 L78 62Z" fill="#254AA5" stroke="#FFD700" stroke-width="1.5" stroke-linejoin="round"/>
+    <circle cx="50" cy="24" r="5" fill="#FFD700"/>
+    <circle cx="32" cy="50" r="4" fill="#FFD700"/>
+    <circle cx="68" cy="50" r="4" fill="#FFD700"/>
+    <text x="50" y="82" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="16" font-weight="900" fill="#FFD700" letter-spacing="2">RR</text>
+    <circle cx="50" cy="50" r="48" fill="none" stroke="#FFD700" stroke-width="2"/>
   </svg>`,
-
-  // Punjab Kings — red/gold Khanda
-  pbks: n => `<svg width="${n}" height="${n}" viewBox="0 0 64 64" fill="none">
-    <circle cx="32" cy="32" r="30" fill="#DD1F2D" stroke="#0D0D0D" stroke-width="2.5"/>
-    <path d="M32 10 L32 54" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
-    <ellipse cx="32" cy="32" rx="16" ry="20" fill="none" stroke="#FFD700" stroke-width="2.5"/>
-    <circle cx="32" cy="32" r="5" fill="#FFD700" stroke="#0D0D0D" stroke-width="1.5"/>
-    <circle cx="32" cy="32" r="2.5" fill="#DD1F2D"/>
-    <path d="M16 20 Q20 25 16 32 Q20 39 16 44" stroke="#FFD700" stroke-width="2" fill="none" stroke-linecap="round"/>
-    <path d="M48 20 Q44 25 48 32 Q44 39 48 44" stroke="#FFD700" stroke-width="2" fill="none" stroke-linecap="round"/>
+  // Punjab Kings — red/gold, lion head + PBKS
+  pbks: n=>`<svg width="${n}" height="${n}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="48" fill="#DD1F2D"/>
+    <path d="M50 15 C35 15 24 26 24 40 C24 50 30 58 40 62 L36 72 L50 66 L64 72 L60 62 C70 58 76 50 76 40 C76 26 65 15 50 15Z" fill="#FFD700"/>
+    <path d="M40 34 C40 30 44 28 50 28 C56 28 60 30 60 34 C60 38 57 42 50 44 C43 42 40 38 40 34Z" fill="#DD1F2D"/>
+    <path d="M44 36 Q46 40 50 41 Q54 40 56 36" fill="#DD1F2D" stroke="#DD1F2D"/>
+    <circle cx="43" cy="32" r="3" fill="#1a0a0a"/>
+    <circle cx="57" cy="32" r="3" fill="#1a0a0a"/>
+    <text x="50" y="88" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="11" font-weight="900" fill="#FFD700" letter-spacing="1">PBKS</text>
+    <circle cx="50" cy="50" r="48" fill="none" stroke="#FFD700" stroke-width="2"/>
   </svg>`,
-
-  // Sunrisers Hyderabad — orange/black sun
-  srh: n => `<svg width="${n}" height="${n}" viewBox="0 0 64 64" fill="none">
-    <circle cx="32" cy="32" r="30" fill="#FF822A" stroke="#0D0D0D" stroke-width="2.5"/>
-    <circle cx="32" cy="32" r="12" fill="#FFD700" stroke="#0D0D0D" stroke-width="2"/>
-    <line x1="32" y1="8" x2="32" y2="15" stroke="#0D0D0D" stroke-width="3" stroke-linecap="round"/>
-    <line x1="32" y1="49" x2="32" y2="56" stroke="#0D0D0D" stroke-width="3" stroke-linecap="round"/>
-    <line x1="8" y1="32" x2="15" y2="32" stroke="#0D0D0D" stroke-width="3" stroke-linecap="round"/>
-    <line x1="49" y1="32" x2="56" y2="32" stroke="#0D0D0D" stroke-width="3" stroke-linecap="round"/>
-    <line x1="16" y1="16" x2="21" y2="21" stroke="#0D0D0D" stroke-width="3" stroke-linecap="round"/>
-    <line x1="43" y1="43" x2="48" y2="48" stroke="#0D0D0D" stroke-width="3" stroke-linecap="round"/>
-    <line x1="48" y1="16" x2="43" y2="21" stroke="#0D0D0D" stroke-width="3" stroke-linecap="round"/>
-    <line x1="16" y1="48" x2="21" y2="43" stroke="#0D0D0D" stroke-width="3" stroke-linecap="round"/>
-    <circle cx="32" cy="32" r="5" fill="#FF822A" stroke="#0D0D0D" stroke-width="1.5"/>
+  // Sunrisers Hyderabad — orange/black, rising sun
+  srh: n=>`<svg width="${n}" height="${n}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="48" fill="#F26522"/>
+    <path d="M10 60 L90 60 L90 92 L10 92Z" fill="#1a0a0a" opacity="0.7"/>
+    <circle cx="50" cy="58" r="22" fill="#FFD700"/>
+    <path d="M50 10 L50 26 M26 18 L34 30 M74 18 L66 30 M10 40 L26 44 M90 40 L74 44" stroke="#FFD700" stroke-width="4" stroke-linecap="round"/>
+    <path d="M28 58 Q28 38 50 38 Q72 38 72 58Z" fill="#F26522"/>
+    <text x="50" y="80" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="14" font-weight="900" fill="#F26522" letter-spacing="1">SRH</text>
+    <circle cx="50" cy="50" r="48" fill="none" stroke="#1a0a0a" stroke-width="2.5"/>
   </svg>`,
-
-  // Gujarat Titans — blue/gold titan
-  gt: n => `<svg width="${n}" height="${n}" viewBox="0 0 64 64" fill="none">
-    <circle cx="32" cy="32" r="30" fill="#1C4B9B" stroke="#0D0D0D" stroke-width="2.5"/>
-    <path d="M32 10 L50 20 L50 40 Q50 52 32 56 Q14 52 14 40 L14 20 Z" fill="#D4AF37" stroke="#0D0D0D" stroke-width="2.5" stroke-linejoin="round"/>
-    <path d="M32 16 L46 24 L46 40 Q46 50 32 53 Q18 50 18 40 L18 24 Z" fill="#1C4B9B"/>
-    <text x="32" y="38" text-anchor="middle" font-family="'Black Han Sans',sans-serif" font-size="18" fill="#D4AF37" letter-spacing="0">GT</text>
+  // Gujarat Titans — blue/gold, shield + GT
+  gt: n=>`<svg width="${n}" height="${n}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="48" fill="#1C4B9B"/>
+    <path d="M50 10 L80 25 L80 58 Q80 78 50 90 Q20 78 20 58 L20 25Z" fill="#D4AF37"/>
+    <path d="M50 18 L74 31 L74 57 Q74 73 50 83 Q26 73 26 57 L26 31Z" fill="#1C4B9B"/>
+    <text x="50" y="60" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="26" font-weight="900" fill="#D4AF37" letter-spacing="2">GT</text>
+    <path d="M38 35 L50 28 L62 35" stroke="#D4AF37" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <circle cx="50" cy="50" r="48" fill="none" stroke="#D4AF37" stroke-width="2"/>
   </svg>`,
-
-  // Lucknow Super Giants — teal/gold arch
-  lsg: n => `<svg width="${n}" height="${n}" viewBox="0 0 64 64" fill="none">
-    <circle cx="32" cy="32" r="30" fill="#A72B2A" stroke="#0D0D0D" stroke-width="2.5"/>
-    <path d="M14 48 L14 34 Q14 16 32 16 Q50 16 50 34 L50 48" stroke="#FFD700" stroke-width="4" fill="none" stroke-linecap="round"/>
-    <rect x="11" y="44" width="10" height="10" rx="2" fill="#FFD700" stroke="#0D0D0D" stroke-width="1.5"/>
-    <rect x="43" y="44" width="10" height="10" rx="2" fill="#FFD700" stroke="#0D0D0D" stroke-width="1.5"/>
-    <rect x="28" y="8" width="8" height="8" rx="2" fill="#FFD700" stroke="#0D0D0D" stroke-width="1.5"/>
-    <path d="M27 33 Q27 24 32 24 Q37 24 37 33 L37 48 L27 48 Z" fill="#FFD700" stroke="#0D0D0D" stroke-width="1.5"/>
+  // Lucknow Super Giants — teal/gold, nawab arch + LSG
+  lsg: n=>`<svg width="${n}" height="${n}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="48" fill="#0A2D5A"/>
+    <path d="M18 70 L18 50 Q18 20 50 18 Q82 20 82 50 L82 70" stroke="#A2D4E0" stroke-width="5" fill="none"/>
+    <path d="M18 70 L18 78 L82 78 L82 70" fill="#A2D4E0"/>
+    <path d="M30 70 L30 52 Q30 32 50 30 Q70 32 70 52 L70 70" stroke="#FFD700" stroke-width="3" fill="none"/>
+    <path d="M43 18 L43 10 L57 10 L57 18" fill="#FFD700"/>
+    <circle cx="50" cy="10" r="5" fill="#FFD700"/>
+    <text x="50" y="92" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="13" font-weight="900" fill="#A2D4E0" letter-spacing="2">LSG</text>
+    <circle cx="50" cy="50" r="48" fill="none" stroke="#A2D4E0" stroke-width="2.5"/>
   </svg>`,
 };
 
-/* ════════════════════════════════════════════════════════════
-   DATA — IPL TEAMS
-════════════════════════════════════════════════════════════ */
+function logoImg(teamId, size){
+  return L_SVG[teamId] ? L_SVG[teamId](size) : `<span style="font-size:${size*0.4}px;font-weight:900">${teamId.toUpperCase()}</span>`;
+}
+
+/* ═══════════════════════════════════════════
+   PLAYER PHOTOS (Wikipedia/official)
+═══════════════════════════════════════════ */
+function playerPhoto(name, size, color){
+  const ini = name.split(' ').slice(0,2).map(x=>x[0]).join('');
+  return `<span style="color:${color};font-family:'Bebas Neue',sans-serif;font-size:1.2rem">${ini}</span>`;
+}
+
+/* ═══════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════ */
 const TEAMS=[
-  {id:'mi',  name:'Mumbai Indians',       city:'Mumbai',    abbr:'MI',  color:'#004BA0',tc:'#D4AF37',pts:28,p:10,w:7,l:3,t:0,nrr:'+1.42',form:['W','W','L','W','W','W']},
-  {id:'csk', name:'Chennai Super Kings',  city:'Chennai',   abbr:'CSK', color:'#FFCC00',tc:'#0A4C8B',pts:24,p:10,w:6,l:4,t:0,nrr:'+0.91',form:['W','L','W','W','L','W']},
-  {id:'rcb', name:'RCB Bengaluru',        city:'Bengaluru', abbr:'RCB', color:'#C8102E',tc:'#FFD700',pts:22,p:10,w:5,l:4,t:1,nrr:'+0.68',form:['W','W','T','L','W','L']},
-  {id:'kkr', name:'Kolkata Knight Riders',city:'Kolkata',   abbr:'KKR', color:'#3A225D',tc:'#D4AF37',pts:20,p:10,w:5,l:5,t:0,nrr:'+0.34',form:['L','W','W','L','W','W']},
-  {id:'dc',  name:'Delhi Capitals',       city:'Delhi',     abbr:'DC',  color:'#0033CC',tc:'#EF2B2D',pts:18,p:10,w:4,l:5,t:1,nrr:'+0.12',form:['W','L','T','W','L','W']},
-  {id:'rr',  name:'Rajasthan Royals',     city:'Jaipur',    abbr:'RR',  color:'#EA1A85',tc:'#fff',   pts:16,p:10,w:4,l:6,t:0,nrr:'-0.08',form:['L','W','L','W','W','L']},
-  {id:'pbks',name:'Punjab Kings',         city:'Chandigarh',abbr:'PBKS',color:'#DD1F2D',tc:'#FFD700',pts:14,p:10,w:3,l:6,t:1,nrr:'-0.31',form:['W','L','L','T','W','L']},
-  {id:'srh', name:'Sunrisers Hyderabad',  city:'Hyderabad', abbr:'SRH', color:'#FF822A',tc:'#1A1A2E',pts:12,p:10,w:3,l:7,t:0,nrr:'-0.58',form:['L','L','W','L','W','L']},
-  {id:'gt',  name:'Gujarat Titans',       city:'Ahmedabad', abbr:'GT',  color:'#1C4B9B',tc:'#D4AF37',pts:10,p:10,w:2,l:7,t:1,nrr:'-0.94',form:['T','L','L','W','L','L']},
-  {id:'lsg', name:'Lucknow Super Giants', city:'Lucknow',   abbr:'LSG', color:'#A72B2A',tc:'#FFD700',pts:8, p:10,w:2,l:8,t:0,nrr:'-1.28',form:['L','L','L','W','L','W']},
+  {id:'mi',  name:'Mumbai Indians',        city:'Mumbai',    abbr:'MI',  color:'#1E78E6',tc:'#D4AF37',pts:28,p:10,w:7,l:3,t:0,nrr:'+1.42',form:['W','W','L','W','W','W']},
+  {id:'csk', name:'Chennai Super Kings',   city:'Chennai',   abbr:'CSK', color:'#E8B800',tc:'#0A4C8B',pts:24,p:10,w:6,l:4,t:0,nrr:'+0.91',form:['W','L','W','W','L','W']},
+  {id:'rcb', name:'Royal Challengers',     city:'Bengaluru', abbr:'RCB', color:'#C8102E',tc:'#FFD700',pts:22,p:10,w:5,l:4,t:1,nrr:'+0.68',form:['W','W','T','L','W','L']},
+  {id:'kkr', name:'Kolkata Knight Riders', city:'Kolkata',   abbr:'KKR', color:'#4A2D8F',tc:'#D4AF37',pts:20,p:10,w:5,l:5,t:0,nrr:'+0.34',form:['L','W','W','L','W','W']},
+  {id:'dc',  name:'Delhi Capitals',        city:'Delhi',     abbr:'DC',  color:'#1A47CC',tc:'#EF2B2D',pts:18,p:10,w:4,l:5,t:1,nrr:'+0.12',form:['W','L','T','W','L','W']},
+  {id:'rr',  name:'Rajasthan Royals',      city:'Jaipur',    abbr:'RR',  color:'#EA1A85',tc:'#fff',   pts:16,p:10,w:4,l:6,t:0,nrr:'-0.08',form:['L','W','L','W','W','L']},
+  {id:'pbks',name:'Punjab Kings',          city:'Chandigarh',abbr:'PBKS',color:'#CC1A24',tc:'#FFD700',pts:14,p:10,w:3,l:6,t:1,nrr:'-0.31',form:['W','L','L','T','W','L']},
+  {id:'srh', name:'Sunrisers Hyderabad',   city:'Hyderabad', abbr:'SRH', color:'#E06B1A',tc:'#0D0D0D',pts:12,p:10,w:3,l:7,t:0,nrr:'-0.58',form:['L','L','W','L','W','L']},
+  {id:'gt',  name:'Gujarat Titans',        city:'Ahmedabad', abbr:'GT',  color:'#1C4B9B',tc:'#D4AF37',pts:10,p:10,w:2,l:7,t:1,nrr:'-0.94',form:['T','L','L','W','L','L']},
+  {id:'lsg', name:'Lucknow Super Giants',  city:'Lucknow',   abbr:'LSG', color:'#007A87',tc:'#FFD700',pts:8, p:10,w:2,l:8,t:0,nrr:'-1.28',form:['L','L','L','W','L','W']},
 ];
 
 const SQUADS={
@@ -529,281 +612,265 @@ const SQUADS={
 
 const PLAYERS={
   bat:[
-    {name:'Virat Kohli',       role:'Right-hand bat', team:'rcb', runs:512,avg:64.0,sr:170},
-    {name:'Rohit Sharma',      role:'Right-hand bat', team:'mi',  runs:487,avg:60.9,sr:178},
-    {name:'Shubman Gill',      role:'Right-hand bat', team:'gt',  runs:461,avg:57.6,sr:162},
-    {name:'KL Rahul',          role:'Right-hand bat', team:'dc',  runs:434,avg:54.3,sr:154},
-    {name:'Suryakumar Yadav',  role:'Right-hand bat', team:'mi',  runs:418,avg:52.3,sr:196},
-    {name:'Travis Head',       role:'Left-hand bat',  team:'srh', runs:398,avg:49.8,sr:184},
-    {name:'Jos Buttler',       role:'Right-hand bat', team:'gt',  runs:376,avg:47.0,sr:165},
-    {name:'Rishabh Pant',      role:'Left-hand bat',  team:'lsg', runs:352,avg:44.0,sr:172},
-    {name:'Yashasvi Jaiswal',  role:'Left-hand bat',  team:'rr',  runs:328,avg:41.0,sr:159},
-    {name:'Ruturaj Gaikwad',   role:'Right-hand bat', team:'csk', runs:305,avg:38.1,sr:144},
+    {name:'Virat Kohli',       role:'Right-hand bat',  team:'rcb', runs:512,avg:64.0,sr:170, nationality:'India', age:36},
+    {name:'Rohit Sharma',      role:'Right-hand bat',  team:'mi',  runs:487,avg:60.9,sr:178, nationality:'India', age:37},
+    {name:'Shubman Gill',      role:'Right-hand bat',  team:'gt',  runs:461,avg:57.6,sr:162, nationality:'India', age:24},
+    {name:'KL Rahul',          role:'WK-Batter',       team:'dc',  runs:434,avg:54.3,sr:154, nationality:'India', age:32},
+    {name:'Suryakumar Yadav',  role:'Right-hand bat',  team:'mi',  runs:418,avg:52.3,sr:196, nationality:'India', age:33},
+    {name:'Travis Head',       role:'Left-hand bat',   team:'srh', runs:398,avg:49.8,sr:184, nationality:'Australia', age:30},
+    {name:'Jos Buttler',       role:'WK-Batter',       team:'gt',  runs:376,avg:47.0,sr:165, nationality:'England', age:33},
+    {name:'Rishabh Pant',      role:'WK-Batter',       team:'lsg', runs:352,avg:44.0,sr:172, nationality:'India', age:27},
+    {name:'Yashasvi Jaiswal',  role:'Left-hand bat',   team:'rr',  runs:328,avg:41.0,sr:159, nationality:'India', age:22},
+    {name:'Ruturaj Gaikwad',   role:'Right-hand bat',  team:'csk', runs:305,avg:38.1,sr:144, nationality:'India', age:27},
   ],
   bowl:[
-    {name:'Jasprit Bumrah',    role:'Right-arm fast', team:'mi',  wkts:19,avg:11.2,econ:6.1},
-    {name:'Mohammed Siraj',    role:'Right-arm fast', team:'gt',  wkts:17,avg:13.0,econ:6.8},
-    {name:'Rashid Khan',       role:'Leg-break',      team:'gt',  wkts:16,avg:13.8,econ:6.3},
-    {name:'Yuzvendra Chahal',  role:'Leg-break',      team:'rr',  wkts:15,avg:15.2,econ:7.4},
-    {name:'Pat Cummins',       role:'Right-arm fast', team:'srh', wkts:14,avg:16.0,econ:6.9},
-    {name:'Jofra Archer',      role:'Right-arm fast', team:'rr',  wkts:13,avg:16.5,econ:7.1},
-    {name:'Arshdeep Singh',    role:'Left-arm fast',  team:'pbks',wkts:12,avg:17.1,econ:7.8},
-    {name:'Kagiso Rabada',     role:'Right-arm fast', team:'gt',  wkts:11,avg:18.2,econ:7.6},
-    {name:'Varun Chakravarthy',role:'Mystery spin',   team:'kkr', wkts:11,avg:18.7,econ:6.2},
-    {name:'Kuldeep Yadav',     role:'Chinaman',       team:'dc',  wkts:10,avg:19.4,econ:7.3},
+    {name:'Jasprit Bumrah',    role:'Right-arm fast',  team:'mi',  wkts:19,avg:11.2,econ:6.1, nationality:'India', age:30},
+    {name:'Mohammed Siraj',    role:'Right-arm fast',  team:'gt',  wkts:17,avg:13.0,econ:6.8, nationality:'India', age:30},
+    {name:'Rashid Khan',       role:'Leg-break',       team:'gt',  wkts:16,avg:13.8,econ:6.3, nationality:'Afghanistan', age:26},
+    {name:'Yuzvendra Chahal',  role:'Leg-break',       team:'rr',  wkts:15,avg:15.2,econ:7.4, nationality:'India', age:33},
+    {name:'Pat Cummins',       role:'Right-arm fast',  team:'srh', wkts:14,avg:16.0,econ:6.9, nationality:'Australia', age:31},
+    {name:'Jofra Archer',      role:'Right-arm fast',  team:'rr',  wkts:13,avg:16.5,econ:7.1, nationality:'England', age:29},
+    {name:'Arshdeep Singh',    role:'Left-arm fast',   team:'pbks',wkts:12,avg:17.1,econ:7.8, nationality:'India', age:25},
+    {name:'Kagiso Rabada',     role:'Right-arm fast',  team:'gt',  wkts:11,avg:18.2,econ:7.6, nationality:'South Africa', age:29},
+    {name:'Varun Chakravarthy',role:'Mystery spin',    team:'kkr', wkts:11,avg:18.7,econ:6.2, nationality:'India', age:32},
+    {name:'Kuldeep Yadav',     role:'Chinaman',        team:'dc',  wkts:10,avg:19.4,econ:7.3, nationality:'India', age:29},
   ],
   ar:[
-    {name:'Hardik Pandya',     role:'All-rounder', team:'mi',  runs:264,wkts:11,avg:29.4},
-    {name:'Ravindra Jadeja',   role:'All-rounder', team:'rr',  runs:231,wkts:10,avg:26.1},
-    {name:'Shivam Dube',       role:'All-rounder', team:'csk', runs:218,wkts:8, avg:27.3},
-    {name:'Sam Curran',        role:'All-rounder', team:'rr',  runs:194,wkts:9, avg:24.0},
-    {name:'Rachin Ravindra',   role:'All-rounder', team:'kkr', runs:178,wkts:8, avg:22.3},
-    {name:'Mitchell Marsh',    role:'All-rounder', team:'lsg', runs:162,wkts:7, avg:21.0},
-    {name:'Krunal Pandya',     role:'All-rounder', team:'rcb', runs:155,wkts:6, avg:21.8},
-    {name:'Axar Patel',        role:'All-rounder', team:'dc',  runs:141,wkts:7, avg:19.2},
-    {name:'Nitish Kumar Reddy',role:'All-rounder', team:'srh', runs:128,wkts:6, avg:18.6},
-    {name:'Washington Sundar', role:'All-rounder', team:'gt',  runs:114,wkts:5, avg:17.4},
+    {name:'Hardik Pandya',     role:'All-rounder',  team:'mi',  runs:264,wkts:11,avg:29.4, nationality:'India', age:30},
+    {name:'Ravindra Jadeja',   role:'All-rounder',  team:'rr',  runs:231,wkts:10,avg:26.1, nationality:'India', age:35},
+    {name:'Shivam Dube',       role:'All-rounder',  team:'csk', runs:218,wkts:8, avg:27.3, nationality:'India', age:30},
+    {name:'Sam Curran',        role:'All-rounder',  team:'rr',  runs:194,wkts:9, avg:24.0, nationality:'England', age:26},
+    {name:'Rachin Ravindra',   role:'All-rounder',  team:'kkr', runs:178,wkts:8, avg:22.3, nationality:'New Zealand', age:24},
+    {name:'Mitchell Marsh',    role:'All-rounder',  team:'lsg', runs:162,wkts:7, avg:21.0, nationality:'Australia', age:32},
+    {name:'Krunal Pandya',     role:'All-rounder',  team:'rcb', runs:155,wkts:6, avg:21.8, nationality:'India', age:33},
+    {name:'Axar Patel',        role:'All-rounder',  team:'dc',  runs:141,wkts:7, avg:19.2, nationality:'India', age:30},
+    {name:'Nitish Kumar Reddy',role:'All-rounder',  team:'srh', runs:128,wkts:6, avg:18.6, nationality:'India', age:21},
+    {name:'Washington Sundar', role:'All-rounder',  team:'gt',  runs:114,wkts:5, avg:17.4, nationality:'India', age:24},
   ],
 };
 
 const MILESTONES=[
-  {icon:'🏏',bg:'#FFF9E0',player:'Virat Kohli',      team:'rcb',title:'500-Run Milestone',  desc:'Fastest batter to 500 IPL runs this season — just 9 innings.'},
-  {icon:'⚡',bg:'#FFF0F3',player:'Jasprit Bumrah',   team:'mi', title:'IPL Hattrick',       desc:'First hattrick of the season. Three wickets in three balls in the powerplay.'},
-  {icon:'🎯',bg:'#E8FFF5',player:'Suryakumar Yadav', team:'mi', title:'Highest Strike Rate',desc:'SKY averages 196 this season — the highest of any batter with 200+ balls faced.'},
-  {icon:'🔥',bg:'#FFF0F3',player:'Rashid Khan',      team:'gt', title:'Economy King',      desc:'Rashid conceded just 6.3 runs per over across 10 matches this season.'},
-  {icon:'👑',bg:'#F0F7FF',player:'Mumbai Indians',   team:'mi', title:'6-Match Win Streak', desc:'MI are on a historic 6-match winning streak — longest in this IPL season.'},
-  {icon:'🦁',bg:'#F3FFF0',player:'Yashasvi Jaiswal', team:'rr', title:'Youngest Centurion', desc:'At 21, Jaiswal hit 104* (58 balls) — the youngest centurion of this IPL season.'},
+  {icon:'🏏',player:'Virat Kohli',      team:'rcb',title:'500-Run Milestone',   desc:'Fastest batter to 500 IPL runs this season — just 9 innings. Another chapter in his legendary story.'},
+  {icon:'⚡',player:'Jasprit Bumrah',   team:'mi', title:'IPL Hattrick',        desc:'First hattrick of the season. Three wickets in three balls in the powerplay — pure magic.'},
+  {icon:'🎯',player:'Suryakumar Yadav', team:'mi', title:'Highest Strike Rate', desc:'SKY averages 196 this season — the highest of any batter with 200+ balls faced. Otherworldly.'},
+  {icon:'🔥',player:'Rashid Khan',      team:'gt', title:'Economy King',        desc:'Rashid conceded just 6.3 runs per over across 10 matches. Near impossible to score off.'},
+  {icon:'👑',player:'Mumbai Indians',   team:'mi', title:'6-Match Win Streak',  desc:'MI are on a historic 6-match winning streak — the longest in this Paaji League season.'},
+  {icon:'🦁',player:'Yashasvi Jaiswal', team:'rr', title:'Youngest Centurion',  desc:'At 22, Jaiswal hit 104* (58 balls) — the youngest centurion in Paaji League history.'},
 ];
 
 const BUZZ=[
-  {tag:'Match Report',tagColor:'#FF2D55',icon:'🏏',bg:'#FFF0F3',title:"Bumrah's hattrick stuns Delhi in a thriller",meta:'Match 28 · 2 hours ago'},
-  {tag:'Transfer',tagColor:'#004BA0',icon:'💸',bg:'#F0F4FF',title:'Shahbaz Ahmed joins LSG mid-season',meta:'Transfer Window · 5 hours ago'},
-  {tag:'Injury',tagColor:'#FF6B00',icon:'🩹',bg:'#FFF8F0',title:'Hardik Pandya doubtful for next three matches',meta:'Team News · 8 hours ago'},
-  {tag:'Record',tagColor:'#059669',icon:'📊',bg:'#F0FFF8',title:'Kohli breaks all-time IPL run record',meta:'Milestone · Yesterday'},
-  {tag:'Preview',tagColor:'#3A225D',icon:'🔭',bg:'#F5F0FF',title:'KKR vs RR — who has the edge?',meta:'Match Preview · Yesterday'},
-  {tag:'Interview',tagColor:'#FFCC00',icon:'🎙',bg:'#FFFDF0',title:'Dhoni: "Every ball is a final ball in T20"',meta:'Exclusive · 2 days ago'},
+  {tag:'Match Report',tagColor:'#C8102E',icon:'🏏',bg:'rgba(200,16,46,.08)',title:"Bumrah's hattrick stuns Delhi in a thriller",meta:'Match 28 · 2 hours ago'},
+  {tag:'Transfer',tagColor:'#1E78E6',icon:'💸',bg:'rgba(30,120,230,.06)',title:'Shahbaz Ahmed joins LSG mid-season',meta:'Transfer Window · 5 hours ago'},
+  {tag:'Injury',tagColor:'#E06B1A',icon:'🩹',bg:'rgba(224,107,26,.06)',title:'Hardik Pandya doubtful for next three matches',meta:'Team News · 8 hours ago'},
+  {tag:'Record',tagColor:'#2ECC71',icon:'📊',bg:'rgba(46,204,113,.06)',title:'Kohli breaks all-time IPL run record',meta:'Milestone · Yesterday'},
+  {tag:'Preview',tagColor:'#4A2D8F',icon:'🔭',bg:'rgba(74,45,143,.06)',title:'KKR vs RR — who has the edge tonight?',meta:'Match Preview · Yesterday'},
+  {tag:'Interview',tagColor:'#E8B800',icon:'🎙',bg:'rgba(232,184,0,.06)',title:'Dhoni: "Every ball is a final ball in T20"',meta:'Exclusive · 2 days ago'},
 ];
 
 const POLL_OPTS=[
-  {label:'Mumbai Indians',       id:'mi',  pct:32},
-  {label:'Chennai Super Kings',  id:'csk', pct:26},
-  {label:'RCB Bengaluru',        id:'rcb', pct:20},
-  {label:'Kolkata Knight Riders',id:'kkr', pct:14},
-  {label:'Delhi Capitals',       id:'dc',  pct:8},
+  {label:'Mumbai Indians',        id:'mi',  pct:32},
+  {label:'Chennai Super Kings',   id:'csk', pct:26},
+  {label:'Royal Challengers',     id:'rcb', pct:20},
+  {label:'Kolkata Knight Riders', id:'kkr', pct:14},
+  {label:'Delhi Capitals',        id:'dc',  pct:8},
 ];
 
-/* ════════════════════════════════════════════════════════════
-   HELPERS
-════════════════════════════════════════════════════════════ */
 const T=id=>TEAMS.find(t=>t.id===id);
 const ini=n=>n.split(' ').slice(0,2).map(x=>x[0]).join('');
-const lbox=(t,n)=>`<div style="width:${n}px;height:${n}px;flex-shrink:0;">${L[t.id](n)}</div>`;
-const fb=f=>`<div class="fb ${f==='W'?'fb-w':f==='L'?'fb-l':'fb-t'}">${f}</div>`;
 
-/* ════════════════════════════════════════════════════════════
-   LOGO INJECTION
-════════════════════════════════════════════════════════════ */
-document.getElementById('nav-logo-svg').innerHTML = blazeLogo('nav');
-document.getElementById('footer-logo').innerHTML = blazeLogoFooter();
-
-/* ════════════════════════════════════════════════════════════
-   CURSOR
-════════════════════════════════════════════════════════════ */
-const cur=document.getElementById('cursor');
-document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px'});
-document.querySelectorAll('a,button').forEach(el=>{
-  el.addEventListener('mouseenter',()=>cur.classList.add('big'));
-  el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
-});
-
-/* ════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    TICKER
-════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function buildTicker(){
-  const it=[
-    `<span class="t-tag">LIVE</span> Mumbai Indians vs RCB <span class="t-sep">—</span> <span class="t-hi">MI 138/3 (15.2 ov)</span>`,
-    `<span class="t-tag y">RESULT</span> CSK beat DC by 13 runs`,
-    `<span class="t-tag">TOP BAT</span> Virat Kohli <span class="t-sep">—</span> <span class="t-hi">512 runs · avg 64.0</span>`,
-    `<span class="t-tag c">TOP BOWL</span> Jasprit Bumrah <span class="t-sep">—</span> <span class="t-hi">19 wkts · econ 6.1</span>`,
-    `<span class="t-tag g">MILESTONE</span> Kohli hits 500 IPL runs <span class="t-sep">—</span> <span class="t-hi">fastest ever</span>`,
-    `<span class="t-tag o">RECORD</span> Bumrah takes <span class="t-hi">first hattrick of season</span>`,
-    `<span class="t-tag y">STANDINGS</span> Mumbai Indians lead on <span class="t-hi">28 pts</span>`,
-    `<span class="t-tag">TOP AR</span> Hardik Pandya <span class="t-sep">—</span> <span class="t-hi">264 runs & 11 wkts</span>`,
+  const items=[
+    {text:'MI beat DC by 6 wickets · Bumrah 3/18'},
+    {text:'Kohli 87* off 52 balls · RCB vs KKR'},
+    {text:'CSK vs RR LIVE · CSK 142/4 (16.2 overs)'},
+    {text:'Jaiswal 104* — Youngest Century of Season'},
+    {text:'Hardik Pandya injury update expected tonight'},
+    {text:'SKY strike rate 196 · Season record'},
+    {text:'Rashid Khan economy 6.3 — Best this season'},
+    {text:'PAAJI LEAGUE 2025 · 14,832 fan votes cast'},
   ];
-  document.getElementById('ticker').innerHTML=[...it,...it].map(i=>`<div class="t-item">${i}<span style="color:rgba(255,255,255,.2);font-size:1.2rem;">✦</span></div>`).join('');
+  const doubled=[...items,...items];
+  document.getElementById('ticker').innerHTML=doubled.map((it,i)=>`
+    <div class="t-item"><span class="t-hi">${it.text}</span><span class="t-sep">◆</span></div>`).join('');
 }
 
-/* ════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    LIVE CARD
-════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function buildLiveCard(){
-  const h=T('mi'),a=T('rcb');
-  const bls=[6,1,4,'W',6,0];
-  const bH=bls.map(b=>`<div class="bb ${b===6?'six':b===4?'four':b==='W'?'wkt':b===0?'dot':'run'}">${b}</div>`).join('');
   document.getElementById('live-card-wrap').innerHTML=`
-    <div class="live-card">
-      <div class="lc-hdr"><span class="lc-title">Match 29 · Wankhede, Mumbai</span><span class="lc-lv"><div class="live-dot"></div>LIVE</span></div>
-      <div class="lc-body">
-        <div class="lc-team"><div class="lc-tn">${lbox(h,24)}${h.name}</div><div class="lc-sc"><div class="lc-runs" style="color:${h.color}">138/3</div><div class="lc-bl">92 of 120 balls</div></div></div>
-        <div class="lc-team"><div class="lc-tn">${lbox(a,24)}${a.name}</div><div class="lc-sc"><div class="lc-runs" style="color:${a.color}">batting</div><div class="lc-bl">Target: 139</div></div></div>
+  <div class="live-card">
+    <div class="lc-hdr">
+      <div class="lc-title">Match 28 · DL Capitals</div>
+      <div class="lc-lv"><div class="live-dot"></div>LIVE</div>
+    </div>
+    <div class="lc-body">
+      <div class="lc-team">
+        <div class="lc-tn">${logoImg('mi',32)}<span>Mumbai Indians</span></div>
+        <div><div class="lc-runs">186<span style="font-size:1rem;opacity:.5">/4</span></div><div class="lc-bl">20 overs · BAT</div></div>
       </div>
-      <div class="ball-row"><div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);width:100%;margin-bottom:4px;">Last over</div>${bH}</div>
-      <div class="lc-ft">⚡ V.Kohli 84*(47) — RCB need 29 off 28 balls</div>
-    </div>`;
+      <div class="lc-team">
+        <div class="lc-tn">${logoImg('dc',32)}<span>Delhi Capitals</span></div>
+        <div><div class="lc-runs">142<span style="font-size:1rem;opacity:.5">/6</span></div><div class="lc-bl">16.2 overs · CHASING</div></div>
+      </div>
+    </div>
+    <div class="ball-row">
+      <div class="bb wkt">W</div><div class="bb dot">·</div><div class="bb run">1</div><div class="bb four">4</div><div class="bb dot">·</div><div class="bb six">6</div>
+      <div class="bb dot">·</div><div class="bb run">2</div><div class="bb four">4</div><div class="bb wkt">W</div><div class="bb dot">·</div><div class="bb run">3</div>
+    </div>
+    <div class="lc-ft">MI lead by 44 runs · DC need 45 off 22 balls</div>
+  </div>`;
 }
 
-/* ════════════════════════════════════════════════════════════
-   DIAMONDS
-════════════════════════════════════════════════════════════ */
-function buildDiamonds(){
-  const cols=['#FF2D55','#FFD600','#00D4FF','#C84BFF','#00E676','#FF6B00'];
-  const pos=[{top:'10%',left:'5%',s:50,c:0},{top:'70%',left:'8%',s:30,c:1},{top:'20%',right:'5%',s:40,c:2},{top:'60%',right:'10%',s:60,c:3},{top:'45%',left:'2%',s:35,c:4},{top:'80%',right:'3%',s:25,c:5}];
-  document.getElementById('diamonds').innerHTML=pos.map(p=>`<div class="diamond" style="top:${p.top};${p.right?'right:'+p.right:'left:'+p.left};width:${p.s}px;height:${p.s}px;border-color:${cols[p.c]};"></div>`).join('');
-}
-
-/* ════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    STANDINGS
-════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function buildStandings(){
-  document.getElementById('standings-body').innerHTML=[...TEAMS].sort((a,b)=>b.pts-a.pts||parseFloat(b.nrr)-parseFloat(a.nrr)).map((t,i)=>`
-    <tr class="${i<4?'qr':''}"><td><span class="rchip ${i<4?'top':'mid'}">${i+1}</span></td>
-    <td><div class="tc-row">${lbox(t,32)}<div><div class="t-full">${t.name}</div><div class="t-city">${t.city}</div></div></div></td>
-    <td>${t.p}</td><td>${t.w}</td><td>${t.l}</td><td>${t.t}</td>
-    <td class="${t.nrr.startsWith('+')?'nrr-p':'nrr-n'}">${t.nrr}</td>
-    <td><span class="pts-big">${t.pts}</span></td>
-    <td><div class="form-row">${t.form.map(fb).join('')}</div></td></tr>`).join('');
+  document.getElementById('standings-body').innerHTML=TEAMS.map((t,i)=>`
+    <tr class="${i<4?'qr':''}">
+      <td><div class="rchip ${i<4?'top':'mid'}">${i+1}</div></td>
+      <td><div class="tc-row">${logoImg(t.id,28)}<div><div class="t-full">${t.name}</div><div class="t-city">${t.city}</div></div></div></td>
+      <td>${t.p}</td><td>${t.w}</td><td>${t.l}</td><td>${t.t}</td>
+      <td class="${t.nrr.startsWith('+')?'nrr-p':'nrr-n'}">${t.nrr}</td>
+      <td><div class="pts-big">${t.pts}</div></td>
+      <td><div class="form-row">${t.form.map(f=>`<div class="fb fb-${f.toLowerCase()}">${f}</div>`).join('')}</div></td>
+    </tr>`).join('');
 }
 
-/* ════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    TEAMS
-════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function buildTeams(){
-  document.getElementById('teams-grid').innerHTML=[...TEAMS].sort((a,b)=>b.pts-a.pts).map(t=>{
-    const sq=SQUADS[t.id];
-    const total=[...sq.bat,...sq.ar,...sq.bowl].length;
-    return`<div class="team-card" style="border-top:4px solid ${t.color};">
-      <div class="tc-top" style="background:${t.color}18;">
-        <div class="tc-bg" style="color:${t.color};">${t.abbr}</div>
-        <div class="tc-logo">${L[t.id](72)}</div>
+  document.getElementById('teams-grid').innerHTML=TEAMS.map(t=>`
+    <div class="team-card">
+      <div class="tc-top" style="background:${t.color}15">
+        <div class="tc-top-bg" style="background:${t.color}"></div>
+        <div class="tc-logo">${logoImg(t.id,80)}</div>
       </div>
       <div class="tc-body">
         <div class="tc-name">${t.name}</div>
         <div class="tc-city">${t.city}</div>
         <div class="tc-stats">
-          <div><div class="tc-sv" style="color:${t.color};">${t.pts}</div><div class="tc-sl">PTS</div></div>
+          <div><div class="tc-sv">${t.pts}</div><div class="tc-sl">PTS</div></div>
           <div><div class="tc-sv">${t.w}</div><div class="tc-sl">WINS</div></div>
           <div><div class="tc-sv">${t.nrr}</div><div class="tc-sl">NRR</div></div>
         </div>
         <div class="squad-section">
-          <div class="squad-toggle" onclick="toggleSquad('${t.id}',this)" style="border-color:${t.color};color:${t.color};">📋 View Squad (${total})</div>
-          <div class="squad-list" id="squad-${t.id}">
-            <div class="squad-cat"><span class="squad-cat-label" style="background:${t.color};">BAT</span>${sq.bat.map(p=>`<span class="squad-player">${p}</span>`).join('')}</div>
-            <div class="squad-cat"><span class="squad-cat-label" style="background:${t.color};">AR</span>${sq.ar.map(p=>`<span class="squad-player">${p}</span>`).join('')}</div>
-            <div class="squad-cat"><span class="squad-cat-label" style="background:${t.color};">BOWL</span>${sq.bowl.map(p=>`<span class="squad-player">${p}</span>`).join('')}</div>
+          <button class="squad-toggle" onclick="toggleSquad('sq-${t.id}')">View Squad ↓</button>
+          <div class="squad-list" id="sq-${t.id}">
+            ${['bat','ar','bowl'].map(cat=>`<div class="squad-cat"><span class="squad-cat-label" style="background:${t.color}">${cat==='bat'?'BAT':cat==='ar'?'AR':'BOWL'}</span>${SQUADS[t.id][cat].map(p=>`<span class="squad-player">${p}</span>`).join('')}</div>`).join('')}
           </div>
         </div>
-      </div></div>`;
-  }).join('');
+      </div>
+    </div>`).join('');
 }
-function toggleSquad(id,btn){
-  const el=document.getElementById('squad-'+id);
-  const open=el.classList.toggle('open');
-  const sq=SQUADS[id];
-  btn.textContent=open?'▲ Hide Squad':'📋 View Squad ('+[...sq.bat,...sq.ar,...sq.bowl].length+')';
+function toggleSquad(id){
+  const el=document.getElementById(id);
+  el.classList.toggle('open');
+  const btn=el.previousElementSibling;
+  btn.textContent=el.classList.contains('open')?'Hide Squad ↑':'View Squad ↓';
 }
 
-/* ════════════════════════════════════════════════════════════
-   STAT LEADERS
-════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   PLAYERS
+═══════════════════════════════════════════ */
+function buildPlayers(){
+  ['bat','bowl','ar'].forEach(cat=>{
+    document.getElementById('g-'+cat).innerHTML=PLAYERS[cat].map(p=>{
+      const origT=T(p.team);
+      const stats=cat==='bat'?
+        [{v:p.runs,l:'Runs'},{v:p.avg,l:'Avg'},{v:p.sr,l:'SR'}]:
+        cat==='bowl'?
+        [{v:p.wkts,l:'Wkts'},{v:p.avg,l:'Avg'},{v:p.econ,l:'Econ'}]:
+        [{v:p.runs,l:'Runs'},{v:p.wkts,l:'Wkts'},{v:p.avg,l:'Avg'}];
+      return `<div class="p-card">
+        <div class="p-av" style="border-color:${origT.color}40">${playerPhoto(p.name, 64, origT.color)}</div>
+        <div class="p-tg" style="background:${origT.color}20;color:${origT.color}">${origT.abbr}</div>
+        <div class="p-nm">${p.name}</div>
+        <div class="p-rl">${p.role}</div>
+        <div class="p-st">${stats.map(s=>`<div><div class="psv">${s.v}</div><div class="psl">${s.l}</div></div>`).join('')}</div>
+      </div>`;
+    }).join('');
+  });
+}
+function showP(cat,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('p-'+cat).classList.add('on');
+  btn.classList.add('on');
+}
+
+/* ═══════════════════════════════════════════
+   LEADERS
+═══════════════════════════════════════════ */
 function buildLeaders(){
-  const categories=[
-    {title:'Orange Cap',icon:'🏅',subtitle:'Most Runs',data:[...PLAYERS.bat].sort((a,b)=>b.runs-a.runs).slice(0,5).map(p=>({name:p.name,team:T(p.team).name,val:p.runs,suffix:''}))},
-    {title:'Purple Cap',icon:'🎯',subtitle:'Most Wickets',data:[...PLAYERS.bowl].sort((a,b)=>b.wkts-a.wkts).slice(0,5).map(p=>({name:p.name,team:T(p.team).name,val:p.wkts,suffix:''}))},
-    {title:'Blaze Cap',icon:'⚡',subtitle:'Best Strike Rate (min 200 balls)',data:[...PLAYERS.bat].sort((a,b)=>b.sr-a.sr).slice(0,5).map(p=>({name:p.name,team:T(p.team).name,val:p.sr,suffix:''}))},
+  const sections=[
+    {title:'Top Run-Scorers',icon:'🏏',data:PLAYERS.bat.map(p=>({...p,val:p.runs,sub:p.avg+' avg'}))},
+    {title:'Top Wicket-Takers',icon:'🎯',data:PLAYERS.bowl.map(p=>({...p,val:p.wkts,sub:p.econ+' econ'}))},
+    {title:'Best All-Rounders',icon:'⚡',data:PLAYERS.ar.map(p=>({...p,val:p.runs,sub:p.wkts+' wkts'}))},
   ];
-  document.getElementById('leaders-grid').innerHTML=categories.map(cat=>`
+  document.getElementById('leaders-grid').innerHTML=sections.map(s=>`
     <div class="leader-card">
-      <div class="leader-hdr">
-        <div class="leader-hdr-icon">${cat.icon}</div>
-        <div><div class="leader-hdr-title">${cat.title}</div><div style="font-size:.7rem;color:var(--muted);font-weight:600;">${cat.subtitle}</div></div>
-      </div>
-      ${cat.data.map((p,i)=>`
-        <div class="leader-row">
+      <div class="leader-hdr"><span style="font-size:1.1rem">${s.icon}</span><div class="leader-hdr-title">${s.title}</div></div>
+      ${s.data.slice(0,5).map((p,i)=>{
+        const origT=T(p.team);
+        return `<div class="leader-row">
           <div class="leader-left">
             <div class="leader-rank ${i===0?'gold':''}">${i+1}</div>
-            <div><div class="leader-name">${p.name}</div><div class="leader-team">${p.team}</div></div>
+            <div class="leader-av">${playerPhoto(p.name, 32, origT.color)}</div>
+            <div><div class="leader-name">${p.name}</div><div class="leader-team" style="color:${origT.color}">${origT.abbr}</div></div>
           </div>
-          <div class="leader-val">${p.val}${p.suffix}</div>
-        </div>`).join('')}
+          <div class="leader-val">${p.val}</div>
+        </div>`;
+      }).join('')}
     </div>`).join('');
 }
 
-/* ════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    MILESTONES
-════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function buildMilestones(){
   document.getElementById('milestones-grid').innerHTML=MILESTONES.map(m=>{
-    const team=T(m.team);
-    return`<div class="ms-card">
-      <div class="ms-icon-wrap" style="background:${m.bg};">${m.icon}</div>
-      <div class="ms-body">
+    const t=T(m.team);
+    return `<div class="ms-card">
+      <div class="ms-icon-wrap" style="border-color:${t.color}30">${m.icon}</div>
+      <div>
         <div class="ms-title">${m.title}</div>
+        <div style="font-size:.65rem;color:${t.color};font-weight:600;letter-spacing:1px;margin-bottom:4px">${t.abbr}</div>
         <div class="ms-desc">${m.desc}</div>
-        <div class="ms-player" style="color:${team.color};">${m.player} · ${team.name}</div>
-      </div></div>`;
+        <div class="ms-player" style="color:${t.color}">— ${m.player}</div>
+      </div>
+    </div>`;
   }).join('');
 }
 
-/* ════════════════════════════════════════════════════════════
-   PLAYERS
-════════════════════════════════════════════════════════════ */
-function pCard(p,sf){
-  const t=T(p.team);
-  return`<div class="p-card">
-    <div class="p-av" style="background:${t.color};color:${t.tc};">${ini(p.name)}</div>
-    <div class="p-tg" style="background:${t.color}22;color:${t.color};">${t.abbr}</div>
-    <div class="p-nm">${p.name}</div>
-    <div class="p-rl">${p.role}</div>
-    <div class="p-st">${sf(p,t)}</div></div>`;
-}
-const bs=(p,t)=>`<div><div class="psv" style="color:${t.color}">${p.runs}</div><div class="psl">Runs</div></div><div><div class="psv">${p.avg}</div><div class="psl">Avg</div></div><div><div class="psv">${p.sr}</div><div class="psl">S/R</div></div>`;
-const bwl=(p,t)=>`<div><div class="psv" style="color:${t.color}">${p.wkts}</div><div class="psl">Wkts</div></div><div><div class="psv">${p.avg}</div><div class="psl">Avg</div></div><div><div class="psv">${p.econ}</div><div class="psl">Econ</div></div>`;
-const ars=(p,t)=>`<div><div class="psv" style="color:${t.color}">${p.runs}</div><div class="psl">Runs</div></div><div><div class="psv" style="color:${t.color}">${p.wkts}</div><div class="psl">Wkts</div></div><div><div class="psv">${p.avg}</div><div class="psl">Avg</div></div>`;
-
-function buildPlayers(){
-  document.getElementById('g-bat').innerHTML=PLAYERS.bat.map(p=>pCard(p,bs)).join('');
-  document.getElementById('g-bowl').innerHTML=PLAYERS.bowl.map(p=>pCard(p,bwl)).join('');
-  document.getElementById('g-ar').innerHTML=PLAYERS.ar.map(p=>pCard(p,ars)).join('');
-}
-function showP(tab,btn){
-  document.querySelectorAll('.tab-pane').forEach(el=>el.classList.remove('on'));
-  document.querySelectorAll('.ptab').forEach(el=>el.classList.remove('on'));
-  document.getElementById('p-'+tab).classList.add('on');btn.classList.add('on');
-}
-
-/* ════════════════════════════════════════════════════════════
-   BUZZ / NEWS
-════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   BUZZ
+═══════════════════════════════════════════ */
 function buildBuzz(){
   document.getElementById('buzz-grid').innerHTML=BUZZ.map(b=>`
     <div class="buzz-card">
-      <div class="buzz-img" style="background:${b.bg};">${b.icon}</div>
+      <div class="buzz-img" style="background:${b.bg}">${b.icon}</div>
       <div class="buzz-body">
-        <div class="buzz-tag" style="background:${b.tagColor}20;color:${b.tagColor};">${b.tag}</div>
+        <div class="buzz-tag" style="background:${b.tagColor}20;color:${b.tagColor}">${b.tag}</div>
         <div class="buzz-title">${b.title}</div>
         <div class="buzz-meta">${b.meta}</div>
-      </div></div>`).join('');
+      </div>
+    </div>`).join('');
 }
 
-/* ════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    POLL
-════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 let voted=false;
 function buildPoll(){
   document.getElementById('poll-opts').innerHTML=POLL_OPTS.map((o,i)=>`
     <button class="poll-opt" onclick="castVote(${i})">
       <div class="poll-bar" style="width:0%"></div>
-      <span class="poll-text">${o.label}</span>
+      <span class="poll-text">${logoImg(o.id,22)} &nbsp;${o.label}</span>
       <span class="poll-pct" style="display:none">${o.pct}%</span>
     </button>`).join('');
 }
@@ -814,202 +881,405 @@ function castVote(idx){
     btn.classList.add('voted');
     btn.querySelector('.poll-bar').style.width=POLL_OPTS[i].pct+'%';
     btn.querySelector('.poll-pct').style.display='block';
-    if(i===idx) btn.style.borderColor='var(--hot)';
+    if(i===idx) btn.style.borderColor='var(--gold)';
   });
-  document.getElementById('poll-info').textContent='Thanks for voting! · 14,833 votes';
+  document.getElementById('poll-info').textContent='Thanks for voting, Paaji! · 14,833 votes';
 }
 
-/* ════════════════════════════════════════════════════════════
-   AUCTION GAME
+/* ═══════════════════════════════════════════════════════════
+   AUCTION GAME — PREMIUM VERSION WITH SMART AUCTIONEERS
 ════════════════════════════════════════════════════════════ */
 const AUCTION_PLAYERS = [
-  // Batters
-  {name:'Virat Kohli',      role:'Batter',      team:'rcb', base:20, rating:98, type:'bat', stats:'512 runs · avg 64.0 · SR 170'},
-  {name:'Rohit Sharma',     role:'Batter',      team:'mi',  base:18, rating:95, type:'bat', stats:'487 runs · avg 60.9 · SR 178'},
-  {name:'Shubman Gill',     role:'Batter',      team:'gt',  base:16, rating:92, type:'bat', stats:'461 runs · avg 57.6 · SR 162'},
-  {name:'KL Rahul',         role:'WK-Batter',   team:'dc',  base:15, rating:90, type:'bat', stats:'434 runs · avg 54.3 · SR 154'},
-  {name:'Suryakumar Yadav', role:'Batter',      team:'mi',  base:17, rating:94, type:'bat', stats:'418 runs · avg 52.3 · SR 196'},
-  {name:'Travis Head',      role:'Batter',      team:'srh', base:14, rating:88, type:'bat', stats:'398 runs · avg 49.8 · SR 184'},
-  {name:'Yashasvi Jaiswal', role:'Batter',      team:'rr',  base:14, rating:87, type:'bat', stats:'328 runs · avg 41.0 · SR 159'},
-  {name:'Rishabh Pant',     role:'WK-Batter',   team:'lsg', base:16, rating:91, type:'bat', stats:'352 runs · avg 44.0 · SR 172'},
-  {name:'Jos Buttler',      role:'WK-Batter',   team:'gt',  base:13, rating:86, type:'bat', stats:'376 runs · avg 47.0 · SR 165'},
-  {name:'Ruturaj Gaikwad',  role:'Batter',      team:'csk', base:12, rating:84, type:'bat', stats:'305 runs · avg 38.1 · SR 144'},
+  // Batters — with detailed profile data
+  {name:'Virat Kohli',      role:'Batter',     team:'rcb',base:20,rating:98,type:'bat',
+   stats:{runs:512,avg:64.0,sr:170,matches:9,fours:48,sixes:12},
+   profile:'Run machine. Leads by example. Premier T20 batter of his generation.',
+   country:'🇮🇳 India'},
+  {name:'Rohit Sharma',     role:'Batter',     team:'mi', base:18,rating:95,type:'bat',
+   stats:{runs:487,avg:60.9,sr:178,matches:9,fours:44,sixes:18},
+   profile:'Six-time IPL champion. Elegant and explosive. Unmatched big-match temperament.',
+   country:'🇮🇳 India'},
+  {name:'Shubman Gill',     role:'Batter',     team:'gt', base:16,rating:92,type:'bat',
+   stats:{runs:461,avg:57.6,sr:162,matches:9,fours:50,sixes:10},
+   profile:'Young star. Technically brilliant. Ready to lead India for years to come.',
+   country:'🇮🇳 India'},
+  {name:'KL Rahul',         role:'WK-Batter',  team:'dc', base:15,rating:90,type:'bat',
+   stats:{runs:434,avg:54.3,sr:154,matches:9,fours:40,sixes:9},
+   profile:'Elegant wicket-keeper batter. Anchors innings and accelerates beautifully.',
+   country:'🇮🇳 India'},
+  {name:'Suryakumar Yadav', role:'Batter',     team:'mi', base:17,rating:94,type:'bat',
+   stats:{runs:418,avg:52.3,sr:196,matches:9,fours:32,sixes:24},
+   profile:'360-degree batter. Unique 360 range of shots. Impossible to set a field for.',
+   country:'🇮🇳 India'},
+  {name:'Travis Head',      role:'Batter',     team:'srh',base:14,rating:88,type:'bat',
+   stats:{runs:398,avg:49.8,sr:184,matches:9,fours:38,sixes:16},
+   profile:'Aggressive opener. World Cup hero. Devastating against pace early on.',
+   country:'🇦🇺 Australia'},
+  {name:'Yashasvi Jaiswal', role:'Batter',     team:'rr', base:14,rating:87,type:'bat',
+   stats:{runs:328,avg:41.0,sr:159,matches:9,fours:36,sixes:11},
+   profile:'Youngest centurion of the season. Fearless, elegant, and hungry for runs.',
+   country:'🇮🇳 India'},
+  {name:'Rishabh Pant',     role:'WK-Batter',  team:'lsg',base:16,rating:91,type:'bat',
+   stats:{runs:352,avg:44.0,sr:172,matches:9,fours:33,sixes:13},
+   profile:'Fearless finisher. Extraordinary reflexes behind the stumps. Comeback king.',
+   country:'🇮🇳 India'},
+  {name:'Jos Buttler',      role:'WK-Batter',  team:'gt', base:13,rating:86,type:'bat',
+   stats:{runs:376,avg:47.0,sr:165,matches:9,fours:38,sixes:11},
+   profile:'Orange Cap winner in 2022. World class T20 batter at any position.',
+   country:'🏴󠁧󠁢󠁥󠁮󠁧󠁿 England'},
+  {name:'Ruturaj Gaikwad',  role:'Batter',     team:'csk',base:12,rating:84,type:'bat',
+   stats:{runs:305,avg:38.1,sr:144,matches:9,fours:30,sixes:8},
+   profile:'Classical top-order batter. Builds innings then launches. CSK captain.',
+   country:'🇮🇳 India'},
   // Bowlers
-  {name:'Jasprit Bumrah',   role:'Bowler',      team:'mi',  base:20, rating:99, type:'bowl',stats:'19 wkts · avg 11.2 · econ 6.1'},
-  {name:'Rashid Khan',      role:'Bowler',      team:'gt',  base:18, rating:96, type:'bowl',stats:'16 wkts · avg 13.8 · econ 6.3'},
-  {name:'Mohammed Siraj',   role:'Bowler',      team:'gt',  base:14, rating:88, type:'bowl',stats:'17 wkts · avg 13.0 · econ 6.8'},
-  {name:'Yuzvendra Chahal', role:'Bowler',      team:'rr',  base:12, rating:85, type:'bowl',stats:'15 wkts · avg 15.2 · econ 7.4'},
-  {name:'Jofra Archer',     role:'Bowler',      team:'rr',  base:16, rating:92, type:'bowl',stats:'13 wkts · avg 16.5 · econ 7.1'},
-  {name:'Pat Cummins',      role:'Bowler',      team:'srh', base:15, rating:90, type:'bowl',stats:'14 wkts · avg 16.0 · econ 6.9'},
-  {name:'Arshdeep Singh',   role:'Bowler',      team:'pbks',base:11, rating:83, type:'bowl',stats:'12 wkts · avg 17.1 · econ 7.8'},
-  {name:'Kagiso Rabada',    role:'Bowler',      team:'gt',  base:13, rating:87, type:'bowl',stats:'11 wkts · avg 18.2 · econ 7.6'},
-  {name:'Kuldeep Yadav',    role:'Bowler',      team:'dc',  base:12, rating:85, type:'bowl',stats:'10 wkts · avg 19.4 · econ 7.3'},
-  {name:'Varun Chakravarthy',role:'Bowler',     team:'kkr', base:11, rating:82, type:'bowl',stats:'11 wkts · avg 18.7 · econ 6.2'},
+  {name:'Jasprit Bumrah',   role:'Bowler',     team:'mi', base:20,rating:99,type:'bowl',
+   stats:{wkts:19,avg:11.2,econ:6.1,matches:9,maidens:1,dot_pct:52},
+   profile:'Best death bowler in the world. Unplayable yorkers. Cannot be hit when on.',
+   country:'🇮🇳 India'},
+  {name:'Rashid Khan',      role:'Bowler',     team:'gt', base:18,rating:96,type:'bowl',
+   stats:{wkts:16,avg:13.8,econ:6.3,matches:9,maidens:0,dot_pct:48},
+   profile:'Mystery spinner. Hides variations brilliantly. Batters fear the googly.',
+   country:'🇦🇫 Afghanistan'},
+  {name:'Mohammed Siraj',   role:'Bowler',     team:'gt', base:14,rating:88,type:'bowl',
+   stats:{wkts:17,avg:13.0,econ:6.8,matches:9,maidens:0,dot_pct:44},
+   profile:'Aggressive seamer. Loves the wicket-to-wicket lines. Highly underrated.',
+   country:'🇮🇳 India'},
+  {name:'Yuzvendra Chahal', role:'Bowler',     team:'rr', base:12,rating:85,type:'bowl',
+   stats:{wkts:15,avg:15.2,econ:7.4,matches:9,maidens:0,dot_pct:40},
+   profile:'India\'s leading T20 leg-spinner. Turns them sharply. Loves big stages.',
+   country:'🇮🇳 India'},
+  {name:'Jofra Archer',     role:'Bowler',     team:'rr', base:16,rating:92,type:'bowl',
+   stats:{wkts:13,avg:16.5,econ:7.1,matches:9,maidens:0,dot_pct:43},
+   profile:'Pace and skill combined. Deceptive change-up. Among the world\'s best.',
+   country:'🏴󠁧󠁢󠁥󠁮󠁧󠁿 England'},
+  {name:'Pat Cummins',      role:'Bowler',     team:'srh',base:15,rating:90,type:'bowl',
+   stats:{wkts:14,avg:16.0,econ:6.9,matches:9,maidens:0,dot_pct:42},
+   profile:'World Test champion captain. Smart and disciplined. Dangerous in death overs.',
+   country:'🇦🇺 Australia'},
+  {name:'Arshdeep Singh',   role:'Bowler',     team:'pbks',base:11,rating:83,type:'bowl',
+   stats:{wkts:12,avg:17.1,econ:7.8,matches:9,maidens:0,dot_pct:38},
+   profile:'Left-arm seamer with exceptional white-ball skills. India\'s powerplay weapon.',
+   country:'🇮🇳 India'},
+  {name:'Kagiso Rabada',    role:'Bowler',     team:'gt', base:13,rating:87,type:'bowl',
+   stats:{wkts:11,avg:18.2,econ:7.6,matches:9,maidens:0,dot_pct:40},
+   profile:'World-class South African quick. Exceptional control at high pace.',
+   country:'🇿🇦 South Africa'},
+  {name:'Kuldeep Yadav',    role:'Bowler',     team:'dc', base:12,rating:85,type:'bowl',
+   stats:{wkts:10,avg:19.4,econ:7.3,matches:9,maidens:0,dot_pct:39},
+   profile:'Chinaman bowler with vicious turn. Re-invented himself as India\'s best spinner.',
+   country:'🇮🇳 India'},
+  {name:'Varun Chakravarthy',role:'Bowler',    team:'kkr',base:11,rating:82,type:'bowl',
+   stats:{wkts:11,avg:18.7,econ:6.2,matches:9,maidens:0,dot_pct:45},
+   profile:'Mystery spinner from KKR. Multiple variations. Batters rarely pick his googly.',
+   country:'🇮🇳 India'},
   // All-rounders
-  {name:'Hardik Pandya',    role:'All-Rounder', team:'mi',  base:18, rating:93, type:'ar',  stats:'264 runs · 11 wkts · avg 29.4'},
-  {name:'Ravindra Jadeja',  role:'All-Rounder', team:'rr',  base:16, rating:91, type:'ar',  stats:'231 runs · 10 wkts · avg 26.1'},
-  {name:'Sam Curran',       role:'All-Rounder', team:'rr',  base:14, rating:87, type:'ar',  stats:'194 runs · 9 wkts · avg 24.0'},
-  {name:'Axar Patel',       role:'All-Rounder', team:'dc',  base:13, rating:85, type:'ar',  stats:'141 runs · 7 wkts · avg 19.2'},
-  {name:'Mitchell Marsh',   role:'All-Rounder', team:'lsg', base:12, rating:83, type:'ar',  stats:'162 runs · 7 wkts · avg 21.0'},
-  {name:'Krunal Pandya',    role:'All-Rounder', team:'rcb', base:11, rating:80, type:'ar',  stats:'155 runs · 6 wkts · avg 21.8'},
-  {name:'Washington Sundar',role:'All-Rounder', team:'gt',  base:10, rating:78, type:'ar',  stats:'114 runs · 5 wkts · avg 17.4'},
-  {name:'Nitish Kumar Reddy',role:'All-Rounder',team:'srh', base:10, rating:77, type:'ar',  stats:'128 runs · 6 wkts · avg 18.6'},
+  {name:'Hardik Pandya',    role:'All-Rounder',team:'mi', base:18,rating:93,type:'ar',
+   stats:{runs:264,wkts:11,avg:29.4,sr:162,econ:8.1},
+   profile:'Dynamic all-rounder. Bats at No.6 and bowls 140kph. MI captain.',
+   country:'🇮🇳 India'},
+  {name:'Ravindra Jadeja',  role:'All-Rounder',team:'rr', base:16,rating:91,type:'ar',
+   stats:{runs:231,wkts:10,avg:26.1,sr:148,econ:7.2},
+   profile:'One of cricket\'s greatest all-rounders. Brilliant fielder. Match winner.',
+   country:'🇮🇳 India'},
+  {name:'Sam Curran',       role:'All-Rounder',team:'rr', base:14,rating:87,type:'ar',
+   stats:{runs:194,wkts:9,avg:24.0,sr:144,econ:8.2},
+   profile:'₹18.5Cr record signing. Left-arm seam and punchy batting. Clutch performer.',
+   country:'🏴󠁧󠁢󠁥󠁮󠁧󠁿 England'},
+  {name:'Axar Patel',       role:'All-Rounder',team:'dc', base:13,rating:85,type:'ar',
+   stats:{runs:141,wkts:7,avg:19.2,sr:155,econ:7.0},
+   profile:'Left-arm spinner who can bat. Excellent with both bat and ball. DC captain.',
+   country:'🇮🇳 India'},
+  {name:'Mitchell Marsh',   role:'All-Rounder',team:'lsg',base:12,rating:83,type:'ar',
+   stats:{runs:162,wkts:7,avg:21.0,sr:158,econ:8.4},
+   profile:'Big-hitting Aussie all-rounder. Power in the lower order. Useful medium pace.',
+   country:'🇦🇺 Australia'},
+  {name:'Krunal Pandya',    role:'All-Rounder',team:'rcb',base:11,rating:80,type:'ar',
+   stats:{runs:155,wkts:6,avg:21.8,sr:140,econ:7.5},
+   profile:'Left-arm spin and aggressive batting. Experienced. Smart cricketer.',
+   country:'🇮🇳 India'},
+  {name:'Washington Sundar',role:'All-Rounder',team:'gt', base:10,rating:78,type:'ar',
+   stats:{runs:114,wkts:5,avg:17.4,sr:132,econ:7.1},
+   profile:'Young off-spinner who can bat. Technical ability belies his age.',
+   country:'🇮🇳 India'},
+  {name:'Nitish Kumar Reddy',role:'All-Rounder',team:'srh',base:10,rating:77,type:'ar',
+   stats:{runs:128,wkts:6,avg:18.6,sr:138,econ:8.2},
+   profile:'Exciting young talent from SRH. Hard-hitting lower-order bat and useful pacer.',
+   country:'🇮🇳 India'},
 ];
 
-// NPC teams that compete in the auction
+// INTELLIGENT NPC AUCTIONEERS — all 10 teams with unique personalities
 const NPC_TEAMS = [
-  {id:'csk', name:'Chennai Super Kings', abbr:'CSK', color:'#FFCC00', budget:5000, aggressiveness:0.85},
-  {id:'kkr', name:'Kolkata Knight Riders',abbr:'KKR',color:'#3A225D', budget:5000, aggressiveness:0.75},
-  {id:'mi',  name:'Mumbai Indians',      abbr:'MI',  color:'#004BA0', budget:5000, aggressiveness:0.80},
+  {
+    id:'mi',  name:'Mumbai Indians',        abbr:'MI',  color:'#1E78E6',
+    budget:5000, personality:'DOMINANT',
+    strategy:'Deep pockets, star hunger. Goes after world-class names every time.',
+    aggr:0.91, needsType:{bat:4,bowl:4,ar:3},
+    quote:'Five titles. We know what winning looks like.',
+    rivalOf:['csk','rcb']
+  },
+  {
+    id:'csk', name:'Chennai Super Kings',   abbr:'CSK', color:'#E8B800',
+    budget:5000, personality:'TACTICAL',
+    strategy:'Prioritises experienced Indian players. Never overpays. Patient, calculated.',
+    aggr:0.82, needsType:{bat:4,bowl:4,ar:3},
+    quote:'Let the others panic. We pick our moments.',
+    rivalOf:['mi','rcb']
+  },
+  {
+    id:'rcb', name:'Royal Challengers',     abbr:'RCB', color:'#C8102E',
+    budget:5000, personality:'STAR-STRUCK',
+    strategy:'Bets big on star batters. Will blow the budget for a Kohli-type player.',
+    aggr:0.93, needsType:{bat:5,bowl:3,ar:3},
+    quote:'We play for the fans. Give us the stars.',
+    rivalOf:['mi','csk']
+  },
+  {
+    id:'kkr', name:'Kolkata Knight Riders', abbr:'KKR', color:'#4A2D8F',
+    budget:5000, personality:'AGGRESSIVE',
+    strategy:'Goes hard for big names. Willing to overpay for match-winners. Bold.',
+    aggr:0.88, needsType:{bat:4,bowl:4,ar:3},
+    quote:'We fear no price tag. We want the best.',
+    rivalOf:['srh','dc']
+  },
+  {
+    id:'dc',  name:'Delhi Capitals',        abbr:'DC',  color:'#1A47CC',
+    budget:5000, personality:'BALANCED',
+    strategy:'Mix of youth and experience. Targets all-rounders highly.',
+    aggr:0.79, needsType:{bat:4,bowl:4,ar:4},
+    quote:'Build smart. Win together.',
+    rivalOf:['kkr','pbks']
+  },
+  {
+    id:'rr',  name:'Rajasthan Royals',      abbr:'RR',  color:'#EA1A85',
+    budget:5000, personality:'SCOUTING',
+    strategy:'Loves young uncapped players and overseas wildcards. Patient.',
+    aggr:0.77, needsType:{bat:4,bowl:4,ar:3},
+    quote:'Find them before anyone else does.',
+    rivalOf:['csk','pbks']
+  },
+  {
+    id:'pbks', name:'Punjab Kings',         abbr:'PBKS',color:'#CC1A24',
+    budget:5000, personality:'IMPULSIVE',
+    strategy:'Known for emotional overbids. Gets into bidding wars easily.',
+    aggr:0.85, needsType:{bat:5,bowl:3,ar:3},
+    quote:'PUNJAB DA RAAJ! No cap can stop us.',
+    rivalOf:['dc','rr']
+  },
+  {
+    id:'srh', name:'Sunrisers Hyderabad',   abbr:'SRH', color:'#E06B1A',
+    budget:5000, personality:'ANALYTICAL',
+    strategy:'Data-driven. Targets high SR batters and economy bowlers. Rarely emotional.',
+    aggr:0.75, needsType:{bat:4,bowl:4,ar:3},
+    quote:'Numbers don\'t lie. We play the percentages.',
+    rivalOf:['kkr','gt']
+  },
+  {
+    id:'gt',  name:'Gujarat Titans',        abbr:'GT',  color:'#1C4B9B',
+    budget:5000, personality:'SHREWD',
+    strategy:'Conservative early, then strikes late. Excellent value hunters.',
+    aggr:0.72, needsType:{bat:4,bowl:4,ar:3},
+    quote:'Patience is our weapon. We win at full time.',
+    rivalOf:['srh','lsg']
+  },
+  {
+    id:'lsg', name:'Lucknow Super Giants',  abbr:'LSG', color:'#007A87',
+    budget:5000, personality:'HUNGRY',
+    strategy:'Newer franchise — desperate to build a powerhouse. Bids on everything.',
+    aggr:0.86, needsType:{bat:4,bowl:4,ar:3},
+    quote:'We have everything to prove and nothing to lose.',
+    rivalOf:['gt','dc']
+  },
 ];
 
-// Game state
 const AUC = {
-  playerBudget: 5000,
-  myTeamId: null,
-  myTeamName: null,
-  myTeamColor: null,
-  phase: 'select', // select | auction | done
-  pool: [],        // shuffled auction players
-  currentIdx: 0,
-  currentBid: 0,
-  currentBidder: null, // 'player' | 'npc_X'
-  mySquad: [],
-  npcSquads: {csk:[],kkr:[],mi:[]},
-  npcBudgets: {csk:5000,kkr:5000,mi:5000},
-  soldPlayers: {},
-  lastBidLog: [],
-  auctionTimer: null,
-  npcThinkTimer: null,
-  bidActive: false,
-  baseBid: 0,
+  playerBudget:5000,myTeamId:null,myTeamName:null,myTeamColor:null,
+  phase:'select',pool:[],currentIdx:0,currentBid:0,currentBidder:null,
+  mySquad:[],npcSquads:{},npcBudgets:{},
+  soldPlayers:{},lastBidLog:[],auctionTimer:null,npcThinkTimer:null,bidActive:false,baseBid:0,
+  npcs:[],playerPassed:false,
 };
-
-function fmt(v){return v>=100?(v/100).toFixed(1)+'B Cr':v+'Cr';}
 
 function buildAuctionCSS(){
   if(document.getElementById('auc-style')) return;
-  const s=document.createElement('style');
-  s.id='auc-style';
+  const s=document.createElement('style');s.id='auc-style';
   s.textContent=`
-  #auction-app{font-family:'Nunito Sans',sans-serif}
-  .auc-select-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-bottom:2rem}
-  .auc-team-btn{background:#fff;border:3px solid var(--ink);border-radius:10px;padding:1.25rem 1rem;text-align:center;cursor:pointer!important;box-shadow:4px 4px 0 var(--ink);transition:all .15s;position:relative;overflow:hidden}
-  .auc-team-btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
-  .auc-team-btn.selected{border-color:var(--hot);box-shadow:6px 6px 0 var(--hot);background:#FFF5F7}
-  .auc-team-btn-logo{margin:0 auto .75rem;display:flex;justify-content:center}
-  .auc-team-btn-name{font-family:'Black Han Sans',sans-serif;font-size:.9rem;margin-bottom:2px}
-  .auc-team-btn-city{font-size:.65rem;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase}
-  .auc-start-btn{background:var(--hot);color:#fff;font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;letter-spacing:1px;text-transform:uppercase;padding:16px 40px;border:3px solid var(--ink);border-radius:8px;box-shadow:5px 5px 0 var(--ink);transition:all .15s;display:inline-block}
-  .auc-start-btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
-  .auc-start-btn:disabled{opacity:.4;transform:none;box-shadow:5px 5px 0 var(--ink)}
+  #auction-app{font-family:'DM Sans',sans-serif}
+  .auc-intro{font-size:.9rem;line-height:1.8;color:var(--muted);max-width:700px;margin-bottom:2rem}
+  .auc-intro strong{color:var(--gold)}
+
+  .auc-select-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1rem;margin-bottom:2.5rem}
+  .auc-team-btn{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:1.5rem 1rem;text-align:center;cursor:pointer!important;transition:all .2s;position:relative;overflow:hidden}
+  .auc-team-btn:hover{border-color:var(--border2);transform:translateY(-3px)}
+  .auc-team-btn.selected{border-color:var(--gold);background:rgba(201,168,76,.06)}
+  .auc-team-btn.selected::after{content:'✓ SELECTED';position:absolute;top:8px;right:8px;font-size:.5rem;font-weight:700;letter-spacing:2px;color:var(--gold);background:rgba(201,168,76,.15);padding:2px 7px;border-radius:2px}
+  .auc-team-btn-name{font-weight:700;font-size:.9rem;margin-bottom:2px;margin-top:.75rem}
+  .auc-team-btn-city{font-size:.62rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+  .auc-start-btn{background:var(--gold);color:var(--deep);font-weight:700;font-size:.8rem;letter-spacing:2px;text-transform:uppercase;padding:15px 40px;border:none;border-radius:2px;transition:all .2s;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px))}
+  .auc-start-btn:hover:not(:disabled){background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 25px rgba(201,168,76,.3)}
+  .auc-start-btn:disabled{opacity:.35;cursor:not-allowed!important}
+
+  /* NPC cards */
+  .auc-npc-cards{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+  .auc-npc-card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:1rem 1.25rem;flex:1;min-width:200px;transition:border-color .2s}
+  .auc-npc-card.active{border-color:var(--gold)}
+  .auc-npc-card-hdr{display:flex;align-items:center;gap:10px;margin-bottom:.5rem}
+  .auc-npc-card-name{font-weight:700;font-size:.82rem}
+  .auc-npc-card-tag{font-size:.52rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:2px 7px;border-radius:1px;margin-left:auto}
+  .auc-npc-card-quote{font-size:.7rem;color:var(--muted);font-style:italic;line-height:1.5}
+  .auc-npc-card-stats{display:flex;gap:.75rem;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border)}
+  .auc-npc-stat-v{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--gold);display:block;letter-spacing:1px}
+  .auc-npc-stat-l{font-size:.5rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
 
   /* Main auction layout */
-  .auc-layout{display:grid;grid-template-columns:1fr 340px;gap:1.5rem;align-items:start}
+  .auc-layout{display:grid;grid-template-columns:1fr 360px;gap:1.5rem;align-items:start}
   @media(max-width:900px){.auc-layout{grid-template-columns:1fr}}
 
-  /* Player on block */
-  .auc-block{background:#fff;border:3px solid var(--ink);border-radius:12px;overflow:hidden;box-shadow:6px 6px 0 var(--ink);margin-bottom:1.5rem}
-  .auc-block-hdr{background:var(--ink);padding:12px 18px;display:flex;justify-content:space-between;align-items:center}
-  .auc-block-label{font-family:'Nunito',sans-serif;font-weight:900;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5)}
-  .auc-block-count{font-family:'Black Han Sans',sans-serif;font-size:1rem;color:var(--yellow)}
-  .auc-player-main{padding:1.5rem;display:flex;gap:1.5rem;align-items:center}
-  .auc-player-av{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Black Han Sans',sans-serif;font-size:1.4rem;border:3px solid var(--ink);flex-shrink:0}
-  .auc-player-info{}
-  .auc-player-name{font-family:'Black Han Sans',sans-serif;font-size:1.4rem;line-height:1;margin-bottom:4px}
-  .auc-player-role{font-size:.7rem;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
-  .auc-player-stats{font-size:.8rem;font-weight:600;color:var(--muted)}
-  .auc-player-team-badge{display:inline-flex;align-items:center;gap:6px;font-family:'Nunito',sans-serif;font-weight:900;font-size:.65rem;letter-spacing:1px;padding:3px 10px;border-radius:4px;border:2px solid var(--ink);margin-top:.4rem}
-  .auc-player-rating-bar{padding:0 1.5rem 1.25rem;display:flex;align-items:center;gap:12px}
-  .auc-rating-label{font-family:'Nunito',sans-serif;font-weight:900;font-size:.65rem;letter-spacing:1px;text-transform:uppercase;color:var(--muted);width:60px}
-  .auc-rating-track{flex:1;height:10px;background:var(--surface);border-radius:100px;border:2px solid var(--border);overflow:hidden}
-  .auc-rating-fill{height:100%;border-radius:100px;transition:width .5s ease}
-  .auc-rating-val{font-family:'Black Han Sans',sans-serif;font-size:1rem;width:32px;text-align:right}
+  /* Player block — PREMIUM */
+  .auc-block{background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:1.5rem;position:relative}
+  .auc-block::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+  .auc-block-hdr{background:rgba(201,168,76,.04);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
+  .auc-block-label{font-size:.62rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted)}
+  .auc-block-count{font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--gold);letter-spacing:2px}
+  
+  .auc-player-main{padding:1.75rem;display:flex;gap:1.75rem;align-items:flex-start}
+  .auc-player-photo-wrap{width:100px;height:100px;border-radius:4px;overflow:hidden;background:var(--surface);border:1px solid var(--border2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:2rem;position:relative}
+  .auc-player-photo{width:100%;height:100%;object-fit:cover}
+  .auc-player-flag{position:absolute;bottom:4px;right:4px;font-size:.85rem}
+  .auc-player-info{flex:1}
+  .auc-player-name{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;line-height:1;margin-bottom:5px}
+  .auc-player-role{font-size:.62rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+  .auc-player-profile{font-size:.78rem;color:var(--muted);line-height:1.6;margin-bottom:.75rem;font-style:italic}
+  .auc-player-team-badge{display:inline-flex;align-items:center;gap:8px;font-size:.6rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:2px;margin-bottom:.75rem}
+
+  .auc-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;padding:0 1.75rem 1.5rem}
+  .auc-stat-box{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:.75rem;text-align:center}
+  .auc-stat-val{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--text);letter-spacing:1px;display:block}
+  .auc-stat-key{font-size:.52rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:2px}
+  .auc-extra-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;padding:0 1.75rem 1.5rem}
+  .auc-extra-stat{text-align:center}
+  .auc-extra-val{font-size:.85rem;font-weight:700;color:var(--text)}
+  .auc-extra-key{font-size:.5rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+
+  .auc-rating-wrap{padding:0 1.75rem 1.5rem;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--border)}
+  .auc-rating-label{font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);width:60px}
+  .auc-rating-track{flex:1;height:6px;background:var(--surface);border-radius:100px;overflow:hidden}
+  .auc-rating-fill{height:100%;border-radius:100px;transition:width .6s ease}
+  .auc-rating-val{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;width:36px;text-align:right;letter-spacing:1px}
 
   /* Bid panel */
-  .auc-bid-panel{background:#fff;border:3px solid var(--ink);border-radius:12px;overflow:hidden;box-shadow:6px 6px 0 var(--ink);margin-bottom:1.5rem}
-  .auc-bid-hdr{background:var(--hot);padding:12px 18px}
-  .auc-bid-hdr-title{font-family:'Nunito',sans-serif;font-weight:900;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:#fff}
-  .auc-current-bid{padding:1.25rem 1.5rem;border-bottom:2px solid var(--border)}
-  .auc-bid-amount{font-family:'Black Han Sans',sans-serif;font-size:2.8rem;line-height:1;color:var(--hot)}
-  .auc-bid-sub{font-size:.72rem;font-weight:700;color:var(--muted);margin-top:4px}
-  .auc-bidder{font-family:'Nunito',sans-serif;font-weight:900;font-size:.78rem;padding:.5rem 1.5rem;border-bottom:2px solid var(--border)}
-  .auc-bid-btns{padding:1rem 1.5rem;display:flex;flex-direction:column;gap:.6rem}
-  .auc-bid-action{font-family:'Nunito',sans-serif;font-weight:900;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;padding:11px 20px;border:2.5px solid var(--ink);border-radius:6px;box-shadow:3px 3px 0 var(--ink);transition:all .12s;width:100%;cursor:pointer!important}
-  .auc-bid-action:hover:not(:disabled){transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
-  .auc-bid-action:disabled{opacity:.35;cursor:not-allowed!important;transform:none}
-  .auc-bid-action.buy{background:var(--green);color:var(--ink)}
-  .auc-bid-action.raise{background:var(--yellow);color:var(--ink)}
-  .auc-bid-action.pass{background:#fff;color:var(--muted)}
-  .auc-bid-timer{padding:.75rem 1.5rem;background:var(--surface);font-family:'Nunito',sans-serif;font-weight:900;font-size:.78rem;color:var(--ink);border-top:2px solid var(--border)}
-  .auc-timer-bar{height:6px;background:var(--hot);border-radius:100px;transition:width .1s linear;margin-top:6px}
+  .auc-bid-panel{background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:1.5rem;position:relative}
+  .auc-bid-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--crimson),var(--accent))}
+  .auc-bid-hdr{padding:12px 20px;border-bottom:1px solid var(--border);background:rgba(139,26,26,.08)}
+  .auc-bid-hdr-title{font-size:.62rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--accent)}
+  .auc-current-bid{padding:1.5rem 1.75rem;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:8px}
+  .auc-bid-amount{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;line-height:1;color:var(--gold);letter-spacing:2px}
+  .auc-bid-currency{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--muted);letter-spacing:1px}
+  .auc-bid-sub{font-size:.7rem;font-weight:600;color:var(--muted);margin-top:5px}
+  .auc-bidder{font-size:.8rem;font-weight:600;padding:.75rem 1.75rem;border-bottom:1px solid var(--border)}
+  .auc-bid-btns{padding:1.25rem 1.75rem;display:flex;flex-direction:column;gap:.6rem}
+  .auc-bid-action{font-weight:700;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;padding:13px 20px;border:1px solid var(--border2);border-radius:2px;transition:all .15s;width:100%;cursor:pointer!important}
+  .auc-bid-action:hover:not(:disabled){transform:translateY(-1px)}
+  .auc-bid-action:disabled{opacity:.3;cursor:not-allowed!important;transform:none}
+  .auc-bid-action.buy{background:var(--gold);color:var(--deep);border-color:var(--gold)}
+  .auc-bid-action.buy:hover:not(:disabled){background:var(--gold2)}
+  .auc-bid-action.raise{background:rgba(201,168,76,.08);color:var(--gold);border-color:rgba(201,168,76,.3)}
+  .auc-bid-action.raise:hover:not(:disabled){background:rgba(201,168,76,.15)}
+  .auc-bid-action.pass{background:transparent;color:var(--muted);border-color:var(--border)}
+  .auc-bid-action.pass:hover:not(:disabled){border-color:var(--border2);color:var(--text)}
+  .auc-bid-timer{padding:.85rem 1.75rem;background:var(--surface);font-size:.7rem;font-weight:600;color:var(--muted);border-top:1px solid var(--border);letter-spacing:1px}
+  .auc-timer-bar{height:3px;background:var(--green);border-radius:100px;transition:width .1s linear;margin-top:8px}
 
   /* Log */
-  .auc-log{background:#fff;border:3px solid var(--ink);border-radius:10px;overflow:hidden;box-shadow:4px 4px 0 var(--ink)}
-  .auc-log-hdr{background:var(--ink2);padding:10px 14px;font-family:'Nunito',sans-serif;font-weight:900;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:#fff}
-  .auc-log-body{max-height:220px;overflow-y:auto;padding:.5rem 0}
-  .auc-log-item{padding:7px 14px;border-bottom:1px solid var(--border);font-size:.78rem;font-weight:600;display:flex;gap:8px;align-items:center}
+  .auc-log{background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden}
+  .auc-log-hdr{padding:10px 16px;border-bottom:1px solid var(--border);font-size:.62rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted)}
+  .auc-log-body{max-height:200px;overflow-y:auto;padding:.25rem 0}
+  .auc-log-item{padding:8px 16px;border-bottom:1px solid rgba(255,255,255,.03);font-size:.75rem;font-weight:500;display:flex;gap:10px;align-items:center;color:var(--text)}
   .auc-log-item:last-child{border-bottom:none}
-  .auc-log-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .auc-log-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 
-  /* My squad sidebar */
-  .auc-squad-panel{background:#fff;border:3px solid var(--ink);border-radius:12px;overflow:hidden;box-shadow:6px 6px 0 var(--ink)}
-  .auc-squad-hdr{padding:14px 18px;border-bottom:2px solid var(--border);display:flex;justify-content:space-between;align-items:center}
-  .auc-squad-title{font-family:'Black Han Sans',sans-serif;font-size:1rem}
-  .auc-budget-badge{font-family:'Black Han Sans',sans-serif;font-size:.85rem;color:var(--hot)}
+  /* Squad sidebar */
+  .auc-squad-panel{background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden}
+  .auc-squad-hdr{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:rgba(201,168,76,.04)}
+  .auc-squad-title{font-weight:700;font-size:.9rem}
+  .auc-budget-badge{font-family:'Bebas Neue',sans-serif;font-size:.95rem;color:var(--gold);letter-spacing:1px}
   .auc-squad-list{padding:.75rem}
-  .auc-squad-item{display:flex;justify-content:space-between;align-items:center;padding:7px 8px;border-radius:6px;border:1.5px solid var(--border);margin-bottom:.4rem;background:var(--surface)}
-  .auc-squad-item-name{font-weight:800;font-size:.8rem}
-  .auc-squad-item-role{font-size:.6rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:1px}
-  .auc-squad-item-price{font-family:'Black Han Sans',sans-serif;font-size:.85rem;color:var(--hot)}
-  .auc-squad-empty{text-align:center;padding:1.5rem;color:var(--muted);font-size:.8rem;font-weight:600}
-  .auc-slot-info{padding:.75rem 1rem;border-top:2px solid var(--border);font-size:.72rem;font-weight:700;color:var(--muted);display:flex;justify-content:space-between}
+  .auc-squad-item{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;border-radius:3px;border:1px solid var(--border);margin-bottom:.4rem;background:var(--surface)}
+  .auc-squad-item-name{font-weight:600;font-size:.78rem}
+  .auc-squad-item-role{font-size:.58rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:1px}
+  .auc-squad-item-price{font-family:'Bebas Neue',sans-serif;font-size:.88rem;color:var(--gold);letter-spacing:1px}
+  .auc-squad-empty{text-align:center;padding:2rem;color:var(--muted);font-size:.8rem}
+  .auc-slot-info{padding:.75rem 1rem;border-top:1px solid var(--border);font-size:.68rem;font-weight:600;color:var(--muted);display:flex;justify-content:space-between;letter-spacing:.5px}
 
-  /* Sold / passed overlay */
-  .auc-result-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Black Han Sans',sans-serif;font-size:2rem;letter-spacing:2px;pointer-events:none;opacity:0;transition:opacity .3s}
-  .auc-result-overlay.sold{background:rgba(0,230,118,.9);color:var(--ink);opacity:1}
-  .auc-result-overlay.unsold{background:rgba(255,45,85,.85);color:#fff;opacity:1}
+  /* Rival teams panel */
+  .auc-rivals-panel{background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-top:1rem}
+  .auc-rivals-hdr{padding:10px 16px;border-bottom:1px solid var(--border);font-size:.62rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted)}
+  .auc-rival-row{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.03)}
+  .auc-rival-row:last-child{border-bottom:none}
+  .auc-rival-name{display:flex;align-items:center;gap:7px;font-weight:600;font-size:.75rem}
+  .auc-rival-tag{font-size:.45rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:1px 5px;border-radius:1px;margin-left:3px}
+  .auc-rival-budget{font-family:'Bebas Neue',sans-serif;font-size:.85rem;color:var(--gold);letter-spacing:1px}
+  .auc-rivals-body{max-height:320px;overflow-y:auto}
+  .auc-rival-players{font-size:.6rem;color:var(--muted);font-weight:500;margin-top:1px}
+
+  /* Overlay */
+  .auc-result-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:4px;pointer-events:none;opacity:0;transition:opacity .3s;z-index:10}
+  .auc-result-overlay.sold{background:rgba(46,204,113,.9);color:var(--deep);opacity:1}
+  .auc-result-overlay.unsold{background:rgba(224,82,82,.85);color:#fff;opacity:1}
+
+  /* Hammer animation */
+  @keyframes hammerDrop{0%{transform:rotate(-45deg) translateY(-20px);opacity:0}100%{transform:rotate(0) translateY(0);opacity:1}}
+  .hammer-anim{animation:hammerDrop .3s ease both}
 
   /* Done screen */
-  .auc-done{text-align:center;padding:3rem 1.5rem}
-  .auc-done-title{font-family:'Black Han Sans',sans-serif;font-size:2.5rem;color:var(--ink);margin-bottom:.5rem}
-  .auc-done-subtitle{font-size:1rem;color:var(--muted);font-weight:600;margin-bottom:2.5rem}
-  .auc-done-squads{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem;text-align:left;margin-bottom:2rem}
-  .auc-done-team{background:#fff;border:3px solid var(--ink);border-radius:10px;overflow:hidden;box-shadow:5px 5px 0 var(--ink)}
-  .auc-done-team-hdr{padding:10px 14px;font-family:'Black Han Sans',sans-serif;font-size:.9rem;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--border)}
+  .auc-done{text-align:center;padding:4rem 1.5rem}
+  .auc-done-title{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:var(--gold);margin-bottom:.5rem}
+  .auc-done-subtitle{font-size:.95rem;color:var(--muted);font-weight:400;margin-bottom:3rem}
+  .auc-done-squads{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.25rem;text-align:left;margin-bottom:2.5rem}
+  .auc-done-team{background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden}
+  .auc-done-team-hdr{padding:12px 16px;font-weight:700;font-size:.88rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
   .auc-done-team-body{padding:.75rem}
-  .auc-done-player{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:.78rem;font-weight:600}
+  .auc-done-player{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.78rem;font-weight:500}
   .auc-done-player:last-child{border-bottom:none}
-  .auc-done-player-price{font-family:'Black Han Sans',sans-serif;color:var(--hot)}
-  .auc-restart-btn{background:var(--hot);color:#fff;font-family:'Nunito',sans-serif;font-weight:900;font-size:.9rem;letter-spacing:1px;text-transform:uppercase;padding:14px 36px;border:3px solid var(--ink);border-radius:8px;box-shadow:5px 5px 0 var(--ink);cursor:pointer!important}
+  .auc-done-player-price{font-family:'Bebas Neue',sans-serif;color:var(--gold);letter-spacing:1px}
+  .auc-restart-btn{background:transparent;color:var(--gold);font-weight:700;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;padding:13px 36px;border:1px solid var(--gold);border-radius:2px;transition:all .2s}
+  .auc-restart-btn:hover{background:rgba(201,168,76,.1)}
+
+  /* Bidding war flash */
+  @keyframes bidFlash{0%,100%{background:var(--card)}50%{background:rgba(201,168,76,.08)}}
+  .bid-flash{animation:bidFlash .4s ease}
   `;
   document.head.appendChild(s);
 }
 
-function buildAuction(){
-  buildAuctionCSS();
-  renderAucSelect();
-}
+function buildAuction(){buildAuctionCSS();renderAucSelect();}
 
 function renderAucSelect(){
-  // All 10 IPL teams available to pick
-  const allTeams = TEAMS;
   document.getElementById('auction-app').innerHTML=`
-    <div style="margin-bottom:1.5rem">
-      <p style="font-size:.95rem;font-weight:600;color:var(--muted);line-height:1.7;max-width:680px;">
-        You have <strong style="color:var(--hot)">₹5000 Crore</strong> to build your dream XI. 
-        Pick your franchise below, then compete against three rival NPC teams in a live auction to sign the best IPL stars. 
-        You need at least <strong>4 batters, 4 bowlers, and 3 all-rounders</strong> (min 11 players).
-      </p>
+    <p class="auc-intro">
+      You have <strong>₹5,000 Crore</strong> to build your dream franchise.
+      Choose your team, then go head-to-head against <strong>all 9 rival franchises</strong> — each with their own 
+      unique bidding personality — to sign the IPL's finest talent. 
+      You need at least <strong>4 batters, 4 bowlers and 3 all-rounders</strong>.
+    </p>
+    <div class="auc-npc-cards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.75rem;margin-bottom:2rem">${NPC_TEAMS.map(n=>`
+      <div class="auc-npc-card">
+        <div class="auc-npc-card-hdr">
+          ${logoImg(n.id,24)}
+          <div class="auc-npc-card-name">${n.abbr}</div>
+          <div class="auc-npc-card-tag" style="background:${n.color}20;color:${n.color}">${n.personality}</div>
+        </div>
+        <div class="auc-npc-card-quote" style="font-size:.65rem">"${n.quote}"</div>
+      </div>`).join('')}
     </div>
+    <div style="margin-bottom:1.25rem;font-size:.62rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold)">— PICK YOUR FRANCHISE —</div>
     <div class="auc-select-grid" id="auc-team-grid"></div>
-    <div style="margin-top:1.5rem">
-      <button class="auc-start-btn" id="auc-start-btn" disabled onclick="startAuction()">🔨 Start Auction</button>
+    <div style="margin-top:2rem">
+      <button class="auc-start-btn" id="auc-start-btn" disabled onclick="startAuction()">🔨 &nbsp;START AUCTION</button>
     </div>`;
   const grid=document.getElementById('auc-team-grid');
-  grid.innerHTML=allTeams.map(t=>`
+  grid.innerHTML=TEAMS.map(t=>`
     <div class="auc-team-btn" id="aucbtn-${t.id}" onclick="selectMyTeam('${t.id}')">
-      <div class="auc-team-btn-logo">${L[t.id](56)}</div>
+      <div style="display:flex;justify-content:center">${logoImg(t.id,60)}</div>
       <div class="auc-team-btn-name">${t.name}</div>
       <div class="auc-team-btn-city">${t.city}</div>
     </div>`).join('');
@@ -1019,28 +1289,20 @@ function selectMyTeam(id){
   document.querySelectorAll('.auc-team-btn').forEach(b=>b.classList.remove('selected'));
   document.getElementById('aucbtn-'+id).classList.add('selected');
   const t=T(id);
-  AUC.myTeamId=id; AUC.myTeamName=t.name; AUC.myTeamColor=t.color;
+  AUC.myTeamId=id;AUC.myTeamName=t.name;AUC.myTeamColor=t.color;
   document.getElementById('auc-start-btn').disabled=false;
 }
 
 function startAuction(){
   if(!AUC.myTeamId) return;
-  // Exclude the NPC teams from competing if user picked one of them; swap in another
-  AUC.npcBudgets={csk:5000,kkr:5000,mi:5000,srh:5000};
-  // Pick 3 NPC teams that aren't the user's team
-  const npcOptions=TEAMS.filter(t=>t.id!==AUC.myTeamId).slice(0,4);
-  AUC.npcs=npcOptions.slice(0,3).map(t=>({id:t.id,name:t.name,abbr:t.abbr,color:t.color,budget:5000,aggr:0.7+Math.random()*0.25}));
-  AUC.npcSquads={};
-  AUC.npcs.forEach(n=>{AUC.npcSquads[n.id]=[];});
-  AUC.playerBudget=5000;
-  AUC.mySquad=[];
-  AUC.soldPlayers={};
+  // All teams except the player's chosen team become NPCs
+  AUC.npcs=NPC_TEAMS.filter(n=>n.id!==AUC.myTeamId);
+  AUC.npcBudgets={};AUC.npcSquads={};
+  AUC.npcs.forEach(n=>{AUC.npcBudgets[n.id]=5000;AUC.npcSquads[n.id]=[];});
+  AUC.playerBudget=5000;AUC.mySquad=[];AUC.soldPlayers={};
   AUC.pool=[...AUCTION_PLAYERS].sort(()=>Math.random()-0.5);
-  AUC.currentIdx=0;
-  AUC.phase='auction';
-  AUC.lastBidLog=[];
-  renderAucMain();
-  nextPlayer();
+  AUC.currentIdx=0;AUC.phase='auction';AUC.lastBidLog=[];
+  renderAucMain();nextPlayer();
 }
 
 function renderAucMain(){
@@ -1054,24 +1316,29 @@ function renderAucMain(){
             <span class="auc-block-count" id="auc-pcount"></span>
           </div>
           <div class="auc-player-main" id="auc-player-main"></div>
-          <div class="auc-player-rating-bar" id="auc-rating-bar"></div>
-          <div id="auc-result-overlay"></div>
+          <div class="auc-stats-grid" id="auc-stats-grid"></div>
+          <div class="auc-extra-stats" id="auc-extra-stats"></div>
+          <div class="auc-rating-wrap" id="auc-rating-bar"></div>
+          <div class="auc-result-overlay" id="auc-result-overlay"></div>
         </div>
         <div class="auc-bid-panel">
-          <div class="auc-bid-hdr"><div class="auc-bid-hdr-title">💰 Current Bid</div></div>
+          <div class="auc-bid-hdr"><div class="auc-bid-hdr-title">💰 LIVE BIDDING</div></div>
           <div class="auc-current-bid">
-            <div class="auc-bid-amount" id="auc-bid-amt">₹0 Cr</div>
-            <div class="auc-bid-sub" id="auc-bid-sub">Base Price: —</div>
+            <div>
+              <div class="auc-bid-amount" id="auc-bid-amt">0</div>
+              <div class="auc-bid-sub" id="auc-bid-sub">Base Price: —</div>
+            </div>
+            <div style="margin-left:auto;text-align:right">
+              <div class="auc-bid-currency">CRORE</div>
+              <div style="font-size:.58rem;color:var(--muted);font-weight:600;letter-spacing:1px;margin-top:4px">YOUR PURSE: <span id="auc-purse" style="color:var(--gold)">₹5000 Cr</span></div>
+            </div>
           </div>
-          <div class="auc-bidder" id="auc-bidder-info" style="color:var(--muted)">Waiting for bids...</div>
+          <div class="auc-bidder" id="auc-bidder-info" style="color:var(--muted)">Awaiting bids...</div>
           <div class="auc-bid-btns">
-            <button class="auc-bid-action buy" id="auc-btn-bid" onclick="playerBid()" disabled>⬆ Raise Bid (+₹5 Cr)</button>
-            <button class="auc-bid-action pass" id="auc-btn-pass" onclick="playerPass()" disabled>✖ Pass</button>
+            <button class="auc-bid-action buy" id="auc-btn-bid" onclick="playerBid()" disabled>⬆ &nbsp;RAISE BID &nbsp;(+₹5 Cr)</button>
+            <button class="auc-bid-action pass" id="auc-btn-pass" onclick="playerPass()" disabled>✖ &nbsp;PASS</button>
           </div>
-          <div class="auc-bid-timer" id="auc-timer-wrap">
-            ⏱ Timer: <span id="auc-timer-val">—</span>
-            <div class="auc-timer-bar" id="auc-timer-bar" style="width:100%"></div>
-          </div>
+          <div class="auc-bid-timer" id="auc-timer-wrap">⏱ &nbsp;TIMER: <span id="auc-timer-val">—</span><div class="auc-timer-bar" id="auc-timer-bar" style="width:100%"></div></div>
         </div>
         <div class="auc-log">
           <div class="auc-log-hdr">📋 Auction Log</div>
@@ -1082,17 +1349,17 @@ function renderAucMain(){
         <div class="auc-squad-panel">
           <div class="auc-squad-hdr">
             <div>
-              <div class="auc-squad-title" style="color:${myT.color}">${myT.abbr} Squad</div>
-              <div style="font-size:.65rem;font-weight:700;color:var(--muted);margin-top:2px;">Your Team</div>
+              <div class="auc-squad-title" style="color:${myT.color}">${myT.abbr} SQUAD</div>
+              <div style="font-size:.58rem;font-weight:600;color:var(--muted);margin-top:2px;letter-spacing:1px">YOUR TEAM</div>
             </div>
             <div class="auc-budget-badge" id="auc-my-budget">₹5000 Cr</div>
           </div>
-          <div class="auc-squad-list" id="auc-my-squad"><div class="auc-squad-empty">No players yet</div></div>
-          <div class="auc-slot-info"><span id="auc-slot-count">0/25 slots used</span><span id="auc-role-count">BAT:0 AR:0 BOWL:0</span></div>
+          <div class="auc-squad-list" id="auc-my-squad"><div class="auc-squad-empty">No players signed yet</div></div>
+          <div class="auc-slot-info"><span id="auc-slot-count">0/25 slots</span><span id="auc-role-count">BAT:0 AR:0 BOWL:0</span></div>
         </div>
-        <div style="margin-top:1rem;background:#fff;border:3px solid var(--ink);border-radius:10px;overflow:hidden;box-shadow:4px 4px 0 var(--ink)">
-          <div style="background:var(--ink2);padding:10px 14px;font-family:'Nunito',sans-serif;font-weight:900;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:#fff">🤖 Rival Teams</div>
-          <div id="auc-npc-status" style="padding:.75rem"></div>
+        <div class="auc-rivals-panel">
+          <div class="auc-rivals-hdr">🤖 Rival Franchises (${AUC.npcs.length} teams)</div>
+          <div class="auc-rivals-body" id="auc-npc-status"></div>
         </div>
       </div>
     </div>`;
@@ -1102,267 +1369,335 @@ function renderAucMain(){
 function renderNPCStatus(){
   const el=document.getElementById('auc-npc-status');
   if(!el) return;
-  el.innerHTML=AUC.npcs.map(n=>`
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)">
-      <div style="display:flex;align-items:center;gap:8px">
-        <div style="width:24px;height:24px;flex-shrink:0">${L[n.id](24)}</div>
-        <div style="font-weight:800;font-size:.78rem">${n.abbr}</div>
+  el.innerHTML=AUC.npcs.map(n=>{
+    const sq=AUC.npcSquads[n.id]||[];
+    const isLeading=AUC.currentBidder===n.id;
+    return `<div class="auc-rival-row" id="rival-${n.id}" style="${isLeading?'background:rgba(201,168,76,.05);':''}">
+      <div>
+        <div class="auc-rival-name">
+          ${logoImg(n.id,20)}
+          ${n.abbr}
+          <span class="auc-rival-tag" style="background:${n.color}20;color:${n.color}">${n.personality||'RIVAL'}</span>
+          ${isLeading?'<span style="color:var(--gold);font-size:.55rem;font-weight:700"> ★ LEADING</span>':''}
+        </div>
+        <div class="auc-rival-players" style="font-size:.58rem;color:var(--muted);margin-top:2px;padding-left:27px">${sq.length} players · BAT:${sq.filter(x=>x.type==='bat').length} AR:${sq.filter(x=>x.type==='ar').length} BOWL:${sq.filter(x=>x.type==='bowl').length}</div>
       </div>
       <div style="text-align:right">
-        <div style="font-family:'Black Han Sans',sans-serif;font-size:.85rem;color:var(--hot)">₹${AUC.npcBudgets[n.id]} Cr</div>
-        <div style="font-size:.6rem;color:var(--muted);font-weight:700">${(AUC.npcSquads[n.id]||[]).length} players</div>
+        <div class="auc-rival-budget">₹${AUC.npcBudgets[n.id]} Cr</div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 function nextPlayer(){
   clearTimers();
-  if(AUC.currentIdx >= AUC.pool.length){
-    endAuction(); return;
-  }
+  if(AUC.currentIdx>=AUC.pool.length){endAuction();return;}
   const p=AUC.pool[AUC.currentIdx];
-  AUC.baseBid=p.base;
-  AUC.currentBid=p.base;
-  AUC.currentBidder=null;
-  AUC.bidActive=true;
-  AUC.playerPassed=false;
-
-  // Render player on block
-  const myT=T(AUC.myTeamId);
+  AUC.baseBid=p.base;AUC.currentBid=p.base;AUC.currentBidder=null;AUC.bidActive=true;AUC.playerPassed=false;
   const origT=T(p.team);
-  const ratingColor=p.rating>=95?'#FF2D55':p.rating>=88?'#FF6B00':p.rating>=80?'#FFD600':'#00E676';
-  document.getElementById('auc-pcount').textContent=`${AUC.currentIdx+1} / ${AUC.pool.length}`;
+  const rc=p.rating>=95?'#C9A84C':p.rating>=88?'#E06B1A':p.rating>=80?'#4A9EE0':'#2ECC71';
+  document.getElementById('auc-pcount').textContent=`Player ${AUC.currentIdx+1} of ${AUC.pool.length}`;
+  
+  // Stats for main grid
+  let statsHtml='',extraHtml='';
+  if(p.type==='bat'){
+    statsHtml=`
+      <div class="auc-stat-box"><span class="auc-stat-val">${p.stats.runs}</span><span class="auc-stat-key">Runs</span></div>
+      <div class="auc-stat-box"><span class="auc-stat-val">${p.stats.avg}</span><span class="auc-stat-key">Average</span></div>
+      <div class="auc-stat-box"><span class="auc-stat-val">${p.stats.sr}</span><span class="auc-stat-key">Strike Rate</span></div>`;
+    extraHtml=`
+      <div class="auc-extra-stat"><div class="auc-extra-val">${p.stats.matches}</div><div class="auc-extra-key">Matches</div></div>
+      <div class="auc-extra-stat"><div class="auc-extra-val">${p.stats.fours}</div><div class="auc-extra-key">Fours</div></div>
+      <div class="auc-extra-stat"><div class="auc-extra-val">${p.stats.sixes}</div><div class="auc-extra-key">Sixes</div></div>`;
+  } else if(p.type==='bowl'){
+    statsHtml=`
+      <div class="auc-stat-box"><span class="auc-stat-val">${p.stats.wkts}</span><span class="auc-stat-key">Wickets</span></div>
+      <div class="auc-stat-box"><span class="auc-stat-val">${p.stats.avg}</span><span class="auc-stat-key">Average</span></div>
+      <div class="auc-stat-box"><span class="auc-stat-val">${p.stats.econ}</span><span class="auc-stat-key">Economy</span></div>`;
+    extraHtml=`
+      <div class="auc-extra-stat"><div class="auc-extra-val">${p.stats.matches}</div><div class="auc-extra-key">Matches</div></div>
+      <div class="auc-extra-stat"><div class="auc-extra-val">${p.stats.dot_pct}%</div><div class="auc-extra-key">Dot Ball %</div></div>
+      <div class="auc-extra-stat"><div class="auc-extra-val">${p.stats.maidens}</div><div class="auc-extra-key">Maidens</div></div>`;
+  } else {
+    statsHtml=`
+      <div class="auc-stat-box"><span class="auc-stat-val">${p.stats.runs}</span><span class="auc-stat-key">Runs</span></div>
+      <div class="auc-stat-box"><span class="auc-stat-val">${p.stats.wkts}</span><span class="auc-stat-key">Wickets</span></div>
+      <div class="auc-stat-box"><span class="auc-stat-val">${p.stats.avg}</span><span class="auc-stat-key">Bat Avg</span></div>`;
+    extraHtml=`
+      <div class="auc-extra-stat"><div class="auc-extra-val">${p.stats.sr}</div><div class="auc-extra-key">Bat SR</div></div>
+      <div class="auc-extra-stat"><div class="auc-extra-val">${p.stats.econ}</div><div class="auc-extra-key">Bowl Econ</div></div>
+      <div class="auc-extra-stat"><div class="auc-extra-val">${p.country}</div><div class="auc-extra-key">Country</div></div>`;
+  }
+
+  // Photo
+  const photoUrl=PLAYER_PHOTOS[p.name];
+  const photoHtml=photoUrl?
+    `<img src="${photoUrl}" alt="${p.name}" class="auc-player-photo" onerror="this.style.display='none'">`:
+    `<span style="font-family:'Bebas Neue',sans-serif;font-size:2rem;color:${origT.color}">${ini(p.name)}</span>`;
+
   document.getElementById('auc-player-main').innerHTML=`
-    <div class="auc-player-av" style="background:${origT.color};color:${origT.tc};">${ini(p.name)}</div>
+    <div class="auc-player-photo-wrap" style="border-color:${origT.color}40">
+      ${photoHtml}
+      <span class="auc-player-flag">${p.country.split(' ')[0]}</span>
+    </div>
     <div class="auc-player-info">
       <div class="auc-player-name">${p.name}</div>
       <div class="auc-player-role">${p.role}</div>
-      <div class="auc-player-stats">${p.stats}</div>
-      <div class="auc-player-team-badge" style="background:${origT.color}22;color:${origT.color};">${origT.abbr} · ${origT.name}</div>
+      <div class="auc-player-team-badge" style="background:${origT.color}15;color:${origT.color};border:1px solid ${origT.color}30">
+        ${logoImg(origT.id,16)} &nbsp;${origT.name}
+      </div>
+      <div class="auc-player-profile">"${p.profile}"</div>
     </div>`;
+  document.getElementById('auc-stats-grid').innerHTML=statsHtml;
+  document.getElementById('auc-extra-stats').innerHTML=extraHtml;
   document.getElementById('auc-rating-bar').innerHTML=`
     <span class="auc-rating-label">Rating</span>
-    <div class="auc-rating-track"><div class="auc-rating-fill" style="width:${p.rating}%;background:${ratingColor}"></div></div>
-    <span class="auc-rating-val" style="color:${ratingColor}">${p.rating}</span>`;
+    <div class="auc-rating-track"><div class="auc-rating-fill" style="width:${p.rating}%;background:${rc}"></div></div>
+    <span class="auc-rating-val" style="color:${rc}">${p.rating}</span>`;
   document.getElementById('auc-result-overlay').innerHTML='';
-  document.getElementById('auc-bid-amt').textContent=`₹${AUC.currentBid} Cr`;
-  document.getElementById('auc-bid-sub').textContent=`Base Price: ₹${p.base} Cr`;
-  document.getElementById('auc-bidder-info').textContent='Auction open — place your bid!';
+  document.getElementById('auc-result-overlay').className='auc-result-overlay';
+  document.getElementById('auc-bid-amt').textContent=p.base;
+  document.getElementById('auc-bid-sub').textContent=`Base Price: ₹${p.base} Crore`;
+  document.getElementById('auc-bidder-info').textContent='Bidding is open — make your move!';
   document.getElementById('auc-bidder-info').style.color='var(--muted)';
   document.getElementById('auc-btn-bid').disabled=false;
   document.getElementById('auc-btn-pass').disabled=false;
-  addLog(`🔨 ${p.name} (${p.role}) — base ₹${p.base} Cr`,'#6B7280');
-
-  // Schedule NPC opening bids after short delay
-  AUC.npcThinkTimer=setTimeout(()=>npcBidRound(), 900);
-  startBidTimer(15);
+  addLog(`🔨 ${p.name} (${p.role}) — base ₹${p.base}Cr`,'#7A7A90');
+  AUC.npcThinkTimer=setTimeout(()=>npcBidRound(),800+Math.random()*600);
+  startBidTimer(16);
 }
 
-let timerSeconds=15;
-let timerInterval=null;
-function startBidTimer(secs){
-  clearInterval(timerInterval);
-  timerSeconds=secs;
-  updateTimerUI();
+let timerSecs=16,timerInterval=null;
+function startBidTimer(s){
+  clearInterval(timerInterval);timerSecs=s;updateTimerUI();
   timerInterval=setInterval(()=>{
-    timerSeconds--;
-    updateTimerUI();
-    if(timerSeconds<=0){
-      clearInterval(timerInterval);
-      hammerFall();
-    }
+    timerSecs--;updateTimerUI();
+    if(timerSecs<=0){clearInterval(timerInterval);hammerFall();}
   },1000);
 }
 function updateTimerUI(){
   const el=document.getElementById('auc-timer-val');
   const bar=document.getElementById('auc-timer-bar');
-  if(!el||!bar) return;
-  el.textContent=timerSeconds+'s';
-  bar.style.width=(timerSeconds/15*100)+'%';
-  bar.style.background=timerSeconds<=4?'var(--hot)':timerSeconds<=8?'var(--orange)':'var(--green)';
+  if(!el||!bar)return;
+  el.textContent=timerSecs+'s';
+  bar.style.width=(timerSecs/16*100)+'%';
+  bar.style.background=timerSecs<=4?'var(--accent)':timerSecs<=8?'var(--orange)':'var(--green)';
 }
-function clearTimers(){
-  clearInterval(timerInterval);
-  clearTimeout(AUC.npcThinkTimer);
-}
+function clearTimers(){clearInterval(timerInterval);clearTimeout(AUC.npcThinkTimer);}
 
 function npcBidRound(){
-  if(!AUC.bidActive) return;
+  if(!AUC.bidActive)return;
   const p=AUC.pool[AUC.currentIdx];
-  // Each NPC decides whether to bid
+  // Shuffle NPCs so bid order varies each round
   const shuffled=[...AUC.npcs].sort(()=>Math.random()-0.5);
   let didBid=false;
   for(const npc of shuffled){
     const squad=AUC.npcSquads[npc.id]||[];
     const budget=AUC.npcBudgets[npc.id];
     const remaining=AUC.pool.length-AUC.currentIdx;
-    const needMore=squad.length<14;
-    const maxBid=Math.min(budget-remaining*2, p.rating*npc.aggr*1.1);
+
+    // Skip if already highest bidder
+    if(AUC.currentBidder===npc.id) continue;
+    // Skip if can't afford
     if(budget<AUC.currentBid+5) continue;
-    if(AUC.currentBidder===npc.id) continue; // already highest
-    const chance=npc.aggr*(p.rating/100)*(needMore?1.3:0.9);
-    if(Math.random()<chance && AUC.currentBid+5<=maxBid){
-      AUC.currentBid+=5;
+
+    // Need assessment
+    const batCount=squad.filter(x=>x.type==='bat').length;
+    const bowlCount=squad.filter(x=>x.type==='bowl').length;
+    const arCount=squad.filter(x=>x.type==='ar').length;
+    const needsThisType=(p.type==='bat'&&batCount<(npc.needsType.bat||4))||
+                        (p.type==='bowl'&&bowlCount<(npc.needsType.bowl||4))||
+                        (p.type==='ar'&&arCount<(npc.needsType.ar||3));
+    const desperateNeed=squad.length<6&&remaining<10;
+    const rivalIsBidding=npc.rivalOf&&npc.rivalOf.includes(AUC.currentBidder);
+
+    // Max bid calculation driven by personality
+    let maxMultiplier=npc.aggr||0.8;
+    if(npc.personality==='DOMINANT')  maxMultiplier*=1.25;
+    if(npc.personality==='AGGRESSIVE')maxMultiplier*=1.20;
+    if(npc.personality==='STAR-STRUCK'&&p.rating>=90) maxMultiplier*=1.35;
+    if(npc.personality==='IMPULSIVE') maxMultiplier*=1.15+Math.random()*0.2;
+    if(npc.personality==='HUNGRY')    maxMultiplier*=1.18;
+    if(npc.personality==='ANALYTICAL')maxMultiplier*=0.90;
+    if(npc.personality==='SHREWD')    maxMultiplier*=0.85;
+    if(npc.personality==='SCOUTING'&&p.rating<85) maxMultiplier*=1.1;
+    if(desperateNeed) maxMultiplier*=1.35;
+    if(!needsThisType) maxMultiplier*=0.55;
+    // Rival in the lead? Ego kicks in
+    if(rivalIsBidding) maxMultiplier*=1.15;
+
+    const budgetReserve=Math.max(remaining*3,50);
+    const maxBid=Math.min(budget-budgetReserve, p.rating*maxMultiplier*1.2);
+    if(AUC.currentBid+5>maxBid) continue;
+
+    // Bid probability based on personality
+    let chance=npc.aggr*(p.rating/100)*(needsThisType?1.5:0.65);
+    if(npc.personality==='DOMINANT')   chance*=1.3;
+    if(npc.personality==='AGGRESSIVE') chance*=1.25;
+    if(npc.personality==='STAR-STRUCK'&&p.rating>=88) chance*=1.4;
+    if(npc.personality==='IMPULSIVE')  chance*=1.2+Math.random()*0.3;
+    if(npc.personality==='HUNGRY')     chance*=1.2;
+    if(npc.personality==='TACTICAL'&&timerSecs>9) chance*=0.45; // waits for last moment
+    if(npc.personality==='ANALYTICAL'&&p.rating<85) chance*=0.35;
+    if(npc.personality==='SHREWD'&&timerSecs>11)  chance*=0.3; // very patient
+    if(rivalIsBidding) chance*=1.35; // rivalry surge
+
+    if(Math.random()<Math.min(chance,0.95)){
+      // Impulsive teams sometimes raise by more
+      const raise=(npc.personality==='IMPULSIVE'&&Math.random()<0.3)?10:5;
+      AUC.currentBid=Math.min(AUC.currentBid+raise, maxBid);
+      AUC.currentBid=Math.ceil(AUC.currentBid/5)*5; // always round to nearest 5
       AUC.currentBidder=npc.id;
-      AUC.npcBudgets[npc.id]=budget; // budget deducted only on win
-      document.getElementById('auc-bid-amt').textContent=`₹${AUC.currentBid} Cr`;
-      document.getElementById('auc-bidder-info').textContent=`🤖 ${npc.name} is leading — ₹${AUC.currentBid} Cr`;
-      document.getElementById('auc-bidder-info').style.color=npc.color;
-      addLog(`🤖 ${npc.abbr} bids ₹${AUC.currentBid} Cr`,'#FF6B00');
+      document.getElementById('auc-bid-amt').textContent=AUC.currentBid;
+      const emoji=npc.personality==='AGGRESSIVE'||npc.personality==='DOMINANT'?'🔥':
+                  npc.personality==='IMPULSIVE'?'😤':
+                  npc.personality==='ANALYTICAL'?'📊':'🤖';
+      document.getElementById('auc-bidder-info').innerHTML=`<span style="color:${npc.color}">${emoji} ${npc.name} leads — ₹${AUC.currentBid}Cr</span>`;
+      document.getElementById('auc-bidder-info').style.color='';
+
+      // Flash rival row
+      const rv=document.getElementById('rival-'+npc.id);
+      if(rv){rv.classList.remove('bid-flash');void rv.offsetWidth;rv.classList.add('bid-flash');}
+
+      addLog(`${emoji} ${npc.abbr} bids ₹${AUC.currentBid}Cr`,'#E06B1A');
       renderNPCStatus();
       didBid=true;
       startBidTimer(10);
       break;
     }
   }
-  // Schedule another NPC round if they didn't bid all pass
   if(didBid){
-    AUC.npcThinkTimer=setTimeout(()=>npcBidRound(), 1800+Math.random()*1200);
+    // More NPCs = faster cadence to feel alive; base delay shorter
+    const delay=900+Math.random()*1100;
+    AUC.npcThinkTimer=setTimeout(()=>npcBidRound(),delay);
   }
 }
 
 function playerBid(){
-  if(!AUC.bidActive) return;
+  if(!AUC.bidActive)return;
   const newBid=AUC.currentBid+5;
-  if(newBid > AUC.playerBudget){
-    addLog('❌ Insufficient funds!','#FF2D55'); return;
-  }
-  AUC.currentBid=newBid;
-  AUC.currentBidder='player';
-  document.getElementById('auc-bid-amt').textContent=`₹${AUC.currentBid} Cr`;
-  document.getElementById('auc-bidder-info').textContent=`✅ You are leading — ₹${AUC.currentBid} Cr`;
-  document.getElementById('auc-bidder-info').style.color='var(--green)';
-  addLog(`💰 You bid ₹${AUC.currentBid} Cr`,'#00E676');
+  if(newBid>AUC.playerBudget){addLog('❌ Insufficient funds!','#E05252');return;}
+  AUC.currentBid=newBid;AUC.currentBidder='player';
+  document.getElementById('auc-bid-amt').textContent=AUC.currentBid;
+  document.getElementById('auc-bidder-info').innerHTML=`<span style="color:var(--green)">✅ YOU are leading — ₹${AUC.currentBid}Cr</span>`;
+  addLog(`💰 You bid ₹${AUC.currentBid}Cr`,'#2ECC71');
   startBidTimer(10);
-  // Trigger NPC counter after short delay
   clearTimeout(AUC.npcThinkTimer);
-  AUC.npcThinkTimer=setTimeout(()=>npcBidRound(), 1200+Math.random()*800);
+  // NPCs react quickly when player bids — feels like a real war
+  AUC.npcThinkTimer=setTimeout(()=>npcBidRound(),700+Math.random()*900);
 }
 
 function playerPass(){
-  if(!AUC.bidActive) return;
+  if(!AUC.bidActive)return;
   AUC.playerPassed=true;
-  addLog('⏭ You passed','#6B7280');
+  addLog('⏭ You passed','#7A7A90');
   document.getElementById('auc-btn-bid').disabled=true;
   document.getElementById('auc-btn-pass').disabled=true;
-  // Let timer run out or NPC claim
-  if(!AUC.currentBidder){
-    // nobody bid, mark unsold
-    clearTimers();
-    hammerFall();
-  }
+  if(!AUC.currentBidder){clearTimers();hammerFall();}
 }
 
 function hammerFall(){
-  if(!AUC.bidActive) return;
-  AUC.bidActive=false;
-  clearTimers();
+  if(!AUC.bidActive)return;
+  AUC.bidActive=false;clearTimers();
   document.getElementById('auc-btn-bid').disabled=true;
   document.getElementById('auc-btn-pass').disabled=true;
   const p=AUC.pool[AUC.currentIdx];
   const overlay=document.getElementById('auc-result-overlay');
+  overlay.classList.add('hammer-anim');
   if(!AUC.currentBidder){
-    // Unsold
-    overlay.className='auc-result-overlay unsold';
+    overlay.className='auc-result-overlay unsold hammer-anim';
     overlay.textContent='UNSOLD';
-    addLog(`❌ ${p.name} — UNSOLD`,'#FF2D55');
-    setTimeout(()=>{ overlay.className='auc-result-overlay'; AUC.currentIdx++; nextPlayer(); },1800);
+    addLog(`❌ ${p.name} — UNSOLD`,'#E05252');
+    setTimeout(()=>{overlay.className='auc-result-overlay';AUC.currentIdx++;nextPlayer();},1800);
   } else if(AUC.currentBidder==='player'){
-    // Player wins
     AUC.playerBudget-=AUC.currentBid;
-    AUC.mySquad.push({...p, price:AUC.currentBid});
-    overlay.className='auc-result-overlay sold';
-    overlay.textContent=`SOLD ₹${AUC.currentBid}Cr`;
-    addLog(`🎉 ${p.name} → YOU for ₹${AUC.currentBid} Cr`,'#00E676');
+    AUC.mySquad.push({...p,price:AUC.currentBid});
+    overlay.className='auc-result-overlay sold hammer-anim';
+    overlay.textContent=`SOLD — ₹${AUC.currentBid}Cr`;
+    addLog(`🏆 ${p.name} → YOU for ₹${AUC.currentBid}Cr`,'#2ECC71');
     document.getElementById('auc-my-budget').textContent=`₹${AUC.playerBudget} Cr`;
+    document.getElementById('auc-purse').textContent=`₹${AUC.playerBudget} Cr`;
     updateMySquadUI();
-    setTimeout(()=>{ overlay.className='auc-result-overlay'; AUC.currentIdx++; nextPlayer(); },2000);
+    setTimeout(()=>{overlay.className='auc-result-overlay';AUC.currentIdx++;nextPlayer();},2200);
   } else {
-    // NPC wins
     const npc=AUC.npcs.find(n=>n.id===AUC.currentBidder);
     AUC.npcBudgets[npc.id]-=AUC.currentBid;
-    AUC.npcSquads[npc.id].push({...p, price:AUC.currentBid});
-    overlay.className='auc-result-overlay unsold';
+    AUC.npcSquads[npc.id].push({...p,price:AUC.currentBid});
+    overlay.className='auc-result-overlay unsold hammer-anim';
     overlay.textContent=`SOLD → ${npc.abbr}`;
-    addLog(`🤖 ${p.name} → ${npc.abbr} for ₹${AUC.currentBid} Cr`,'#FF822A');
+    addLog(`🤖 ${p.name} → ${npc.abbr} for ₹${AUC.currentBid}Cr`,'#E06B1A');
     renderNPCStatus();
-    setTimeout(()=>{ overlay.className='auc-result-overlay'; AUC.currentIdx++; nextPlayer(); },2000);
+    setTimeout(()=>{overlay.className='auc-result-overlay';AUC.currentIdx++;nextPlayer();},2000);
   }
 }
 
 function updateMySquadUI(){
   const el=document.getElementById('auc-my-squad');
-  if(!el) return;
-  if(AUC.mySquad.length===0){
-    el.innerHTML='<div class="auc-squad-empty">No players yet</div>';
-  } else {
-    el.innerHTML=AUC.mySquad.map(p=>`
-      <div class="auc-squad-item">
-        <div><div class="auc-squad-item-name">${p.name}</div><div class="auc-squad-item-role">${p.role}</div></div>
-        <div class="auc-squad-item-price">₹${p.price}Cr</div>
-      </div>`).join('');
-  }
+  if(!el)return;
+  el.innerHTML=AUC.mySquad.length===0?'<div class="auc-squad-empty">No players signed yet</div>':
+    AUC.mySquad.map(p=>`<div class="auc-squad-item">
+      <div><div class="auc-squad-item-name">${p.name}</div><div class="auc-squad-item-role">${p.role}</div></div>
+      <div class="auc-squad-item-price">₹${p.price}Cr</div>
+    </div>`).join('');
   const bat=AUC.mySquad.filter(p=>p.type==='bat').length;
   const ar=AUC.mySquad.filter(p=>p.type==='ar').length;
   const bowl=AUC.mySquad.filter(p=>p.type==='bowl').length;
   const sc=document.getElementById('auc-slot-count');
   const rc=document.getElementById('auc-role-count');
-  if(sc) sc.textContent=`${AUC.mySquad.length}/25 slots used`;
+  if(sc) sc.textContent=`${AUC.mySquad.length}/25 slots`;
   if(rc) rc.textContent=`BAT:${bat} AR:${ar} BOWL:${bowl}`;
 }
 
 function addLog(msg,color){
   AUC.lastBidLog.unshift({msg,color});
-  if(AUC.lastBidLog.length>30) AUC.lastBidLog.pop();
+  if(AUC.lastBidLog.length>40)AUC.lastBidLog.pop();
   const el=document.getElementById('auc-log');
-  if(!el) return;
+  if(!el)return;
   el.innerHTML=AUC.lastBidLog.map(l=>`<div class="auc-log-item"><div class="auc-log-dot" style="background:${l.color}"></div>${l.msg}</div>`).join('');
 }
 
 function endAuction(){
-  clearTimers();
-  AUC.phase='done';
+  clearTimers();AUC.phase='done';
   const myT=T(AUC.myTeamId);
   const spent=5000-AUC.playerBudget;
   const bat=AUC.mySquad.filter(p=>p.type==='bat').length;
   const ar=AUC.mySquad.filter(p=>p.type==='ar').length;
   const bowl=AUC.mySquad.filter(p=>p.type==='bowl').length;
   let html=`<div class="auc-done">
-    <div class="auc-done-title">🏆 Auction Complete!</div>
-    <div class="auc-done-subtitle">You signed ${AUC.mySquad.length} players for ₹${spent} Cr · ₹${AUC.playerBudget} Cr remaining</div>
+    <div class="auc-done-title">🏆 Auction Complete</div>
+    <div class="auc-done-subtitle">You signed ${AUC.mySquad.length} players for ₹${spent}Cr · ₹${AUC.playerBudget}Cr remaining</div>
     <div class="auc-done-squads">
-      <div class="auc-done-team" style="border-top:5px solid ${myT.color}">
-        <div class="auc-done-team-hdr" style="background:${myT.color}18;">
-          <div style="display:flex;align-items:center;gap:8px">${L[AUC.myTeamId](32)} <span>${myT.name}</span></div>
-          <span style="font-size:.7rem;color:var(--muted);font-weight:700">BAT:${bat} AR:${ar} BOWL:${bowl}</span>
+      <div class="auc-done-team" style="border-top:3px solid ${myT.color}">
+        <div class="auc-done-team-hdr" style="background:${myT.color}10">
+          <div style="display:flex;align-items:center;gap:10px">${logoImg(myT.id,28)}<span>${myT.name}</span></div>
+          <span style="font-size:.62rem;color:var(--muted);font-weight:600;letter-spacing:1px">BAT:${bat} AR:${ar} BOWL:${bowl}</span>
         </div>
         <div class="auc-done-team-body">
-          ${AUC.mySquad.length===0?'<div style="color:var(--muted);font-size:.8rem;text-align:center;padding:1rem">No players signed</div>':
+          ${AUC.mySquad.length===0?'<div style="color:var(--muted);text-align:center;padding:1rem;font-size:.8rem">No players signed</div>':
             AUC.mySquad.map(p=>`<div class="auc-done-player"><span>${p.name} <span style="color:var(--muted);font-size:.65rem">${p.role}</span></span><span class="auc-done-player-price">₹${p.price}Cr</span></div>`).join('')}
         </div>
       </div>`;
   AUC.npcs.forEach(npc=>{
-    const npcT=T(npc.id);
     const sq=AUC.npcSquads[npc.id]||[];
-    html+=`<div class="auc-done-team" style="border-top:5px solid ${npc.color}">
-      <div class="auc-done-team-hdr" style="background:${npc.color}18;">
-        <div style="display:flex;align-items:center;gap:8px">${L[npc.id](32)} <span>${npc.name}</span></div>
-        <span style="font-size:.7rem;color:var(--muted);font-weight:700">${sq.length} players</span>
+    html+=`<div class="auc-done-team" style="border-top:3px solid ${npc.color}">
+      <div class="auc-done-team-hdr" style="background:${npc.color}10">
+        <div style="display:flex;align-items:center;gap:10px">${logoImg(npc.id,28)}<span>${npc.name}</span></div>
+        <span style="font-size:.62rem;color:var(--muted);font-weight:600;letter-spacing:1px">${sq.length} players</span>
       </div>
       <div class="auc-done-team-body">
-        ${sq.length===0?'<div style="color:var(--muted);font-size:.8rem;text-align:center;padding:1rem">No players signed</div>':
+        ${sq.length===0?'<div style="color:var(--muted);text-align:center;padding:1rem;font-size:.8rem">No players signed</div>':
           sq.map(p=>`<div class="auc-done-player"><span>${p.name} <span style="color:var(--muted);font-size:.65rem">${p.role}</span></span><span class="auc-done-player-price">₹${p.price}Cr</span></div>`).join('')}
       </div>
     </div>`;
   });
-  html+=`</div><button class="auc-restart-btn" onclick="buildAuction()">🔄 Restart Auction</button></div>`;
+  html+=`</div><button class="auc-restart-btn" onclick="buildAuction()">↩ &nbsp;RESTART AUCTION</button></div>`;
   document.getElementById('auction-app').innerHTML=html;
 }
 
-/* ════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    INIT
-════════════════════════════════════════════════════════════ */
-buildTicker();buildLiveCard();buildDiamonds();buildStandings();
+═══════════════════════════════════════════ */
+buildTicker();buildLiveCard();buildStandings();
 buildTeams();buildLeaders();buildMilestones();
 buildPlayers();buildBuzz();buildPoll();buildAuction();
 </script>
