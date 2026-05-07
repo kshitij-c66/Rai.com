@@ -66,13 +66,14 @@
 
   /* ── API STATUS BADGE ── */
   .api-badge {
-    position:fixed; top:70px; left:50%; transform:translateX(-50%);
-    z-index:960;
-    background:rgba(212,175,55,0.08); border:1px solid var(--gold-dim);
+    position:fixed; top:68px; left:50%; transform:translateX(-50%);
+    z-index:850;
+    background:rgba(13,13,13,0.97); border:1px solid var(--gold-dim);
     font-family:var(--font-mono); font-size:10px; letter-spacing:2px; color:var(--gold);
-    padding:5px 16px;
+    padding:4px 16px;
     clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
     animation:demoPulse 2.5s ease-in-out infinite;
+    white-space:nowrap; max-width:90vw; overflow:hidden; text-overflow:ellipsis;
   }
   @keyframes demoPulse { 0%,100%{opacity:.6} 50%{opacity:1} }
 
@@ -128,12 +129,12 @@
 
   /* ── PROFILE ── */
   .profile-btn {
-    position:fixed; top:14px; right:20px; z-index:950;
     width:36px; height:36px; border-radius:50%;
     background:linear-gradient(135deg, var(--gold), #8B6914);
     border:none; cursor:pointer; font-size:16px;
     display:flex; align-items:center; justify-content:center;
     transition:transform 0.2s; box-shadow:0 0 12px rgba(212,175,55,0.3);
+    flex-shrink:0;
   }
   .profile-btn:hover { transform:scale(1.1); box-shadow:0 0 20px rgba(212,175,55,0.5); }
   .profile-panel {
@@ -579,8 +580,20 @@
 <!-- API STATUS BADGE -->
 <div class="api-badge" id="apiBadge">⚡ CONNECTING TO LIVE IPL FEED…</div>
 
-<!-- PROFILE -->
-<button class="profile-btn" onclick="toggleProfile()" title="Your Fan Profile">🏏</button>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">PAAJI LEAGUE</div>
+  <ul class="nav-links">
+    <li><a href="#dashboard">Match Day</a></li>
+    <li><a href="#pavilion">Pavilion</a></li>
+    <li><a href="#buzz">The Buzz</a></li>
+    <li><a href="#membership">Membership</a></li>
+    <li><a href="#fanmap">Fan Map</a></li>
+  </ul>
+  <button class="profile-btn" onclick="toggleProfile()" title="Your Fan Profile">🏏</button>
+</nav>
+
+<!-- PROFILE PANEL -->
 <div class="profile-panel" id="profilePanel">
   <div class="profile-welcome" id="profileWelcome">WELCOME BACK!</div>
   <div class="fan-level" id="fanLevel">🏏 Rookie</div>
@@ -598,23 +611,10 @@
 <!-- SCORE TICKER -->
 <div class="score-ticker">
   <div class="ticker-track" id="tickerTrack">
-    <!-- populated by JS -->
     <span class="ticker-item ticker-live"><span class="live-dot"></span>IPL LIVE <span class="ticker-sep">·</span> Fetching scores… <span class="ticker-sep">|</span></span>
     <span class="ticker-item ticker-live"><span class="live-dot"></span>IPL LIVE <span class="ticker-sep">·</span> Fetching scores… <span class="ticker-sep">|</span></span>
   </div>
 </div>
-
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">PAAJI LEAGUE</div>
-  <ul class="nav-links">
-    <li><a href="#dashboard">Match Day</a></li>
-    <li><a href="#pavilion">Pavilion</a></li>
-    <li><a href="#buzz">The Buzz</a></li>
-    <li><a href="#membership">Membership</a></li>
-    <li><a href="#fanmap">Fan Map</a></li>
-  </ul>
-</nav>
 
 <!-- HERO -->
 <div id="hero">
@@ -681,23 +681,9 @@
         <div class="match-overs" id="liveOvers2"></div>
       </div>
     </div>
-    <div style="margin-top:12px; font-family:var(--font-mono); font-size:10px; color:var(--muted); letter-spacing:2px; margin-bottom:6px;">LAST OVER</div>
-    <div class="ball-history" id="ballHistory"></div>
-    <div style="margin-top:14px; display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10px; color:var(--muted);">
-      <span>PARTNERSHIP: <span id="partnershipRuns" style="color:var(--gold)">—</span></span>
-      <span>BATSMEN: <span id="batsmenDisplay" style="color:var(--text)">—</span></span>
-    </div>
-    <div class="partnership-bar"><div class="partnership-fill" id="partnershipFill" style="width:50%"></div></div>
-    <div class="worm-wrap">
-      <div class="worm-title">RUN RATE WORM (THIS INNINGS)</div>
-      <canvas id="wormCanvas" height="70" style="width:100%;display:block;"></canvas>
-    </div>
-    <div class="last-ball-feed">
-      🏏 <span id="lastBallText">Connecting to live IPL data feed…</span>
-    </div>
     <!-- Last updated indicator -->
-    <div style="margin-top:8px; font-family:var(--font-mono); font-size:9px; color:var(--muted); text-align:right;">
-      LAST UPDATED: <span id="lastUpdated">—</span> &nbsp;·&nbsp; AUTO-REFRESH 60s
+    <div style="margin-top:16px; font-family:var(--font-mono); font-size:9px; color:var(--muted); text-align:right;">
+      LAST UPDATED: <span id="lastUpdated">—</span> &nbsp;·&nbsp; AUTO-REFRESH 90s
     </div>
   </div>
 
@@ -956,7 +942,7 @@
   <div class="footer-sub">DPS RK PURAM · OFFICIAL IPL FAN CLUB HUB · HERITAGE EDITION</div>
   <div class="seal">PAAJI<br>SEAL</div>
   <div style="font-family:var(--font-mono); font-size:11px; color:var(--muted);">Made with ❤️ by Dipsites · For Dipsites · @paajileague_rkp</div>
-  <div style="margin-top:12px; font-family:var(--font-mono); font-size:10px; color:rgba(212,175,55,0.15);">v4.0 — Heritage Upgrade · Real-Time IPL API · localStorage Persist</div>
+  <div style="margin-top:12px; font-family:var(--font-mono); font-size:10px; color:rgba(212,175,55,0.15);">v5.0 — Heritage Upgrade · Real-Time IPL API · Tab-Aware 90s Fetching · Credit Saver</div>
 </footer>
 
 <!-- JERSEY MODAL -->
@@ -985,6 +971,8 @@
 // ── cricapi.com key — go to cricapi.com dashboard → My Account → add your host to the allowlist ──
 const CRICKET_API_KEY = '0d6a1ce1-44cf-4fb4-b4a4-8266e8315585';
 const CRICKET_API_URL = 'https://api.cricapi.com/v1/currentMatches';
+// ── Credit-saver config: 90s interval × 160 fetches = 4hrs of coverage within 100-req/day cap ──
+const FETCH_INTERVAL_MS = 90_000;
 const LS_KEY          = 'paaji_heritage_profile';
 
 // IPL team name fragments to detect IPL matches
@@ -1159,15 +1147,16 @@ async function fetchIPLScores() {
     const iplMatches = allMatches.filter(isIPLMatch);
 
     if (iplMatches.length === 0) {
-      // No IPL matches live — show upcoming if available
-      const upcoming = allMatches.find(m => m.matchStarted === false && isIPLMatch(m));
+      // No IPL matches live — look for any upcoming IPL match across all data
+      const upcoming = allMatches.find(m => !m.matchStarted && isIPLMatch(m))
+                    || allMatches.find(m => isIPLMatch(m));   // fallback: any IPL entry
       if (upcoming) {
-        showUpcomingMatch(upcoming);
+        showNextIPLMatch(upcoming);
       } else {
         showNoIPLMatches();
       }
       updateTickerNoIPL(allMatches);
-      updateBadge('🔴 NO IPL MATCHES LIVE — Demo simulation active');
+      updateBadge('⏳ NEXT IPL MATCH — No live games right now');
       STATE.demoActive = true;
       return;
     }
@@ -1185,7 +1174,7 @@ async function fetchIPLScores() {
     // Populate predictor dropdown with live matches
     populatePredictorMatches(iplMatches);
 
-    updateBadge('🟢 LIVE IPL DATA — cricapi.com · Updates every 60s');
+    updateBadge('🟢 LIVE IPL DATA — cricapi.com · Updates every 90s');
     document.getElementById('lastUpdated').textContent = new Date().toLocaleTimeString('en-IN');
 
   } catch(err) {
@@ -1269,6 +1258,37 @@ function showUpcomingMatch(match) {
     startCountdownTo(new Date(match.dateTimeGMT));
     document.getElementById('nextMatchLabel').textContent = `${teams[0]} vs ${teams[1]}`;
   }
+}
+
+// ── Stale data: "Next IPL Match" with date/time when no live games are found ──
+function showNextIPLMatch(match) {
+  const teams = match.teams || ['TBA', 'TBA'];
+  const matchLabel = match.name || `${teams[0]} vs ${teams[1]}`;
+
+  // Parse & format date
+  let dateStr = 'Date TBD';
+  let timeStr = '';
+  if (match.dateTimeGMT) {
+    const dt = new Date(match.dateTimeGMT);
+    // Convert to IST (UTC+5:30)
+    const ist = new Date(dt.getTime() + (5.5 * 60 * 60 * 1000));
+    dateStr = ist.toLocaleDateString('en-IN', { weekday:'short', day:'numeric', month:'short' });
+    timeStr = ist.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' }) + ' IST';
+    startCountdownTo(dt);
+    document.getElementById('nextMatchLabel').textContent = matchLabel;
+  }
+
+  document.getElementById('liveTeam1').textContent  = teams[0];
+  document.getElementById('liveTeam2').textContent  = teams[1];
+  document.getElementById('liveScore1').textContent = dateStr;
+  document.getElementById('liveScore2').textContent = timeStr;
+  document.getElementById('liveOvers1').textContent = match.venue ? `@ ${match.venue}` : '';
+  document.getElementById('liveOvers2').textContent = '';
+  document.getElementById('matchStatusText').innerHTML = '📅 NEXT IPL MATCH';
+  document.getElementById('pillVenue').textContent  = match.venue || 'TBD';
+  document.getElementById('pillCRR').textContent    = 'CRR: —';
+  document.getElementById('pillRRR').textContent    = 'RRR: —';
+  document.getElementById('lastBallText').textContent = match.status || `Next up: ${matchLabel} · ${dateStr}${timeStr ? ' · ' + timeStr : ''}`;
 }
 
 function showNoIPLMatches() {
@@ -1836,11 +1856,36 @@ window.addEventListener('scroll',()=>{
   // Start demo fallback immediately
   runDemoFallback();
 
-  // First API fetch
-  await fetchIPLScores();
+  // ── SMART INTERVAL: Tab-Aware Fetching ──────────────────────────────────────
+  // Only fetch when the user is actually looking at the page.
+  // At 90s intervals, 100 daily requests covers a full 4-hour IPL game.
+  // ────────────────────────────────────────────────────────────────────────────
+  let fetchTimer = null;
 
-  // Auto-refresh every 60s only when a live key is configured
-  if (CRICKET_API_KEY) setInterval(fetchIPLScores, 60_000);
+  function scheduleFetch() {
+    clearInterval(fetchTimer);
+    fetchTimer = setInterval(async () => {
+      if (document.visibilityState === 'hidden') {
+        // Tab is hidden — skip this tick silently to save credits
+        return;
+      }
+      await fetchIPLScores();
+    }, FETCH_INTERVAL_MS);
+  }
+
+  // Re-fetch immediately when user returns to the tab
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      fetchIPLScores();          // instant refresh on tab focus
+      scheduleFetch();           // reset the 90s clock
+    }
+  });
+
+  // First API fetch (only if visible on load)
+  if (CRICKET_API_KEY) {
+    await fetchIPLScores();
+    scheduleFetch();
+  }
 
   // Populate predictor with demo matches if API gave nothing
   const predSel = document.getElementById('predMatch');
